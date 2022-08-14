@@ -31,11 +31,11 @@ import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.ResourceLocation;
-import optifine.Config;
-import optifine.ConnectedTextures;
-import optifine.Reflector;
-import optifine.TextureUtils;
-import shadersmod.client.ShadersTex;
+import net.optifine.Config;
+import net.optifine.ConnectedTextures;
+import net.optifine.Reflector;
+import net.optifine.TextureUtils;
+import net.optifine.shadersmod.client.ShadersTex;
 
 public class TextureMap extends AbstractTexture implements ITickableTextureObject
 {

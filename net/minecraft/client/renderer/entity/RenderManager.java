@@ -101,8 +101,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import optifine.PlayerItemsLayer;
-import optifine.Reflector;
+import net.optifine.PlayerItemsLayer;
+import net.optifine.Reflector;
 
 public class RenderManager
 {
