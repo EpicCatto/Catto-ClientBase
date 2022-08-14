@@ -35,6 +35,11 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
+
+import epiccatto.catto.event.impl.EventClickBlock;
+import epiccatto.catto.event.impl.EventKey;
+import epiccatto.catto.event.impl.EventTick;
+import epiccatto.catto.event.impl.EventWorldLoad;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -1715,6 +1720,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      */
     public void runTick() throws IOException
     {
+
+        EventTick event = new EventTick();
+        event.call();
+
         if (this.rightClickDelayTimer > 0)
         {
             --this.rightClickDelayTimer;
@@ -1918,6 +1927,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                     }
                     else
                     {
+                        EventKey eventKey = new EventKey(k);
+                        eventKey.call();
+
                         if (k == 1)
                         {
                             this.displayInGameMenu();
@@ -2139,6 +2151,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             {
                 this.rightClickMouse();
             }
+
+            EventClickBlock eventClickBlock = new EventClickBlock();
+            eventClickBlock.call();
 
             this.sendClickBlockToController(this.currentScreen == null && this.gameSettings.keyBindAttack.isKeyDown() && this.inGameHasFocus);
         }
@@ -2391,6 +2406,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings);
             this.playerController.setPlayerCapabilities(this.thePlayer);
             this.renderViewEntity = this.thePlayer;
+
+            EventWorldLoad eventWorldLoad = new EventWorldLoad();
+            eventWorldLoad.call();
         }
         else
         {

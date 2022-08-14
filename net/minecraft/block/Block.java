@@ -2,6 +2,8 @@ package net.minecraft.block;
 
 import java.util.List;
 import java.util.Random;
+
+import epiccatto.catto.event.impl.EventCollide;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -484,13 +486,18 @@ public class Block
     /**
      * Add all collision boxes of this Block to the list that intersect with the given mask.
      */
-    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity)
-    {
-        AxisAlignedBB axisalignedbb = this.getCollisionBoundingBox(worldIn, pos, state);
+    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity) {
+        AxisAlignedBB axisalignedbb = this.getCollisionBoundingBox ( worldIn, pos, state );
 
-        if (axisalignedbb != null && mask.intersectsWith(axisalignedbb))
-        {
-            list.add(axisalignedbb);
+        EventCollide eventCollide = new EventCollide( collidingEntity, pos.getX (), pos.getY (), pos.getZ (), axisalignedbb, this );
+        eventCollide.call();
+        axisalignedbb = eventCollide.getBoundingBox ();
+
+        if (eventCollide.isCancelled ())
+            return;
+
+        if (axisalignedbb != null && mask.intersectsWith ( axisalignedbb )) {
+            list.add ( axisalignedbb );
         }
     }
 

@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Callable;
+
+import epiccatto.catto.event.impl.EventSafeWalk;
+import epiccatto.catto.event.impl.EventStrafe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -51,6 +54,7 @@ public abstract class Entity implements ICommandSender
 {
     private static final AxisAlignedBB ZERO_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
     private static int nextEntityID;
+
     private int entityId;
     public double renderDistanceWeight;
 
@@ -610,12 +614,15 @@ public abstract class Entity implements ICommandSender
                 this.motionZ = 0.0D;
             }
 
+            final EventSafeWalk event = new EventSafeWalk(false);
+            event.call();
+
             double d3 = x;
             double d4 = y;
             double d5 = z;
             boolean flag = this.onGround && this.isSneaking() && this instanceof EntityPlayer;
-
-            if (flag)
+            final boolean safeMode = this.onGround && event.safe && this instanceof EntityPlayer;
+            if (flag || safeMode)
             {
                 double d6;
 
@@ -1213,7 +1220,11 @@ public abstract class Entity implements ICommandSender
      */
     public void moveFlying(float strafe, float forward, float friction)
     {
-        float f = strafe * strafe + forward * forward;
+        EventStrafe strafeEvent = new EventStrafe(this.rotationYaw, strafe, forward, friction);
+        strafeEvent.call();
+        if (strafeEvent.isCancelled())return;
+
+        float f = strafeEvent.getStrafe() * strafeEvent.getStrafe() + strafeEvent.getForward() * strafeEvent.getForward();
 
         if (f >= 1.0E-4F)
         {
@@ -1227,12 +1238,13 @@ public abstract class Entity implements ICommandSender
             f = friction / f;
             strafe = strafe * f;
             forward = forward * f;
-            float f1 = MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F);
-            float f2 = MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F);
-            this.motionX += (double)(strafe * f2 - forward * f1);
-            this.motionZ += (double)(forward * f2 + strafe * f1);
+            float f1 = MathHelper.sin(strafeEvent.getYaw() * (float)Math.PI / 180.0F);
+            float f2 = MathHelper.cos(strafeEvent.getYaw() * (float)Math.PI / 180.0F);
+            this.motionX += strafe * f2 - forward * f1;
+            this.motionZ += forward * f2 + strafe * f1;
         }
     }
+
 
     public int getBrightnessForRender(float partialTicks)
     {
