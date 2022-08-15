@@ -1,5 +1,20 @@
 package epiccatto.catto;
 
+import epiccatto.catto.command.CommandManager;
+import epiccatto.catto.event.EventManager;
+import epiccatto.catto.event.EventTarget;
+import epiccatto.catto.event.impl.EventKey;
+import epiccatto.catto.module.Module;
+import epiccatto.catto.module.ModuleManager;
+import epiccatto.catto.module.file.FileFactory;
+import epiccatto.catto.module.file.config.ConfigManager;
+import epiccatto.catto.module.file.impl.ClientDataFile;
+import epiccatto.catto.module.file.impl.ModulesFile;
+import epiccatto.catto.module.settings.SettingsManager;
+import epiccatto.catto.utils.client.ClientData;
+
+import java.io.File;
+import java.io.FileWriter;
 import java.util.Date;
 
 public class Client {
@@ -10,18 +25,57 @@ public class Client {
     public static int versionNumber = 0;
     public static boolean load = false;
 
+    //Instance
+    public SettingsManager settingsManager;
+    public ModuleManager moduleManager;
+    public FileFactory fileFactory;
+    public ConfigManager configManager;
+    public CommandManager commandManager;
+
+    //Data
+    public ClientData clientData;
+
     public void startClient(){
         if (instance!=null) return;
         System.out.println(new Date().getTime());
         instance = this;
 
+        settingsManager = new SettingsManager();
+        moduleManager = new ModuleManager();
+        fileFactory = new FileFactory();
+        commandManager = new CommandManager();
+        configManager = new ConfigManager();
+
+        moduleManager.registerNormal();
+        fileFactory.setupRoot(clientName);
+        fileFactory.add(
+                new ModulesFile(),
+                new ClientDataFile()
+        );
+        this.fileFactory.load();
+
+        EventManager.register(this);
+
+        load = true;
     }
 
-    public static void preLoad() {
+    public static void bootClient() {
 
     }
 
     public static void shutdownClient() {
+        if (instance==null) return;
 
+        try {
+            EventManager.unregister(instance);
+            instance.fileFactory.save();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @EventTarget
+    public void onKeyUpdate(EventKey event){
+        ModuleManager.getModules().stream().filter(module -> module.getKeyCode() == event.getKey()).forEach(Module::toggle);
     }
 }

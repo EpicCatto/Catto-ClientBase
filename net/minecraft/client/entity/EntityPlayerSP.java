@@ -1,5 +1,6 @@
 package net.minecraft.client.entity;
 
+import epiccatto.catto.Client;
 import epiccatto.catto.event.impl.EventMove;
 import epiccatto.catto.event.impl.EventUpdate;
 import net.minecraft.client.Minecraft;
@@ -303,9 +304,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void sendChatMessage(String message)
     {
-        this.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
+        if (!Client.instance.commandManager.processCommand(message))
+            this.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
     }
-
     /**
      * Swings the item the player is holding.
      */
