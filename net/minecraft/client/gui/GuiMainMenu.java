@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import epiccatto.catto.ui.alts.GuiAltsManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -278,9 +280,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             this.mc.displayGuiScreen(new GuiMultiplayer(this));
         }
 
-        if (button.id == 14 && this.realmsButton.visible)
+        if (button.id == 14)
         {
-            this.switchToRealms();
+            this.mc.displayGuiScreen(new GuiAltsManager(this));
         }
 
         if (button.id == 4)

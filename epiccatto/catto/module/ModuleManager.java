@@ -1,6 +1,7 @@
 package epiccatto.catto.module;
 
-import epiccatto.catto.module.modules.movement.Fly;
+import epiccatto.catto.module.modules.movement.*;
+import epiccatto.catto.module.modules.render.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class ModuleManager {
         //Player
 
         //Render
+        modules.add(new HUD());
 
         //World
 
