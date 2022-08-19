@@ -3,8 +3,6 @@ package epiccatto.catto.module.file.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import epiccatto.catto.Client;
-import epiccatto.catto.module.Module;
-import epiccatto.catto.module.ModuleManager;
 import epiccatto.catto.module.file.IFile;
 import epiccatto.catto.utils.authentication.Encryption;
 import epiccatto.catto.utils.authentication.HWID;
@@ -12,7 +10,8 @@ import epiccatto.catto.utils.client.ClientData;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Objects;
+import java.util.Date;
+import java.util.HashMap;
 
 public class ClientDataFile implements IFile {
 
@@ -34,29 +33,40 @@ public class ClientDataFile implements IFile {
             salt = Encryption.generateSalt();
             authToken = "waiting";
             hwid = HWID.getComputerHWID();
-            if (Client.instance.clientData == null)
-                Client.instance.clientData = new ClientData(secret, salt, authToken, hwid);
+            if (Client.clientData == null)
+                Client.clientData = new ClientData(secret, salt, authToken, hwid);
         }
 
         JsonObject object = new JsonObject();
 
         //Client Data keys
         JsonObject dataKeyObject = new JsonObject();
-        dataKeyObject.addProperty("Secret", Client.instance.clientData.getSecret());
-        dataKeyObject.addProperty("Salt", Client.instance.clientData.getSalt());
+        dataKeyObject.addProperty("Secret", Client.clientData.getSecret());
+        dataKeyObject.addProperty("Salt", Client.clientData.getSalt());
         object.add("DO NOT TOUCH IF YOU DONT KNOW WHAT YOU ARE DOING", dataKeyObject);
 
         //Client info
         JsonObject dataObject = new JsonObject();
         dataObject.addProperty("version", Client.versionNumber);
-        dataObject.addProperty("auth-token", Client.instance.clientData.getAuthToken());
-        dataObject.addProperty("hwid", Client.instance.clientData.getHwid());
+        dataObject.addProperty("auth-token", Client.clientData.getAuthToken());
+        dataObject.addProperty("hwid", Client.clientData.getHwid());
+        JsonObject errorsLogs = new JsonObject();
+
+        for (String key : Client.clientData.getErrorLogs().keySet()) {
+            JsonObject error = new JsonObject();
+            error.addProperty("title", key);
+            error.addProperty("message", Client.clientData.getErrorLogs().get(key).getMessage());
+            error.addProperty("stacktrace", Arrays.toString(Client.clientData.getErrorLogs().get(key).getStackTrace()));
+            errorsLogs.add(key, error);
+        }
+
+        dataObject.add("error-logs", errorsLogs);
 
         JsonObject dataObjectOut = new JsonObject();
         try {
             dataObjectOut.addProperty("Data", Encryption.encrypt(gson.toJson(dataObject), secret, salt));
         }catch (Exception e){
-            e.printStackTrace();
+            Client.clientData.logError("Error while saving client data Json", e);
         }
         object.add("Data (DO NOT TOUCH)", dataObjectOut);
 
@@ -82,20 +92,20 @@ public class ClientDataFile implements IFile {
             authToken = dataObject.get("auth-token").getAsString();
             hwid = dataObject.get("hwid").getAsString();
 
-            System.out.println(dataObject);
+//            System.out.println(dataObject);
         } catch (Exception e) {
             System.err.println("Error while loading client data resetting...");
-            e.printStackTrace();
+//            Client.clientData.logError("Error while loading client data Json", e);
             save(gson);
             return;
         }
-        if (Client.instance.clientData == null)
-            Client.instance.clientData = new ClientData(secret, salt, authToken, hwid);
+        if (Client.clientData == null)
+            Client.clientData = new ClientData(secret, salt, authToken, hwid);
 
     }
 
     @Override
     public void setFile(File root) {
-        file = new File(root, "/data.mythclient");
+        file = new File(root, "/data.catto");
     }
 }

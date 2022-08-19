@@ -1,5 +1,7 @@
 package epiccatto.catto.utils.authentication;
 
+import epiccatto.catto.Client;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -21,7 +23,7 @@ public class HWID {
             clipboard.setContents(stringSelection, null);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Client.clientData.logError("Error while showing JPane", e);
         }
     }
 

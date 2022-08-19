@@ -45,6 +45,6 @@ public class ModulesFile implements IFile {
 
     @Override
     public void setFile(File root) {
-        file = new File(root, "/modules.mythclient");
+        file = new File(root, "/modules.catto");
     }
 }

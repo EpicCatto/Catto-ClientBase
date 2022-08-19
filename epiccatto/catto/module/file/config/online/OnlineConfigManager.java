@@ -1,5 +1,6 @@
 package epiccatto.catto.module.file.config.online;
 
+import epiccatto.catto.Client;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class OnlineConfigManager {
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                Client.clientData.logError("Error while loading online config", e);
                 loadedConfigs.add(new OnlineConfig(EnumChatFormatting.RED + "Online Config Error", EnumChatFormatting.RED + "NO DATA", EnumChatFormatting.RED + "Error: " + e.getMessage(), EnumChatFormatting.RED + "ERROR", new Date().toGMTString()));
             }
         }).run();

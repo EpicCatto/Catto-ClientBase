@@ -1,5 +1,7 @@
 package epiccatto.catto.event;
 
+import epiccatto.catto.Client;
+
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -67,10 +69,8 @@ public abstract class Event {
 
                 try {
                     data.target.invoke(data.source, event);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    Client.clientData.logError("Error while calling event", e);
                 }
 
             }

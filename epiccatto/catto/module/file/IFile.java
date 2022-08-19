@@ -1,6 +1,7 @@
 package epiccatto.catto.module.file;
 
 import com.google.gson.Gson;
+import epiccatto.catto.Client;
 
 import java.io.*;
 
@@ -16,7 +17,7 @@ public interface IFile {
         try (FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write(content);
         } catch (IOException e) {
-            e.printStackTrace();
+            Client.clientData.logError("Error while writing file", e);
         }
     }
 
@@ -28,7 +29,7 @@ public interface IFile {
                 builder.append(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Client.clientData.logError("Error while reading file", e);
         }
         return builder.toString();
     }

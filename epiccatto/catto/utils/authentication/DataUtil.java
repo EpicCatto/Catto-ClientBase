@@ -1,6 +1,7 @@
 package epiccatto.catto.utils.authentication;
 
 import com.google.gson.JsonObject;
+import epiccatto.catto.Client;
 import epiccatto.catto.event.Data;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -36,7 +37,7 @@ public class DataUtil {
 
             System.out.println("Respond: " + DataUtil.postResponse("/auth", jsonObject.toString()));
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+            Client.clientData.logError("Error while connecting to the auth server", e);
         }
     }
 
@@ -127,7 +128,7 @@ public class DataUtil {
         }
         catch(NoSuchAlgorithmException | IOException e)
         {
-            e.printStackTrace();
+            Client.clientData.logError("Error while getting Current Sha 256", e);
         }
 
         return sb.toString();

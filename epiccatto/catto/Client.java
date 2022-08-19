@@ -13,8 +13,6 @@ import epiccatto.catto.module.file.impl.ModulesFile;
 import epiccatto.catto.module.settings.SettingsManager;
 import epiccatto.catto.utils.client.ClientData;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.Date;
 
 public class Client {
@@ -33,7 +31,7 @@ public class Client {
     public CommandManager commandManager;
 
     //Data
-    public ClientData clientData;
+    public static ClientData clientData;
 
     public void startClient(){
         if (instance!=null) return;
@@ -70,7 +68,7 @@ public class Client {
             EventManager.unregister(instance);
             instance.fileFactory.save();
         } catch (Exception e) {
-            e.printStackTrace();
+            clientData.logError("Error while saving files", e);
         }
     }
 
