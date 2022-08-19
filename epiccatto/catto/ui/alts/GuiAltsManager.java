@@ -18,7 +18,6 @@ public class GuiAltsManager extends GuiScreen {
     private final GuiScreen parent;
 
     private GuiTextField username;
-    private GuiTextField combined;
     private GuiTextField password;
 
     private String status = "";
@@ -101,10 +100,9 @@ public class GuiAltsManager extends GuiScreen {
         //this.combined.textboxKeyTyped(typedChar, keyCode);
         this.password.textboxKeyTyped(typedChar, keyCode);
 
-        if (typedChar == '\t' && (this.username.isFocused() || this.combined.isFocused() || this.password.isFocused())) {
+        if (typedChar == '\t' && (this.username.isFocused() || this.password.isFocused())) {
             this.username.setFocused(!this.username.isFocused());
             this.password.setFocused(!this.password.isFocused());
-            this.combined.setFocused(!this.combined.isFocused());
         }
         if (typedChar == '\r') {
             this.actionPerformed(this.buttonList.get(0));
@@ -117,7 +115,6 @@ public class GuiAltsManager extends GuiScreen {
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         this.username.mouseClicked(mouseX, mouseY, mouseButton);
         this.password.mouseClicked(mouseX, mouseY, mouseButton);
-        //this.combined.mouseClicked(mouseX, mouseY, mouseButton);
 
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
