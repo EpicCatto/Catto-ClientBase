@@ -1,4 +1,4 @@
-package epiccatto.catto.module.file.impl;
+package epiccatto.catto.utils.client;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -6,12 +6,9 @@ import epiccatto.catto.Client;
 import epiccatto.catto.module.file.IFile;
 import epiccatto.catto.utils.authentication.Encryption;
 import epiccatto.catto.utils.authentication.HWID;
-import epiccatto.catto.utils.client.ClientData;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
 
 public class ClientDataFile implements IFile {
 
@@ -24,6 +21,7 @@ public class ClientDataFile implements IFile {
     //Data
     private String authToken;
     private String hwid;
+//    private final HashMap<String, Exception> oldErrorLogs = new HashMap<>();
 
     @Override
     public void save(Gson gson) {
@@ -52,15 +50,24 @@ public class ClientDataFile implements IFile {
         dataObject.addProperty("hwid", Client.clientData.getHwid());
         JsonObject errorsLogs = new JsonObject();
 
-        for (String key : Client.clientData.getErrorLogs().keySet()) {
-            JsonObject error = new JsonObject();
-            error.addProperty("title", key);
-            error.addProperty("message", Client.clientData.getErrorLogs().get(key).getMessage());
-            error.addProperty("stacktrace", Arrays.toString(Client.clientData.getErrorLogs().get(key).getStackTrace()));
-            errorsLogs.add(key, error);
+        //Error logs
+        //add old error logs
+
+        if (!Client.clientData.getStackErrorLogs().isEmpty()) {
+            for (String key : Client.clientData.getStackErrorLogs().keySet()) {
+                JsonObject error = new JsonObject();
+                error.addProperty("title", key);
+                error.addProperty("message", Client.clientData.getStackErrorLogs().get(key).getMessage());
+                error.addProperty("cause", String.valueOf(Client.clientData.getStackErrorLogs().get(key).getCause()));
+                error.addProperty("stacktrace", Arrays.toString(Client.clientData.getStackErrorLogs().get(key).getCause().getStackTrace()));
+                errorsLogs.add(key, error);
+            }
+        }else {
+            errorsLogs.add("No errors logged from the previous session", new JsonObject());
         }
 
-        dataObject.add("error-logs", errorsLogs);
+        dataObject.add("previous-session-errors-logs", errorsLogs);
+        System.out.println(dataObject);
 
         JsonObject dataObjectOut = new JsonObject();
         try {
@@ -71,6 +78,7 @@ public class ClientDataFile implements IFile {
         object.add("Data (DO NOT TOUCH)", dataObjectOut);
 
         writeFile(gson.toJson(object), file);
+
 
         load(gson);
     }

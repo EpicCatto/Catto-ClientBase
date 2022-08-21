@@ -445,6 +445,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                 this.addGraphicsAndWorldToCrashReport(reportedexception.getCrashReport());
                 this.freeMemory();
                 logger.fatal((String)"Reported exception thrown!", (Throwable)reportedexception);
+                Client.clientData.logError("root", reportedexception);
+                Client.shutdownClient();
                 this.displayCrashReport(reportedexception.getCrashReport());
                 break;
             }
@@ -453,6 +455,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                 CrashReport crashreport1 = this.addGraphicsAndWorldToCrashReport(new CrashReport("Unexpected error", throwable1));
                 this.freeMemory();
                 logger.fatal("Unreported exception thrown!", throwable1);
+                Client.clientData.logError("root", throwable1);
+                Client.shutdownClient();
                 this.displayCrashReport(crashreport1);
                 break;
             }

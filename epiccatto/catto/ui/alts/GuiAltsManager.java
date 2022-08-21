@@ -97,7 +97,6 @@ public class GuiAltsManager extends GuiScreen {
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         this.username.textboxKeyTyped(typedChar, keyCode);
-        //this.combined.textboxKeyTyped(typedChar, keyCode);
         this.password.textboxKeyTyped(typedChar, keyCode);
 
         if (typedChar == '\t' && (this.username.isFocused() || this.password.isFocused())) {

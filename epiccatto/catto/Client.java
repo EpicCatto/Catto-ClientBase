@@ -8,7 +8,7 @@ import epiccatto.catto.module.Module;
 import epiccatto.catto.module.ModuleManager;
 import epiccatto.catto.module.file.FileFactory;
 import epiccatto.catto.module.file.config.ConfigManager;
-import epiccatto.catto.module.file.impl.ClientDataFile;
+import epiccatto.catto.utils.client.ClientDataFile;
 import epiccatto.catto.module.file.impl.ModulesFile;
 import epiccatto.catto.module.settings.SettingsManager;
 import epiccatto.catto.utils.client.ClientData;
