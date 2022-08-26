@@ -52,18 +52,32 @@ public class ClientDataFile implements IFile {
 
         //Error logs
         //add old error logs
-
-        if (!Client.clientData.getStackErrorLogs().isEmpty()) {
-            for (String key : Client.clientData.getStackErrorLogs().keySet()) {
-                JsonObject error = new JsonObject();
-                error.addProperty("title", key);
-                error.addProperty("message", Client.clientData.getStackErrorLogs().get(key).getMessage());
-                error.addProperty("cause", String.valueOf(Client.clientData.getStackErrorLogs().get(key).getCause()));
-                error.addProperty("stacktrace", Arrays.toString(Client.clientData.getStackErrorLogs().get(key).getCause().getStackTrace()));
-                errorsLogs.add(key, error);
+        try {
+            if (!Client.clientData.getStackErrorLogs().isEmpty()) {
+                for (String key : Client.clientData.getStackErrorLogs().keySet()) {
+                    JsonObject error = new JsonObject();
+                    error.addProperty("title", key);
+                    error.addProperty("message", Client.clientData.getStackErrorLogs().get(key).getMessage());
+                    error.addProperty("cause", String.valueOf(Client.clientData.getStackErrorLogs().get(key).getCause()));
+                    error.addProperty("stacktrace",
+                            Client.clientData.getStackErrorLogs().get(key).getStackTrace() != null
+                            ? Arrays.toString(Client.clientData.getStackErrorLogs().get(key).getStackTrace())
+                            : "no stacktrace available");
+                    try {
+                        error.addProperty("cause-class", Arrays.toString(Client.clientData.getStackErrorLogs().get(key).getCause().getStackTrace()));
+                    } catch (NullPointerException e) {
+                        error.addProperty("cause-class", "no cause class available");
+                    }
+                    errorsLogs.add(key, error);
+                }
             }
-        }else {
-            errorsLogs.add("No errors logged from the previous session", new JsonObject());
+            else {
+                errorsLogs.add("No errors logged from the previous session", new JsonObject());
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            errorsLogs.add("Error while adding logs", new JsonObject());
         }
 
         dataObject.add("previous-session-errors-logs", errorsLogs);
