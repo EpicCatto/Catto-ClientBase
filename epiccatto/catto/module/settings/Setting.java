@@ -16,7 +16,7 @@ public class Setting {
 		this.name = name;
 		this.parent = parent;
 
-		Client.instance.settingsManager.registerSetting(this);
+//		Client.instance.settingsManager.registerSetting(this);
 	}
 
 	public Object getValue() {

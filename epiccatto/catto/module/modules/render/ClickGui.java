@@ -13,6 +13,7 @@ public class ClickGui extends Module {
 
     public ClickGui() {
         super("ClickGui", "Show modules and cool stuff", Category.RENDER, Keyboard.KEY_RSHIFT);
+        addSettings(mode);
     }
 
     @Override

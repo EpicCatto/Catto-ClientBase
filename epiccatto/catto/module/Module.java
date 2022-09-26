@@ -8,6 +8,8 @@ import epiccatto.catto.module.settings.Setting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Module implements Serializable {
@@ -23,7 +25,7 @@ public class Module implements Serializable {
     private boolean enabled;
     private boolean isShow = true;
 
-    private float xAnimation, yAnimation; // Animation
+    private final ArrayList<Setting> settings;
 
     public Module(String name, String description, Category category, int keyCode) {
         this.name = name;
@@ -31,6 +33,7 @@ public class Module implements Serializable {
         this.category = category;
         this.keyCode = keyCode;
         this.suffix = "";
+        this.settings = new ArrayList<>();
     }
 
     public String getName() {
@@ -115,20 +118,14 @@ public class Module implements Serializable {
     }
 
 
-    public float getXAnimation() {
-        return xAnimation;
+
+    public List<Setting> getSettings() {
+    	return settings;
     }
 
-    public void setXAnimation(float xAnimation) {
-        this.xAnimation = xAnimation;
-    }
-
-    public float getYAnimation() {
-        return yAnimation;
-    }
-
-    public void setYAnimation(float yAnimation) {
-        this.yAnimation = yAnimation;
+    public final void addSettings(Setting... settings) {
+        // added all settings to the list
+        this.settings.addAll(Arrays.asList(settings));
     }
 
     @Override
@@ -136,7 +133,7 @@ public class Module implements Serializable {
         JsonObject object = new JsonObject();
         object.addProperty("toggled", isEnabled());
         object.addProperty("key", getKeyCode());
-        List<Setting> properties = Client.instance.settingsManager.getSettingsFromModule(this);
+        List<Setting> properties = settings;
         if (properties != null && !properties.isEmpty()) {
             JsonObject propertiesObject = new JsonObject();
 
@@ -157,7 +154,7 @@ public class Module implements Serializable {
         if (object.has("key") && loadKeyBind)
             setKeyCode(object.get("key").getAsInt());
 
-        List<Setting> properties = Client.instance.settingsManager.getSettingsFromModule(this);
+        List<Setting> properties = settings;
 
         if (object.has("Properties")) {
             JsonObject propertiesObject = object.getAsJsonObject("Properties");

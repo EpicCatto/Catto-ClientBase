@@ -166,7 +166,7 @@ public class MythClickGui extends GuiScreen {
             }
             if (selectedModule != null && selectedCategory != Category.CONFIG) {
                 FontLoaders.Sfui20.drawString(selectedModule.getCategory().name + " > " + selectedModule.getName(), (int) x + 275 - FontLoaders.Sfui20.getStringWidth(selectedModule.getCategory().name + " > " + selectedModule.getName())/2, (int) y + 10, new Color(200, 200, 200).getRGB());
-                if (Client.instance.settingsManager.getSettingsFromModule(selectedModule).isEmpty()) {
+                if (selectedModule.getSettings().isEmpty()) {
                     FontLoaders.Sfui20.drawString("No settings", (int) x + 275 - FontLoaders.Sfui20.getStringWidth(selectedModule.getCategory().name + " > " + selectedModule.getName()), (int) y + 10 + FontLoaders.Sfui20.getHeight() + 5, new Color(200, 200, 200).getRGB());
                 } else {
 
@@ -178,7 +178,7 @@ public class MythClickGui extends GuiScreen {
                     int dWheel = Mouse.getDWheel();
 
                     if (isHovered(mouseX, mouseY, x + 180, y, width, height)) {
-                        if (dWheel < 0 && Math.abs(settingsScroll) + 170 < (Client.instance.settingsManager.getSettingsFromModule(selectedModule).size() * 25)) {
+                        if (dWheel < 0 && Math.abs(settingsScroll) + 170 < (selectedModule.getSettings().size() * 25)) {
                             settingsScroll -= 32;
                         }
                         if (dWheel > 0 && settingsScroll < 0) {
@@ -341,8 +341,8 @@ public class MythClickGui extends GuiScreen {
 
     public void updateSettings(Module module){
         int offset = (int) (10 + FontLoaders.Sfui20.getHeight() + 5);
-        if (Client.instance.settingsManager.getSettingsFromModule(module) != null) {
-            for (Setting setting : Client.instance.settingsManager.getSettingsFromModule(module)) {
+        if (module.getSettings() != null) {
+            for (Setting setting : module.getSettings()) {
                 if (setting instanceof BooleanSetting) {
                     BooleanComponent booleanComponent = new BooleanComponent(275, offset, this, module, (BooleanSetting) setting);
                     components.add(booleanComponent);

@@ -3,26 +3,42 @@ package epiccatto.catto.module.modules.render;
 import epiccatto.catto.Client;
 import epiccatto.catto.event.EventTarget;
 import epiccatto.catto.event.impl.Event2D;
+import epiccatto.catto.event.impl.EventUpdate;
 import epiccatto.catto.module.Category;
 import epiccatto.catto.module.Module;
 import epiccatto.catto.module.ModuleManager;
 import epiccatto.catto.utils.ColorUtil;
+import epiccatto.catto.utils.font.FontLoaders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HUD extends Module {
+
+    //Info
+    private static final HashMap<String, String> info = new HashMap<>();
+
     public HUD() {
         super("HUD", "Show module on your screen cuz yes :D", Category.RENDER, 0);
     }
 
     @EventTarget
-    public void onRender2D(Event2D event){
+    public void onUpdate(EventUpdate event) {
+        double bps = Math.round((Math.hypot(mc.thePlayer.posX - mc.thePlayer.prevPosX, mc.thePlayer.posZ - mc.thePlayer.prevPosZ) * mc.timer.timerSpeed * 20) * 100.0) / 100.0;
+
+        info.put("FPS", String.valueOf(Minecraft.getDebugFPS()));
+        info.put("BPS", String.valueOf(bps));
+    }
+
+    @EventTarget
+    public void onRender2D(Event2D event) {
         mc.fontRendererObj.drawStringWithShadow(Client.clientName, 2, 2, 0xFFFFFF);
         drawOldArraylist();
+        drawInfo();
     }
 
     private void drawOldArraylist() {
@@ -36,7 +52,7 @@ public class HUD extends Module {
                 continue;
             sorted.add(m);
         }
-            sorted.sort((o1, o2) -> mc.fontRendererObj.getStringWidth(o2.getSuffix().isEmpty() ? o2.getName() : String.format("%s %s", o2.getName(), o2.getSuffix())) - mc.fontRendererObj.getStringWidth(o1.getSuffix().isEmpty() ? o1.getName() : String.format("%s %s", o1.getName(), o1.getSuffix())));
+        sorted.sort((o1, o2) -> mc.fontRendererObj.getStringWidth(o2.getSuffix().isEmpty() ? o2.getName() : String.format("%s %s", o2.getName(), o2.getSuffix())) - mc.fontRendererObj.getStringWidth(o1.getSuffix().isEmpty() ? o1.getName() : String.format("%s %s", o1.getName(), o1.getSuffix())));
 
         int y = 0;
         int count = 0;
@@ -46,12 +62,61 @@ public class HUD extends Module {
             x = width() - mc.fontRendererObj.getStringWidth(name);
             mc.fontRendererObj.drawString(name, (int) (x - 2), y + 2, ColorUtil.getColor("Myth", count * 200));
 
-                mc.fontRendererObj.drawStringWithShadow(name, x - 2, y + 2, ColorUtil.getColor("Myth", count * 200));
+            mc.fontRendererObj.drawStringWithShadow(name, x - 2, y + 2, ColorUtil.getColor("Myth", count * 200));
             y += 10;
             count++;
 
         }
-     }
+    }
+
+    private void drawInfo() {
+        ScaledResolution sr = new ScaledResolution(mc);
+        int x = -5;
+        int y = 20;
+        int count = 0;
+        int color = -1;
+
+        //Sort info
+        ArrayList<String> sorted = new ArrayList<String>();
+        for (String s : info.keySet()) {
+            sorted.add(s);
+        }
+        sorted.sort((o1, o2) -> FontLoaders.Sfui18.getStringWidth(o2 + ": ") - FontLoaders.Sfui18.getStringWidth(o1));
+
+        //get the longest string in the info map
+        int longest = 0;
+        int countyes = 0;
+        for (String s : sorted) {
+            if (FontLoaders.Sfui18.getStringWidth(s) > longest) {
+                longest = FontLoaders.Sfui18.getStringWidth(s);
+            }
+            countyes++;
+        }
+
+        //Draw head
+        Gui.drawRect(x + 10, y - FontLoaders.Sfui18.getHeight() + 4, x + 50 + longest, y + 10, new Color(0, 0, 0, 161).getRGB());
+        FontLoaders.Sfui18.drawString("Info", x + (longest+50)/2 - FontLoaders.Sfui18.getStringWidth("info")/4, y, -1);
+
+        //Backround
+        Gui.drawRect(x + 10, y + 10, x + 50 + longest, y + 20 + ((FontLoaders.Sfui18.getHeight() + 2) * countyes), new Color(0, 0, 0, 100).getRGB());
+
+
+        // list all the info
+        for (String s : sorted) {
+            FontLoaders.Sfui18.drawStringWithShadow(s + ": " + info.get(s), x + 15, y + 15 + ((FontLoaders.Sfui18.getHeight() + 4) * count), color);
+            count++;
+        }
+    }
+
+
+    public static void addInfo(String name, Object value) {
+        info.put(name, String.valueOf(value));
+    }
+
+    public static void removeInfo(String name) {
+        info.remove(name);
+    }
+
     public static int width() {
         return new ScaledResolution(Minecraft.getMinecraft()).getScaledWidth();
     }

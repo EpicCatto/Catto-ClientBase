@@ -11,7 +11,6 @@ import epiccatto.catto.module.file.config.ConfigManager;
 import epiccatto.catto.ui.clickgui.myth.MythClickGui;
 import epiccatto.catto.utils.client.ClientDataFile;
 import epiccatto.catto.module.file.impl.ModulesFile;
-import epiccatto.catto.module.settings.SettingsManager;
 import epiccatto.catto.utils.client.ClientData;
 
 import java.util.Date;
@@ -25,7 +24,6 @@ public class Client {
     public static boolean load = false;
 
     //Instance
-    public SettingsManager settingsManager;
     public ModuleManager moduleManager;
     public FileFactory fileFactory;
     public ConfigManager configManager;
@@ -39,7 +37,6 @@ public class Client {
         System.out.println(new Date().getTime());
         instance = this;
 
-        settingsManager = new SettingsManager();
         moduleManager = new ModuleManager();
         fileFactory = new FileFactory();
         commandManager = new CommandManager();

@@ -20,9 +20,7 @@ public class DataUtil {
     private static final String SERVER = "https://notthatuwu-bot-backup.herokuapp.com";
     private static final String USER_AGENT = "GATO-API/";
 
-    /*
-     * hi i use intent api dont mind me :troll:
-     */
+
     public static void main(String[] args) {
         try {
             System.out.println(getCurSha256());
