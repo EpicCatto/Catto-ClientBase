@@ -6,6 +6,7 @@ import epiccatto.catto.utils.font.FontLoaders;
 import epiccatto.catto.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
@@ -128,6 +129,8 @@ public class GuiWelcome extends GuiScreen {
     private void drawFinish(ScaledResolution sr){
         mc.getTextureManager().bindTexture(new ResourceLocation("catto/image/cattosunblur.png"));
         Gui.drawScaledCustomSizeModalRect(0, 0, 0.0f, 0.0f, sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
+
+        mc.displayGuiScreen(new GuiMainMenu());
     }
 
     public boolean isHovered(int mouseX, int mouseY, int x, int y, int width, int height) {

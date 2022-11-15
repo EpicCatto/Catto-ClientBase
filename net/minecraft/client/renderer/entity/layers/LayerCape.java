@@ -19,14 +19,12 @@ public class LayerCape implements LayerRenderer
         this.playerRenderer = playerRendererIn;
     }
 
-    Cape capeModule = (Cape) ModuleManager.getModuleByName("Cape");
-
     public void doRenderLayer(AbstractClientPlayer entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale)
     {
         if (entitylivingbaseIn.hasPlayerInfo() && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && entitylivingbaseIn.getLocationCape() != null)
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-
+            Cape capeModule = (Cape) ModuleManager.getModuleByName("Cape");
             this.playerRenderer.bindTexture(capeModule.isEnabled() ? capeModule.getCapeLoc() : entitylivingbaseIn.getLocationCape());
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, 0.0F, 0.125F);
