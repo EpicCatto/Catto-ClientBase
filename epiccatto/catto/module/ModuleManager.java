@@ -23,6 +23,7 @@ public class ModuleManager {
         //Render
         modules.add(new HUD());
         modules.add(new ClickGui());
+        modules.add(new Cape());
 
         //World
 

@@ -41,6 +41,7 @@ import epiccatto.catto.event.impl.EventClickBlock;
 import epiccatto.catto.event.impl.EventKey;
 import epiccatto.catto.event.impl.EventTick;
 import epiccatto.catto.event.impl.EventWorldLoad;
+import epiccatto.catto.ui.menu.GuiWelcome;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -578,7 +579,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         }
         else
         {
-            this.displayGuiScreen(new GuiMainMenu());
+            this.displayGuiScreen(new GuiWelcome());
         }
 
         this.renderEngine.deleteTexture(this.mojangLogo);

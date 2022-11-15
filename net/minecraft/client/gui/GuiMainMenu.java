@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import epiccatto.catto.ui.alts.GuiAltsManager;
+import epiccatto.catto.ui.menu.GuiWelcome;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -282,7 +283,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 
         if (button.id == 14)
         {
-            this.mc.displayGuiScreen(new GuiAltsManager(this));
+            this.mc.displayGuiScreen(new GuiWelcome());
         }
 
         if (button.id == 4)

@@ -15,8 +15,6 @@ public class Setting {
 	public Setting(String name, Module parent) {
 		this.name = name;
 		this.parent = parent;
-
-//		Client.instance.settingsManager.registerSetting(this);
 	}
 
 	public Object getValue() {

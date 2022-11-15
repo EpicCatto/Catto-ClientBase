@@ -77,9 +77,15 @@ public class GuiAltsManager extends GuiScreen {
         }
         if (button.id == 1 && timer.hasReached(1000)) {
             timer.reset();
-            System.out.println("Microsoft");
             status = EnumChatFormatting.YELLOW + "Logging in...";
+            if (password.getText().isEmpty()){
+                mc.session = new Session(username.getText(), "0", "balls", "null");
+                status = EnumChatFormatting.GREEN + "Logged in Cracked! (" + username.getText() + ")";
+                return;
+            }
             new Thread(() -> {
+                System.out.println("Microsoft");
+
                 MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
                 try {
                     MicrosoftAuthResult result = authenticator.loginWithCredentials(username.getText(), password.getText());

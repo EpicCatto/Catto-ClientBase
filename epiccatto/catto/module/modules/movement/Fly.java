@@ -8,6 +8,7 @@ import epiccatto.catto.module.Category;
 import epiccatto.catto.module.Module;
 import epiccatto.catto.module.modules.combat.Killaura;
 import epiccatto.catto.module.modules.render.HUD;
+import epiccatto.catto.module.settings.impl.BooleanSetting;
 import epiccatto.catto.module.settings.impl.ModeSetting;
 import epiccatto.catto.utils.MoveUtil;
 import epiccatto.catto.utils.font.FontLoaders;
@@ -21,7 +22,9 @@ import org.lwjgl.input.Keyboard;
 
 public class Fly extends Module {
 
-    private ModeSetting mode = new ModeSetting("Mode", this, new String[]{"Motion", "Zonecraft"}, "Motion");
+    private final ModeSetting mode = new ModeSetting("Mode", this, new String[]{"Motion", "Zonecraft"}, "Motion");
+
+    private final BooleanSetting bobbing = new BooleanSetting("Bobbing", this, true);
 
     //Default values
     private double startY;
@@ -31,12 +34,15 @@ public class Fly extends Module {
 
     public Fly() {
         super("Fly", "Make you fly vroom vroom", Category.MOVEMENT, 0);
-        addSettings(mode);
+        addSettings(mode, bobbing);
     }
 
     @EventTarget
     public void onUpdate(EventUpdate event) {
         setSuffix(mode.getValue());
+        if (bobbing.getValue()){
+            mc.thePlayer.cameraYaw = 0.1f;
+        }
         switch (event.getType()) {
             case PRE:
                 switch (mode.getValue()) {
@@ -50,8 +56,11 @@ public class Fly extends Module {
                         break;
                     case "Zonecraft":
                         // Mini jump
+
+                        mc.thePlayer.posY = startY;
                         if (mc.thePlayer.onGround && zcBoost) {
                             mc.thePlayer.motionY = 0.1;
+//                            mc.thePlayer.jump(); // 0.42
                             mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY - 1E-32, mc.thePlayer.posZ);
                             //get if there is a block under the player
                             if (Killaura.target == null && zcBoost) {

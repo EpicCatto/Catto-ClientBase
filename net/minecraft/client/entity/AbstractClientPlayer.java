@@ -2,6 +2,10 @@ package net.minecraft.client.entity;
 
 import com.mojang.authlib.GameProfile;
 import java.io.File;
+
+import epiccatto.catto.module.Module;
+import epiccatto.catto.module.ModuleManager;
+import epiccatto.catto.module.modules.render.Cape;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.ImageBufferDownload;

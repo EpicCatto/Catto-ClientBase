@@ -175,6 +175,11 @@ public class MythClickGui extends GuiScreen {
                     this.prepareScissorBox((float) x + 190, (float)y + 20, (float)width, (float)height);
                     GL11.glEnable(3089);
 
+
+                    //Get hovered module description
+                    if (selectedModule.getDescription() != null) {
+                        FontLoaders.Sfui20.drawString(selectedModule.getDescription(), (float) ((int) x + 275 - FontLoaders.Sfui20.getStringWidth(selectedModule.getDescription())/2), (float) ((int) y - height), new Color(200, 200, 200).getRGB());
+                    }
                     int dWheel = Mouse.getDWheel();
 
                     if (isHovered(mouseX, mouseY, x + 180, y, width, height)) {
@@ -242,27 +247,27 @@ public class MythClickGui extends GuiScreen {
 
         if (selectedCategory == Category.CONFIG) {
 
-            for (OnlineConfig onlineConfig : onlineConfigs) {
-                offset += 20;
-                if (isHovered(mouseX, mouseY, (float) x + 65, (float) y + 1 - 20 + offset, (float) x + 70 + FontLoaders.Sfui20.getStringWidth(onlineConfig.getName()), (float) y + 15 + offset - 20)) {
-                    if (InputHelper.mouse[0] == InputHelper.Status.CLICKED) {
-                        OnlineConfigManager.jsonGetRequest(onlineConfig.getUrl());
-                        Config config = new Config(onlineConfig.getName());
-                        try {
-                            JsonObject configJson = new JsonParser().parse(OnlineConfigManager.jsonGetRequest(onlineConfig.getUrl())).getAsJsonObject();
-                            config.load(configJson, false);
-                            ChatUtil.sendChatMessageWPrefix(EnumChatFormatting.GREEN + onlineConfig.getName() + " Online Config loaded");
-                        }catch (Exception e){
-                            ChatUtil.sendChatMessageWPrefix(EnumChatFormatting.RED + onlineConfig.getName() + " Online Config Failed to load " + Arrays.toString(e.getStackTrace()));
-                            e.printStackTrace();
-                        }
-                    }
-                    if (InputHelper.mouse[1] == InputHelper.Status.CLICKED) {
-                        selectedOnlineConfig = onlineConfig;
-                        selectedConfig = null;
-                    }
-                }
-            }
+//            for (OnlineConfig onlineConfig : onlineConfigs) {
+//                offset += 20;
+//                if (isHovered(mouseX, mouseY, (float) x + 65, (float) y + 1 - 20 + offset, (float) x + 70 + FontLoaders.Sfui20.getStringWidth(onlineConfig.getName()), (float) y + 15 + offset - 20)) {
+//                    if (InputHelper.mouse[0] == InputHelper.Status.CLICKED) {
+//                        OnlineConfigManager.jsonGetRequest(onlineConfig.getUrl());
+//                        Config config = new Config(onlineConfig.getName());
+//                        try {
+//                            JsonObject configJson = new JsonParser().parse(OnlineConfigManager.jsonGetRequest(onlineConfig.getUrl())).getAsJsonObject();
+//                            config.load(configJson, false);
+//                            ChatUtil.sendChatMessageWPrefix(EnumChatFormatting.GREEN + onlineConfig.getName() + " Online Config loaded");
+//                        }catch (Exception e){
+//                            ChatUtil.sendChatMessageWPrefix(EnumChatFormatting.RED + onlineConfig.getName() + " Online Config Failed to load " + Arrays.toString(e.getStackTrace()));
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    if (InputHelper.mouse[1] == InputHelper.Status.CLICKED) {
+//                        selectedOnlineConfig = onlineConfig;
+//                        selectedConfig = null;
+//                    }
+//                }
+//            }
 
             for (Config config : localConfigs) {
                 offset += 20;
