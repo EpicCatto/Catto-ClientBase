@@ -31,6 +31,7 @@ public class Client {
     public MythClickGui mythClickGui;
     //Data
     public static ClientData clientData;
+    public boolean confMkdir = false;
 
     public void startClient(){
         if (instance!=null) return;

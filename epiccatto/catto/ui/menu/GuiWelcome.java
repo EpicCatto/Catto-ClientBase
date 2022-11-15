@@ -1,5 +1,6 @@
 package epiccatto.catto.ui.menu;
 
+import epiccatto.catto.Client;
 import epiccatto.catto.ui.menu.setup.Style;
 import epiccatto.catto.utils.TimerUtil;
 import epiccatto.catto.utils.font.FontLoaders;
@@ -10,13 +11,11 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -42,7 +41,12 @@ public class GuiWelcome extends GuiScreen {
         stage = 0;
         selectedStyle= null;
         if (screenStage == null) {
-            screenStage = ScreenStage.Welcome;
+//            screenStage = ScreenStage.Welcome;
+            if (Client.instance.confMkdir) {
+                screenStage = ScreenStage.Welcome;
+            } else {
+                screenStage = ScreenStage.Finish;
+            }
         }
         super.initGui();
     }

@@ -25,7 +25,7 @@ public class ClientDataFile implements IFile {
 
     @Override
     public void save(Gson gson) {
-
+        Client.instance.confMkdir = true;
         if (secret == null || salt == null || authToken == null) {
             secret = Encryption.generateSecret();
             salt = Encryption.generateSalt();
