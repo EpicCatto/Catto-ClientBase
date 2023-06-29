@@ -117,7 +117,7 @@ public class GuiWelcome extends GuiScreen {
 
         styleList.forEach(style -> {
             // double click check
-            if (selectedStyle != null && style.isHovered(mouseX, mouseY) && System.currentTimeMillis() - lastClick < 500) {
+            if (selectedStyle != null && selectedStyle == style && style.isHovered(mouseX, mouseY) && System.currentTimeMillis() - lastClick < 500) {
                 screenStage = ScreenStage.Finish;
                 System.out.println("Selected style: " + selectedStyle.getName());
                 System.out.println("ms clicked: " + (lastClick - System.currentTimeMillis()));

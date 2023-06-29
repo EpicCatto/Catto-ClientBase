@@ -2,6 +2,7 @@ package epiccatto.catto.module;
 
 import epiccatto.catto.module.modules.movement.*;
 import epiccatto.catto.module.modules.render.*;
+import epiccatto.catto.module.modules.world.Scaffold;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,10 @@ public class ModuleManager {
         modules.add(new HUD());
         modules.add(new ClickGui());
         modules.add(new Cape());
+        modules.add(new TestColorTween());
 
         //World
+        modules.add(new Scaffold());
 
         //Config
     }

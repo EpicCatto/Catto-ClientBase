@@ -13,6 +13,8 @@ import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -42,24 +44,13 @@ import epiccatto.catto.event.impl.EventKey;
 import epiccatto.catto.event.impl.EventTick;
 import epiccatto.catto.event.impl.EventWorldLoad;
 import epiccatto.catto.ui.menu.GuiWelcome;
+import epiccatto.catto.utils.font.FontLoaders;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiControls;
-import net.minecraft.client.gui.GuiGameOver;
-import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.gui.GuiIngameMenu;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiMemoryErrorScreen;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiSleepMP;
-import net.minecraft.client.gui.GuiYesNo;
-import net.minecraft.client.gui.GuiYesNoCallback;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.achievement.GuiAchievement;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.gui.stream.GuiStreamUnavailable;
@@ -896,15 +887,16 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.displayHeight = displaymode.getHeight();
     }
 
-    private void drawSplashScreen(TextureManager textureManagerInstance) throws LWJGLException
+    private void drawSplashScreen(TextureManager tm)
     {
-        ScaledResolution scaledresolution = new ScaledResolution(this);
-        int i = scaledresolution.getScaleFactor();
-        Framebuffer framebuffer = new Framebuffer(scaledresolution.getScaledWidth() * i, scaledresolution.getScaledHeight() * i, true);
+        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+        int i = sr.getScaleFactor();
+        Framebuffer framebuffer = new Framebuffer(sr.getScaledWidth() * i, sr.getScaledHeight() * i, true);
         framebuffer.bindFramebuffer(false);
+
         GlStateManager.matrixMode(5889);
         GlStateManager.loadIdentity();
-        GlStateManager.ortho(0.0D, (double)scaledresolution.getScaledWidth(), (double)scaledresolution.getScaledHeight(), 0.0D, 1000.0D, 3000.0D);
+        GlStateManager.ortho(0.0D, sr.getScaledWidth(), sr.getScaledHeight(), 0.0D, 1000.0D, 3000.0D);
         GlStateManager.matrixMode(5888);
         GlStateManager.loadIdentity();
         GlStateManager.translate(0.0F, 0.0F, -2000.0F);
@@ -912,43 +904,19 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         GlStateManager.disableFog();
         GlStateManager.disableDepth();
         GlStateManager.enableTexture2D();
-        InputStream inputstream = null;
 
-        try
-        {
-            inputstream = this.mcDefaultResourcePack.getInputStream(locationMojangPng);
-            this.mojangLogo = textureManagerInstance.getDynamicTextureLocation("logo", new DynamicTexture(ImageIO.read(inputstream)));
-            textureManagerInstance.bindTexture(this.mojangLogo);
-        }
-        catch (IOException ioexception)
-        {
-            logger.error((String)("Unable to load logo: " + locationMojangPng), (Throwable)ioexception);
-        }
-        finally
-        {
-            IOUtils.closeQuietly(inputstream);
-        }
+        Gui.drawRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight(), new Color(0, 0, 0, 255).getRGB());
+        FontLoaders.Sfui40.drawCenteredString("Loading ...", sr.getScaledWidth()/2, sr.getScaledHeight()/2 - 15, new Color(255, 255, 255, 255).getRGB());
 
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        worldrenderer.pos(0.0D, (double)this.displayHeight, 0.0D).tex(0.0D, 0.0D).color(255, 255, 255, 255).endVertex();
-        worldrenderer.pos((double)this.displayWidth, (double)this.displayHeight, 0.0D).tex(0.0D, 0.0D).color(255, 255, 255, 255).endVertex();
-        worldrenderer.pos((double)this.displayWidth, 0.0D, 0.0D).tex(0.0D, 0.0D).color(255, 255, 255, 255).endVertex();
-        worldrenderer.pos(0.0D, 0.0D, 0.0D).tex(0.0D, 0.0D).color(255, 255, 255, 255).endVertex();
-        tessellator.draw();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        int j = 256;
-        int k = 256;
-        this.func_181536_a((scaledresolution.getScaledWidth() - j) / 2, (scaledresolution.getScaledHeight() - k) / 2, 0, 0, j, k, 255, 255, 255, 255);
         GlStateManager.disableLighting();
         GlStateManager.disableFog();
         framebuffer.unbindFramebuffer();
-        framebuffer.framebufferRender(scaledresolution.getScaledWidth() * i, scaledresolution.getScaledHeight() * i);
+        framebuffer.framebufferRender(sr.getScaledWidth() * i, sr.getScaledHeight() * i);
         GlStateManager.enableAlpha();
         GlStateManager.alphaFunc(516, 0.1F);
         this.updateDisplay();
     }
+
 
     public void func_181536_a(int p_181536_1_, int p_181536_2_, int p_181536_3_, int p_181536_4_, int p_181536_5_, int p_181536_6_, int p_181536_7_, int p_181536_8_, int p_181536_9_, int p_181536_10_)
     {
