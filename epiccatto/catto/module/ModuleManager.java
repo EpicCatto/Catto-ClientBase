@@ -11,8 +11,6 @@ public class ModuleManager {
 
     private static final ArrayList<Module> modules = new ArrayList<Module>();
 
-    //public static ClickGui clickGui;
-
     public void registerNormal(){
         //Combat
 

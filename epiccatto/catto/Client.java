@@ -8,6 +8,8 @@ import epiccatto.catto.module.Module;
 import epiccatto.catto.module.ModuleManager;
 import epiccatto.catto.module.file.FileFactory;
 import epiccatto.catto.module.file.config.ConfigManager;
+import epiccatto.catto.processor.Processor;
+import epiccatto.catto.processor.ProcessorManager;
 import epiccatto.catto.ui.clickgui.myth.MythClickGui;
 import epiccatto.catto.utils.client.ClientDataFile;
 import epiccatto.catto.module.file.impl.ModulesFile;
@@ -31,6 +33,7 @@ public class Client {
     public MythClickGui mythClickGui;
     //Data
     public static ClientData clientData;
+    public ProcessorManager processorManager;
     public boolean confMkdir = false;
 
     public void startClient(){
@@ -42,6 +45,7 @@ public class Client {
         fileFactory = new FileFactory();
         commandManager = new CommandManager();
         configManager = new ConfigManager();
+        processorManager = new ProcessorManager();
 
         moduleManager.registerNormal();
         fileFactory.setupRoot(clientName);
