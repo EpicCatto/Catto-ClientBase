@@ -7,6 +7,7 @@ import epiccatto.catto.event.impl.EventMove;
 import epiccatto.catto.event.impl.EventUpdate;
 import epiccatto.catto.module.Category;
 import epiccatto.catto.module.Module;
+import epiccatto.catto.module.ModuleData;
 import epiccatto.catto.module.modules.combat.Killaura;
 import epiccatto.catto.module.modules.render.HUD;
 import epiccatto.catto.module.settings.impl.BooleanSetting;
@@ -24,6 +25,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.Objects;
 
+@ModuleData(name = "Fly", description = "Allows you to fly", category = Category.MOVEMENT)
 public class Fly extends Module {
 
     private final ModeSetting mode = new ModeSetting("Mode", this, new String[]{"Motion", "Test"}, "Motion");
@@ -37,7 +39,7 @@ public class Fly extends Module {
     private boolean zcBoost;
 
     public Fly() {
-        super("Fly", "Make you fly vroom vroom", Category.MOVEMENT, 0);
+        super();
         addSettings(mode, speed, bobbing);
     }
 

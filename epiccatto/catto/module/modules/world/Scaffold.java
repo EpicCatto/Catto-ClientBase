@@ -6,9 +6,11 @@ import epiccatto.catto.event.impl.EventStrafe;
 import epiccatto.catto.event.impl.EventUpdate;
 import epiccatto.catto.module.Category;
 import epiccatto.catto.module.Module;
+import epiccatto.catto.module.ModuleData;
 import epiccatto.catto.module.settings.impl.BooleanSetting;
 import epiccatto.catto.module.settings.impl.NumberSetting;
 
+@ModuleData(name = "Scaffold", description = "Automatically places blocks under you", category = Category.WORLD)
 public class Scaffold extends Module {
     private final NumberSetting delay = new NumberSetting("Delay", this, 0, 0, 1000, false);
     private final BooleanSetting safewalk = new BooleanSetting("Safewalk", this, true);
@@ -17,7 +19,6 @@ public class Scaffold extends Module {
     private float[] rotations = new float[2];
 
     public Scaffold() {
-        super("Scaffold", "Places blocks down for you.", Category.WORLD, 0);
         addSettings(delay, safewalk);
     }
 

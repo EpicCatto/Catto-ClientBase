@@ -3,6 +3,8 @@ package epiccatto.catto.module;
 import epiccatto.catto.module.modules.movement.*;
 import epiccatto.catto.module.modules.render.*;
 import epiccatto.catto.module.modules.world.Scaffold;
+import org.lwjgl.Sys;
+import org.reflections.Reflections;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,23 +14,13 @@ public class ModuleManager {
     private static final ArrayList<Module> modules = new ArrayList<Module>();
 
     public void registerNormal(){
-        //Combat
-
-        //Movement
-        modules.add(new Fly());
-
-        //Player
-
-        //Render
-        modules.add(new HUD());
-        modules.add(new ClickGui());
-        modules.add(new Cape());
-        modules.add(new TestColorTween());
-
-        //World
-        modules.add(new Scaffold());
-
-        //Config
+        new Reflections("epiccatto").getTypesAnnotatedWith(ModuleData.class).forEach((aClass -> {
+            try {
+                modules.add((Module) aClass.newInstance());
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }));
     }
 
 

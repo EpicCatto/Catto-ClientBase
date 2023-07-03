@@ -12,37 +12,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class Module implements Serializable {
 
     public static Minecraft mc = Minecraft.getMinecraft();
 
-    private String name;
-    private String description;
-    private String suffix;
-    private Category category;
-    private int keyCode;
-
-    private boolean enabled;
+    private ModuleData data;
     private boolean isShow = true;
+    private String suffix = "";
+    private int keyCode;
+    private boolean enabled;
+
 
     private final ArrayList<Setting> settings;
 
-    public Module(String name, String description, Category category, int keyCode) {
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.keyCode = keyCode;
-        this.suffix = "";
+    public Module() {
+        data = getClass().getAnnotation(ModuleData.class);
+
         this.settings = new ArrayList<>();
     }
 
     public String getName() {
-        return name;
+        return data.name();
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getSuffix() {
         return suffix;
@@ -59,15 +52,12 @@ public class Module implements Serializable {
     }
 
     public Category getCategory() {
-        return category;
+        return data.category();
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 
     public int getKeyCode() {
-        return keyCode;
+        return this.keyCode;
     }
 
     public void setKeyCode(int keyCode) {
@@ -79,12 +69,9 @@ public class Module implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        return data.description();
     }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;

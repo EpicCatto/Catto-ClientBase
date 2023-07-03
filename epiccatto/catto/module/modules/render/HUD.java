@@ -6,6 +6,7 @@ import epiccatto.catto.event.impl.Event2D;
 import epiccatto.catto.event.impl.EventUpdate;
 import epiccatto.catto.module.Category;
 import epiccatto.catto.module.Module;
+import epiccatto.catto.module.ModuleData;
 import epiccatto.catto.module.ModuleManager;
 import epiccatto.catto.utils.ColorUtil;
 import epiccatto.catto.utils.font.FontLoaders;
@@ -17,14 +18,11 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+@ModuleData(name = "HUD", description = "Show module on your screen cuz yes :D", category = Category.RENDER)
 public class HUD extends Module {
 
     //Info
     private static final HashMap<String, String> info = new HashMap<>();
-
-    public HUD() {
-        super("HUD", "Show module on your screen cuz yes :D", Category.RENDER, 0);
-    }
 
     @EventTarget
     public void onUpdate(EventUpdate event) {

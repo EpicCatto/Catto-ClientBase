@@ -4,12 +4,14 @@ import epiccatto.catto.event.EventTarget;
 import epiccatto.catto.event.impl.EventUpdate;
 import epiccatto.catto.module.Category;
 import epiccatto.catto.module.Module;
+import epiccatto.catto.module.ModuleData;
 import epiccatto.catto.module.settings.impl.NumberSetting;
 import epiccatto.catto.utils.TimerUtil;
 import net.minecraft.entity.EntityLivingBase;
 
 import java.util.ArrayList;
 
+@ModuleData(name = "Killaura", description = "Automatically attack things around you!", category = Category.COMBAT)
 public class Killaura extends Module {
 
     public static EntityLivingBase target;
@@ -27,8 +29,8 @@ public class Killaura extends Module {
 
 
     public Killaura() {
-        super("Killaura", "Automatically attack things around you!", Category.COMBAT, 0);
-        addSettings();
+        super();
+        addSettings(attackRange, cps, maxCps, minCps);
     }
 
 
