@@ -3,12 +3,12 @@ package epiccatto.catto.module.modules.render;
 import epiccatto.catto.Client;
 import epiccatto.catto.event.EventTarget;
 import epiccatto.catto.event.impl.Event2D;
-import epiccatto.catto.event.impl.EventUpdate;
+import epiccatto.catto.event.impl.EventMotion;
 import epiccatto.catto.module.Category;
 import epiccatto.catto.module.Module;
 import epiccatto.catto.module.ModuleData;
 import epiccatto.catto.module.ModuleManager;
-import epiccatto.catto.utils.ColorUtil;
+import epiccatto.catto.utils.render.ColorUtil;
 import epiccatto.catto.utils.font.FontLoaders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -25,7 +25,7 @@ public class HUD extends Module {
     private static final HashMap<String, String> info = new HashMap<>();
 
     @EventTarget
-    public void onUpdate(EventUpdate event) {
+    public void onMotion(EventMotion event) {
         double bps = Math.round((Math.hypot(mc.thePlayer.posX - mc.thePlayer.prevPosX, mc.thePlayer.posZ - mc.thePlayer.prevPosZ) * mc.timer.timerSpeed * 20) * 100.0) / 100.0;
 
         info.put("FPS", String.valueOf(Minecraft.getDebugFPS()));

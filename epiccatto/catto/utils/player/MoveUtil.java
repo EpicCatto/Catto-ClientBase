@@ -1,4 +1,4 @@
-package epiccatto.catto.utils;
+package epiccatto.catto.utils.player;
 
 import epiccatto.catto.event.impl.EventMove;
 import net.minecraft.client.Minecraft;
@@ -55,6 +55,14 @@ public class MoveUtil {
 
     public static float getSpeed() {
         return (float) Math.sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ);
+    }
+
+    public static boolean isOnGround(double height) {
+        return !mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0D, -height, 0.0D)).isEmpty();
+    }
+
+    public static boolean isOnGround() {
+        return mc.thePlayer.onGround && mc.thePlayer.isCollidedVertically;
     }
 
 }

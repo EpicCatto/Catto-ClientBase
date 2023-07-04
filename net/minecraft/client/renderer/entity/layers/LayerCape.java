@@ -21,7 +21,7 @@ public class LayerCape implements LayerRenderer
 
     public void doRenderLayer(AbstractClientPlayer entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale)
     {
-        if (entitylivingbaseIn.hasPlayerInfo() && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && entitylivingbaseIn.getLocationCape() != null)
+        if (entitylivingbaseIn.hasPlayerInfo() && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && (entitylivingbaseIn.getLocationCape() != null || ModuleManager.getModuleByName("Cape").isEnabled()))
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             Cape capeModule = (Cape) ModuleManager.getModuleByName("Cape");

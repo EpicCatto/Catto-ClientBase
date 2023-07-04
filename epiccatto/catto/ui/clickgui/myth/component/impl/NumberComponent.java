@@ -1,6 +1,6 @@
 package epiccatto.catto.ui.clickgui.myth.component.impl;
 
-import epiccatto.catto.utils.ColorUtil;
+import epiccatto.catto.utils.render.ColorUtil;
 import epiccatto.catto.utils.font.FontLoaders;
 import epiccatto.catto.utils.render.RenderUtils;
 import net.minecraft.client.gui.Gui;

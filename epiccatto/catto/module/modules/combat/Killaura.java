@@ -1,7 +1,7 @@
 package epiccatto.catto.module.modules.combat;
 
 import epiccatto.catto.event.EventTarget;
-import epiccatto.catto.event.impl.EventUpdate;
+import epiccatto.catto.event.impl.EventMotion;
 import epiccatto.catto.module.Category;
 import epiccatto.catto.module.Module;
 import epiccatto.catto.module.ModuleData;
@@ -36,7 +36,7 @@ public class Killaura extends Module {
 
 
     @EventTarget
-    public void onUpdate(EventUpdate event){
+    public void onMotion(EventMotion event){
 
 
 

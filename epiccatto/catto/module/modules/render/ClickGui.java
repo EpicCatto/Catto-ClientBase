@@ -11,7 +11,7 @@ import org.lwjgl.input.Keyboard;
 @ModuleData(name = "ClickGui", description = "Opens the ClickGui", category = Category.RENDER)
 public class ClickGui extends Module {
 
-    ModeSetting mode = new ModeSetting("Mode", this, new String[]{"EpicCatto Myth"}, "EpicCatto Myth");
+    ModeSetting mode = new ModeSetting("Mode", this, new String[]{"Myth"}, "Myth");
 
     public ClickGui() {
         super();

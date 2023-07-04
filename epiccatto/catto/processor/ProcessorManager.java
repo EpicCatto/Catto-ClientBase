@@ -39,5 +39,9 @@ public final class ProcessorManager {
 
          System.out.println("Registered " + processors.size() + " processors.");
      }
+
+     public Processor getProcessor(final Class<? extends Processor> clazz) {
+         return processors.stream().filter(processor -> processor.getClass().equals(clazz)).findFirst().orElse(null);
+     }
 }
 

@@ -1,7 +1,5 @@
 package epiccatto.catto.ui.clickgui.myth;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
@@ -15,13 +13,12 @@ import epiccatto.catto.module.ModuleManager;
 import epiccatto.catto.module.file.config.Config;
 import epiccatto.catto.module.file.config.ConfigManager;
 import epiccatto.catto.module.file.config.online.OnlineConfig;
-import epiccatto.catto.module.file.config.online.OnlineConfigManager;
 import epiccatto.catto.ui.clickgui.myth.component.Component;
 import epiccatto.catto.module.settings.Setting;
 import epiccatto.catto.module.settings.impl.*;
 import epiccatto.catto.ui.clickgui.myth.component.impl.*;
 import epiccatto.catto.utils.ChatUtil;
-import epiccatto.catto.utils.ColorUtil;
+import epiccatto.catto.utils.render.ColorUtil;
 import epiccatto.catto.utils.font.FontLoaders;
 import epiccatto.catto.utils.render.RenderUtils;
 import org.lwjgl.input.Mouse;
@@ -30,7 +27,6 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MythClickGui extends GuiScreen {
 
@@ -116,6 +112,7 @@ public class MythClickGui extends GuiScreen {
         offset = 10;
 
         if (selectedCategory == Category.CONFIG) {
+            if (onlineConfigs == null)return;
             for (OnlineConfig onlineConfig : onlineConfigs) {
                 RenderUtils.drawRoundedRect((float) x + 65, (float) y + 1 + offset, (float) x + 70 + FontLoaders.Sfui20.getStringWidth(onlineConfig.getName()), (float) y + 15 + offset, 4, new Color(28, 28, 28).getRGB());
                 FontLoaders.Sfui20.drawString(onlineConfig.getName(), (int) x + 67, (int) (y + 5) + offset, new Color(53, 243, 0, 255).getRGB());

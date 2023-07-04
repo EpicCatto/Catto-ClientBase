@@ -1,14 +1,17 @@
 package epiccatto.catto.module.modules.world;
 
+import epiccatto.catto.Client;
 import epiccatto.catto.event.EventTarget;
 import epiccatto.catto.event.impl.EventSafeWalk;
 import epiccatto.catto.event.impl.EventStrafe;
-import epiccatto.catto.event.impl.EventUpdate;
+import epiccatto.catto.event.impl.EventMotion;
 import epiccatto.catto.module.Category;
 import epiccatto.catto.module.Module;
 import epiccatto.catto.module.ModuleData;
 import epiccatto.catto.module.settings.impl.BooleanSetting;
 import epiccatto.catto.module.settings.impl.NumberSetting;
+import epiccatto.catto.processor.impl.RotationProcessor;
+import epiccatto.catto.ui.player.Rotation;
 
 @ModuleData(name = "Scaffold", description = "Automatically places blocks under you", category = Category.WORLD)
 public class Scaffold extends Module {
@@ -23,9 +26,8 @@ public class Scaffold extends Module {
     }
 
     @EventTarget
-    public void onUpdate(EventUpdate event) {
+    public void onMotion(EventMotion event) {
         setSuffix(delay.getValue());
-
 
     }
 
@@ -36,7 +38,7 @@ public class Scaffold extends Module {
     @EventTarget
     public void onStrafe(EventStrafe event) {
 //        apply movefix
-        event.setYaw(rotations[0]);
+//        event.setYaw(rotations[0]);
     }
     @Override
     public void onEnable() {

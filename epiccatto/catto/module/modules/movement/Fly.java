@@ -4,24 +4,14 @@ import epiccatto.catto.event.EventTarget;
 import epiccatto.catto.event.impl.Event2D;
 import epiccatto.catto.event.impl.EventCollide;
 import epiccatto.catto.event.impl.EventMove;
-import epiccatto.catto.event.impl.EventUpdate;
+import epiccatto.catto.event.impl.EventMotion;
 import epiccatto.catto.module.Category;
 import epiccatto.catto.module.Module;
 import epiccatto.catto.module.ModuleData;
-import epiccatto.catto.module.modules.combat.Killaura;
-import epiccatto.catto.module.modules.render.HUD;
 import epiccatto.catto.module.settings.impl.BooleanSetting;
 import epiccatto.catto.module.settings.impl.ModeSetting;
 import epiccatto.catto.module.settings.impl.NumberSetting;
-import epiccatto.catto.utils.MoveUtil;
-import epiccatto.catto.utils.font.FontLoaders;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import org.lwjgl.input.Keyboard;
+import epiccatto.catto.utils.player.MoveUtil;
 
 import java.util.Objects;
 
@@ -35,21 +25,18 @@ public class Fly extends Module {
     //Default values
     private double startY;
 
-    // Zonecraft
-    private boolean zcBoost;
 
     public Fly() {
-        super();
         addSettings(mode, speed, bobbing);
     }
 
     @EventTarget
-    public void onUpdate(EventUpdate event) {
+    public void onMotion(EventMotion event) {
         setSuffix(mode.getValue());
         if (bobbing.getValue()){
             mc.thePlayer.cameraYaw = 0.1f;
         }
-        if (Objects.requireNonNull(event.getType()) == EventUpdate.Type.PRE) {
+        if (Objects.requireNonNull(event.getType()) == EventMotion.Type.PRE) {
             switch (mode.getValue()) {
                 case "Motion":
                     updateMotion();

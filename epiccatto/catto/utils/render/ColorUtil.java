@@ -1,4 +1,4 @@
-package epiccatto.catto.utils;
+package epiccatto.catto.utils.render;
 
 import net.minecraft.util.EnumChatFormatting;
 

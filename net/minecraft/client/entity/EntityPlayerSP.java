@@ -2,6 +2,7 @@ package net.minecraft.client.entity;
 
 import epiccatto.catto.Client;
 import epiccatto.catto.event.impl.EventMove;
+import epiccatto.catto.event.impl.EventMotion;
 import epiccatto.catto.event.impl.EventUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
@@ -179,6 +180,10 @@ public class EntityPlayerSP extends AbstractClientPlayer
     {
         if (this.worldObj.isBlockLoaded(new BlockPos(this.posX, 0.0D, this.posZ)))
         {
+
+            EventUpdate event = new EventUpdate();
+            event.call();
+
             super.onUpdate();
             if (this.isRiding())
             {
@@ -189,7 +194,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
             else
             {
                 this.onUpdateWalkingPlayer();
-                e = new EventUpdate(this.mc.thePlayer.posX, this.mc.thePlayer.posY, this.mc.thePlayer.posZ, this.mc.thePlayer.rotationYaw, this.mc.thePlayer.rotationPitch, this.mc.thePlayer.onGround, EventUpdate.Type.POST);
+                e = new EventMotion(this.mc.thePlayer.posX, this.mc.thePlayer.posY, this.mc.thePlayer.posZ, this.mc.thePlayer.rotationYaw, this.mc.thePlayer.rotationPitch, this.mc.thePlayer.onGround, EventMotion.Type.POST);
                 e.call();
             }
         }
@@ -198,7 +203,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     private float cachedYaw = 0;
     private float cachedPitch = 0;
 
-    public EventUpdate e;
+    public EventMotion e;
 
     public float eventPitch;
 
@@ -207,22 +212,22 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void onUpdateWalkingPlayer()
     {
-        e = new EventUpdate(this.mc.thePlayer.posX, this.mc.thePlayer.posY, this.mc.thePlayer.posZ, this.mc.thePlayer.rotationYaw, this.mc.thePlayer.rotationPitch, this.mc.thePlayer.onGround, EventUpdate.Type.PRE);
+        e = new EventMotion(this.mc.thePlayer.posX, this.mc.thePlayer.posY, this.mc.thePlayer.posZ, this.mc.thePlayer.rotationYaw, this.mc.thePlayer.rotationPitch, this.mc.thePlayer.onGround, EventMotion.Type.PRE);
         e.call();
 
         cachedYaw = mc.thePlayer.rotationYaw;
         cachedPitch = mc.thePlayer.rotationPitch;
 
-        if(EventUpdate.isRotatingYaw()) {
+        if(EventMotion.isRotatingYaw()) {
             mc.thePlayer.rotationYawHead = e.getYaw();
             mc.thePlayer.renderYawOffset = e.getYaw();
-            EventUpdate.setRotatingYaw(false);
+            EventMotion.setRotatingYaw(false);
         }
 
-        eventPitch = EventUpdate.getPitch();
+        eventPitch = EventMotion.getPitch();
 
         mc.thePlayer.rotationYaw = e.getYaw();
-        mc.thePlayer.rotationPitch = EventUpdate.getPitch();
+        mc.thePlayer.rotationPitch = EventMotion.getPitch();
 
         boolean flag = isSprinting();
         if (flag != this.serverSprintState) {
@@ -247,21 +252,21 @@ public class EntityPlayerSP extends AbstractClientPlayer
             double d1 = (getEntityBoundingBox()).minY - this.lastReportedPosY;
             double d2 = this.posZ - this.lastReportedPosZ;
             double d3 = (e.getYaw() - this.lastReportedYaw);
-            double d4 = (EventUpdate.getPitch() - this.lastReportedPitch);
+            double d4 = (EventMotion.getPitch() - this.lastReportedPitch);
             boolean flag2 = (d0 * d0 + d1 * d1 + d2 * d2 > 9.0E-4D || this.positionUpdateTicks >= 20);
             boolean flag3 = (d3 != 0.0D || d4 != 0.0D);
             if (this.ridingEntity == null) {
                 if (flag2 && flag3) {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, (getEntityBoundingBox()).minY, this.posZ, e.getYaw(), EventUpdate.getPitch(), this.onGround));
+                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, (getEntityBoundingBox()).minY, this.posZ, e.getYaw(), EventMotion.getPitch(), this.onGround));
                 } else if (flag2) {
                     this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(this.posX, (getEntityBoundingBox()).minY, this.posZ, this.onGround));
                 } else if (flag3) {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(e.getYaw(), EventUpdate.getPitch(), this.onGround));
+                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(e.getYaw(), EventMotion.getPitch(), this.onGround));
                 } else {
                     this.sendQueue.addToSendQueue(new C03PacketPlayer(this.onGround));
                 }
             } else {
-                this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D, this.motionZ, e.getYaw(), EventUpdate.getPitch(), this.onGround));
+                this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D, this.motionZ, e.getYaw(), EventMotion.getPitch(), this.onGround));
                 flag2 = false;
             }
             this.positionUpdateTicks++;
@@ -273,13 +278,13 @@ public class EntityPlayerSP extends AbstractClientPlayer
             }
             if (flag3) {
                 this.lastReportedYaw = e.getYaw();
-                this.lastReportedPitch = EventUpdate.getPitch();
+                this.lastReportedPitch = EventMotion.getPitch();
             }
         }
 
         mc.thePlayer.rotationYaw = cachedYaw;
         mc.thePlayer.rotationPitch = cachedPitch;
-        e.setType(EventUpdate.Type.POST);
+        e.setType(EventMotion.Type.POST);
     }
 
     /**
