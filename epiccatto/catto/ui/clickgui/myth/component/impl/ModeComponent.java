@@ -1,6 +1,6 @@
 package epiccatto.catto.ui.clickgui.myth.component.impl;
 
-import epiccatto.catto.module.Module;
+import epiccatto.catto.module.api.Module;
 import epiccatto.catto.module.settings.impl.ModeSetting;
 import epiccatto.catto.ui.clickgui.myth.MythClickGui;
 import epiccatto.catto.ui.clickgui.myth.component.Component;

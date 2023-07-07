@@ -1,9 +1,5 @@
-package epiccatto.catto.module;
+package epiccatto.catto.module.api;
 
-import epiccatto.catto.module.modules.movement.*;
-import epiccatto.catto.module.modules.render.*;
-import epiccatto.catto.module.modules.world.Scaffold;
-import org.lwjgl.Sys;
 import org.reflections.Reflections;
 
 import java.util.ArrayList;

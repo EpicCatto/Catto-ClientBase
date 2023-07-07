@@ -1,8 +1,8 @@
 package epiccatto.catto.module.file.config;
 
 import com.google.gson.JsonObject;
-import epiccatto.catto.module.Module;
-import epiccatto.catto.module.ModuleManager;
+import epiccatto.catto.module.api.Module;
+import epiccatto.catto.module.api.ModuleManager;
 import epiccatto.catto.module.settings.Serializable;
 
 import java.io.File;

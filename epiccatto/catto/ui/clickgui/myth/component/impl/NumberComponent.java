@@ -5,7 +5,7 @@ import epiccatto.catto.utils.font.FontLoaders;
 import epiccatto.catto.utils.render.RenderUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
-import epiccatto.catto.module.Module;
+import epiccatto.catto.module.api.Module;
 import epiccatto.catto.module.settings.impl.NumberSetting;
 import epiccatto.catto.ui.clickgui.myth.MythClickGui;
 import epiccatto.catto.ui.clickgui.myth.component.Component;

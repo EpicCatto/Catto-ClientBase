@@ -2,12 +2,10 @@ package epiccatto.catto.module.modules.render;
 
 import epiccatto.catto.event.EventTarget;
 import epiccatto.catto.event.impl.Event2D;
-import epiccatto.catto.module.Category;
-import epiccatto.catto.module.Module;
-import epiccatto.catto.module.ModuleData;
+import epiccatto.catto.module.api.Category;
+import epiccatto.catto.module.api.Module;
+import epiccatto.catto.module.api.ModuleData;
 import epiccatto.catto.module.settings.impl.NumberSetting;
-import epiccatto.catto.utils.font.FontLoaders;
-import epiccatto.catto.utils.render.RenderUtils;
 import epiccatto.catto.utils.render.tweek.ColorTween;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;

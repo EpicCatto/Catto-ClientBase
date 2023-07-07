@@ -33,8 +33,8 @@ public class GuiWelcome extends GuiScreen {
     public void initGui() {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         styleList = new ArrayList<>();
-        styleList.add(new Style("Gato Client", "Good old gato client theme and uuhh test line break test line break test line break test line break", "NotThatUwU, Memer(Assets)", new ResourceLocation("catto/image/gato icon.png")));
-        styleList.add(new Style("Gato Client2", "Good old gato client theme and uuhh test line break test line break test line break test line break", "NotThatUwU, Memer(Assets)", new ResourceLocation("catto/image/gato icon.png")));
+        styleList.add(new Style("Classic Gato", "Good old fashion gato vibes from 2020. No flashy shaders just the good old visuals", "NotThatUwU, Memer(Assets, Original owner)", new ResourceLocation("catto/image/gato icon.png")));
+        styleList.add(new Style("Modern Gato", "New visuals and stuff (dont expect much)", "NotThatUwU", new ResourceLocation("catto/image/gato icon.png")));
 
         Collections.reverse(styleList);
         page = 0;

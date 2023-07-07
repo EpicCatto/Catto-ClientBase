@@ -1,4 +1,4 @@
-package epiccatto.catto.module;
+package epiccatto.catto.module.api;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

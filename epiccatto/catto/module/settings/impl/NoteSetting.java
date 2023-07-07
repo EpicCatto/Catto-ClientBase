@@ -1,6 +1,6 @@
 package epiccatto.catto.module.settings.impl;
 
-import epiccatto.catto.module.Module;
+import epiccatto.catto.module.api.Module;
 import epiccatto.catto.module.settings.Setting;
 
 import java.util.function.Supplier;

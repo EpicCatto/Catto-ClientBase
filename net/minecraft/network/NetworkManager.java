@@ -182,6 +182,12 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     public void sendPacket(Packet packetIn)
     {
+        EventSendPacket eventSendPacket = new EventSendPacket(packetIn);
+        eventSendPacket.call();
+
+        if(eventSendPacket.isCancelled())
+            return;
+
         if (this.isChannelOpen())
         {
             this.flushOutboundQueue();
@@ -204,11 +210,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     public void sendPacket(Packet packetIn, GenericFutureListener <? extends Future <? super Void >> listener, GenericFutureListener <? extends Future <? super Void >> ... listeners)
     {
-        EventSendPacket eventSendPacket = new EventSendPacket(packetIn);
-        eventSendPacket.call();
 
-        if(eventSendPacket.isCancelled())
-            return;
 
         if (this.isChannelOpen())
         {

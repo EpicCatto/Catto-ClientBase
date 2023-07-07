@@ -1,4 +1,4 @@
-package epiccatto.catto.module;
+package epiccatto.catto.module.api;
 
 public enum Category {
     COMBAT("Combat"),

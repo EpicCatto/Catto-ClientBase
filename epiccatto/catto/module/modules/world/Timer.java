@@ -2,9 +2,9 @@ package epiccatto.catto.module.modules.world;
 
 import epiccatto.catto.event.EventTarget;
 import epiccatto.catto.event.impl.EventUpdate;
-import epiccatto.catto.module.Category;
-import epiccatto.catto.module.Module;
-import epiccatto.catto.module.ModuleData;
+import epiccatto.catto.module.api.Category;
+import epiccatto.catto.module.api.Module;
+import epiccatto.catto.module.api.ModuleData;
 import epiccatto.catto.module.settings.impl.NumberSetting;
 
 @ModuleData(name = "Timer", description = "Speeds up the game", category = Category.WORLD)

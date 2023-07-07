@@ -1,13 +1,12 @@
 package epiccatto.catto.module.modules.world;
 
-import epiccatto.catto.Client;
 import epiccatto.catto.event.EventTarget;
 import epiccatto.catto.event.impl.EventSafeWalk;
 import epiccatto.catto.event.impl.EventStrafe;
 import epiccatto.catto.event.impl.EventMotion;
-import epiccatto.catto.module.Category;
-import epiccatto.catto.module.Module;
-import epiccatto.catto.module.ModuleData;
+import epiccatto.catto.module.api.Category;
+import epiccatto.catto.module.api.Module;
+import epiccatto.catto.module.api.ModuleData;
 import epiccatto.catto.module.settings.impl.BooleanSetting;
 import epiccatto.catto.module.settings.impl.NumberSetting;
 import epiccatto.catto.processor.impl.RotationProcessor;
@@ -28,7 +27,10 @@ public class Scaffold extends Module {
     @EventTarget
     public void onMotion(EventMotion event) {
         setSuffix(delay.getValue());
-
+//				if (place) {
+//        event.setYaw(mc.thePlayer.rotationYaw - 180);
+//        event.setPitch(78.59991f);
+        RotationProcessor.setToRotation(new Rotation(mc.thePlayer.rotationYaw - 180, 78.59991f));
     }
 
     @EventTarget

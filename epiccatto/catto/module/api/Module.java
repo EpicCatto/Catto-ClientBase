@@ -1,7 +1,6 @@
-package epiccatto.catto.module;
+package epiccatto.catto.module.api;
 
 import com.google.gson.JsonObject;
-import epiccatto.catto.Client;
 import epiccatto.catto.event.EventManager;
 import epiccatto.catto.module.settings.Serializable;
 import epiccatto.catto.module.settings.Setting;

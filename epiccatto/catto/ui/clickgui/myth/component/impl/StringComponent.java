@@ -3,7 +3,7 @@ package epiccatto.catto.ui.clickgui.myth.component.impl;
 import epiccatto.catto.ui.clickgui.myth.component.utils.SettingsInputBox;
 import epiccatto.catto.utils.font.FontLoaders;
 import net.minecraft.client.Minecraft;
-import epiccatto.catto.module.Module;
+import epiccatto.catto.module.api.Module;
 import epiccatto.catto.module.settings.impl.StringSetting;
 import epiccatto.catto.ui.clickgui.myth.MythClickGui;
 import epiccatto.catto.ui.clickgui.myth.component.Component;

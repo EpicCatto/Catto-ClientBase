@@ -1,8 +1,8 @@
 package epiccatto.catto.module.modules.render;
 
-import epiccatto.catto.module.Category;
-import epiccatto.catto.module.Module;
-import epiccatto.catto.module.ModuleData;
+import epiccatto.catto.module.api.Category;
+import epiccatto.catto.module.api.Module;
+import epiccatto.catto.module.api.ModuleData;
 import epiccatto.catto.module.settings.impl.ModeSetting;
 import net.minecraft.util.ResourceLocation;
 

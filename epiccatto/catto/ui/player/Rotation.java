@@ -1,5 +1,7 @@
 package epiccatto.catto.ui.player;
 
+import net.minecraft.client.Minecraft;
+
 public class Rotation {
     private float yaw, lastYaw;
     private float pitch, lastPitch;
@@ -98,7 +100,6 @@ public class Rotation {
         this.pitch = 0;
         return this;
     }
-
     public Rotation clone() {
         return new Rotation(yaw, pitch);
     }

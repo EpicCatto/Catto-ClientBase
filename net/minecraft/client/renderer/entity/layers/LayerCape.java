@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity.layers;
 
-import epiccatto.catto.module.ModuleManager;
+import epiccatto.catto.module.api.ModuleManager;
 import epiccatto.catto.module.modules.render.Cape;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;

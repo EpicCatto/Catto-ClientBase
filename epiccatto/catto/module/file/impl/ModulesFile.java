@@ -2,8 +2,8 @@ package epiccatto.catto.module.file.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import epiccatto.catto.module.Module;
-import epiccatto.catto.module.ModuleManager;
+import epiccatto.catto.module.api.Module;
+import epiccatto.catto.module.api.ModuleManager;
 import epiccatto.catto.module.file.IFile;
 
 import java.io.File;

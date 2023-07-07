@@ -2,8 +2,8 @@ package epiccatto.catto.command.commands;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import epiccatto.catto.command.Command;
-import epiccatto.catto.module.Module;
-import epiccatto.catto.module.ModuleManager;
+import epiccatto.catto.module.api.Module;
+import epiccatto.catto.module.api.ModuleManager;
 import epiccatto.catto.utils.ChatUtil;
 import org.lwjgl.input.Keyboard;
 
