@@ -30,7 +30,7 @@ public class Scaffold extends Module {
 //				if (place) {
 //        event.setYaw(mc.thePlayer.rotationYaw - 180);
 //        event.setPitch(78.59991f);
-        RotationProcessor.setToRotation(new Rotation(mc.thePlayer.rotationYaw - 180, 78.59991f));
+        RotationProcessor.setToRotation(new Rotation(mc.thePlayer.rotationYaw - 180, 78.59991f), false);
     }
 
     @EventTarget

@@ -13,6 +13,7 @@ import epiccatto.catto.utils.math.Vec3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 
@@ -66,7 +67,8 @@ public class Killaura extends Module {
             RotationProcessor.setToRotation(new Rotation(rotations[0], rotations[1]));
             if (attackTimer.hasReached((long) ((Math.random() * (1000 / minCps.getValue() - 1000 / maxCps.getValue() + 1) + 1000 / maxCps.getValue())))) {
                 mc.thePlayer.swingItem();
-                mc.playerController.attackEntity(mc.thePlayer, target);
+//                mc.playerController.attackEntity(mc.thePlayer, target);
+                mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(target, C02PacketUseEntity.Action.ATTACK));
                 attackTimer.reset();
             }
         }
@@ -88,6 +90,7 @@ public class Killaura extends Module {
         final double diffXZ = Math.sqrt(diffX * diffX + diffZ * diffZ);
         final float yaw = (float)Math.toDegrees(Math.atan2(diffZ, diffX)) - 90.0f;
         final float pitch = (float)(-Math.toDegrees(Math.atan2(diffY, diffXZ)));
+
         return new float[] { MathHelper.wrapAngleTo180_float(yaw), MathHelper.wrapAngleTo180_float(pitch) };
     }
 

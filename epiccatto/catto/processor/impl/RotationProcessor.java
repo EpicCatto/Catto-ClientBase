@@ -19,7 +19,7 @@ public class RotationProcessor implements Processor {
 
     private static final Rotation toRotation = new Rotation();
 
-    private boolean enabled;
+    private static boolean enabled, moveFix;
 
     private static int rotateTicks, revertTicks;
 
@@ -39,8 +39,8 @@ public class RotationProcessor implements Processor {
 
     @EventTarget
     public void onStrafe(EventStrafe event) {
-        if(enabled) {
-            event.setYaw(toRotation.getYaw());
+        if(enabled && moveFix) {
+            event.setYaw(clientRotation.getYaw());
         }
     }
 
@@ -62,26 +62,13 @@ public class RotationProcessor implements Processor {
             final float yawDifference = getAngleDifference(toRotation.getYaw(), clientRotation.getYaw());
             final float pitchDifference = getAngleDifference(toRotation.getPitch(), clientRotation.getPitch());
             double base = Math.hypot(getAngleDifference(toRotation.getYaw(), serverRotation.getYaw()), (toRotation.getPitch() - serverRotation.getPitch()));
-            if (base < 0) base = -base;
-            if (base > 180.0) base = 180.0;
-
-            final float turnSpeed = (float) base/ ThreadLocalRandom.current().nextInt(2, 5);;
-
-            clientRotation.setYaw(serverRotation.getYaw() + (yawDifference > turnSpeed ? turnSpeed : Math.max(yawDifference, -turnSpeed)));
-            clientRotation.setPitch(serverRotation.getPitch() + (pitchDifference > turnSpeed ? turnSpeed : Math.max(pitchDifference, -turnSpeed)));
+            setClientRotation(yawDifference, pitchDifference, base);
 //            ChatUtil.sendChatMessageWPrefix("turnSpeed: " + turnSpeed + " yaw: " + clientRotation.getYaw() + " pitch: " + clientRotation.getPitch() + " realYaw: " + mc.thePlayer.rotationYaw + " realPitch: " + mc.thePlayer.rotationPitch);
         }else {
             final float yawDifference = getAngleDifference(mc.thePlayer.rotationYaw, clientRotation.getYaw());
             final float pitchDifference = getAngleDifference(mc.thePlayer.rotationPitch, clientRotation.getPitch());
             double base = Math.hypot(getAngleDifference(toRotation.getYaw(), mc.thePlayer.rotationYaw), (toRotation.getPitch() - mc.thePlayer.rotationPitch));
-            if (base < 0) base = -base;
-            if (base > 180.0) base = 180.0;
-
-            final float turnSpeed = (float) base/ ThreadLocalRandom.current().nextInt(2, 5);;
-
-            clientRotation.setYaw(serverRotation.getYaw() + (yawDifference > turnSpeed ? turnSpeed : Math.max(yawDifference, -turnSpeed)));
-            clientRotation.setPitch(serverRotation.getPitch() + (pitchDifference > turnSpeed ? turnSpeed : Math.max(pitchDifference, -turnSpeed)));
-
+            setClientRotation(yawDifference, pitchDifference, base);
         }
 
         enabled = revertTicks > 0 || rotateTicks > 0;
@@ -95,6 +82,20 @@ public class RotationProcessor implements Processor {
         if (revertTicks > 0)
             revertTicks--;
 
+        if (rotateTicks <= 0 && revertTicks <= 0) {
+            moveFix = false;
+        }
+
+    }
+
+    private void setClientRotation(float yawDifference, float pitchDifference, double base) {
+        if (base < 0) base = -base;
+        if (base > 180.0) base = 180.0;
+
+        final float turnSpeed = (float) base/ ThreadLocalRandom.current().nextInt(2, 4);
+
+        clientRotation.setYaw(serverRotation.getYaw() + (yawDifference > turnSpeed ? turnSpeed : Math.max(yawDifference, -turnSpeed)));
+        clientRotation.setPitch(serverRotation.getPitch() + (pitchDifference > turnSpeed ? turnSpeed : Math.max(pitchDifference, -turnSpeed)));
     }
 
     public Rotation getClientRotation() {
@@ -113,10 +114,15 @@ public class RotationProcessor implements Processor {
 
     public static void setToRotation(Rotation toRotation) {
         if (toRotation.getPitch() > 90 || toRotation.getPitch() < -90) return;
+        setToRotation(toRotation, true);
+    }
+    public static void setToRotation(Rotation toRotation, boolean moveFix) {
+        if (toRotation.getPitch() > 90 || toRotation.getPitch() < -90) return;
         RotationProcessor.toRotation.setYaw(toRotation.getYaw());
         RotationProcessor.toRotation.setPitch(toRotation.getPitch());
         rotateTicks = 1;
-        revertTicks = 5;
+        revertTicks = 20;
+        RotationProcessor.moveFix = moveFix;
     }
 
     private static float getAngleDifference(float a, float b) {
