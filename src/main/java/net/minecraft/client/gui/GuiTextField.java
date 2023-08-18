@@ -686,6 +686,10 @@ public class GuiTextField extends Gui
         this.enabledColor = p_146193_1_;
     }
 
+    public int getHeight() {
+        return height;
+    }
+
     public void setDisabledTextColour(int p_146204_1_)
     {
         this.disabledColor = p_146204_1_;

@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Callable;
+
+import epiccatto.catto.event.impl.EventSafeWalk;
+import epiccatto.catto.event.impl.EventStrafe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -12,6 +15,7 @@ import net.minecraft.block.BlockWall;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockPattern;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandResultStats;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.crash.CrashReport;
@@ -620,6 +624,11 @@ public abstract class Entity implements ICommandSender
                 this.motionZ = 0.0D;
             }
 
+            if (this instanceof EntityPlayerSP){
+                final EventSafeWalk event = new EventSafeWalk(false);
+                event.call();
+            }
+
             double d3 = x;
             double d4 = y;
             double d5 = z;
@@ -1223,7 +1232,11 @@ public abstract class Entity implements ICommandSender
      */
     public void moveFlying(float strafe, float forward, float friction)
     {
-        float f = strafe * strafe + forward * forward;
+        EventStrafe strafeEvent = new EventStrafe(this.rotationYaw, strafe, forward, friction);
+        strafeEvent.call();
+        if (strafeEvent.isCancelled())return;
+
+        float f = strafeEvent.getStrafe() * strafeEvent.getStrafe() + strafeEvent.getForward() * strafeEvent.getForward();
 
         if (f >= 1.0E-4F)
         {

@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+
+import epiccatto.catto.event.impl.EventJump;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.BaseAttributeMap;
@@ -1571,6 +1574,15 @@ public abstract class EntityLivingBase extends Entity
         if (this.isPotionActive(Potion.jump))
         {
             this.motionY += (double)((float)(this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F);
+        }
+
+        if (this instanceof EntityPlayerSP) {
+            EventJump event = new EventJump(rotationYaw, motionY);
+            event.call();
+
+            if (event.isCancelled()) {
+                return;
+            }
         }
 
         if (this.isSprinting())
