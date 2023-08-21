@@ -1,9 +1,0 @@
-package epiccatto.catto.command;
-
-public interface Command {
-
-	boolean run(String[] args);
-
-	String usage();
-
-}

@@ -3,6 +3,8 @@ package net.minecraft.client.gui;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 import com.mojang.authlib.GameProfile;
+
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import net.minecraft.client.Minecraft;
@@ -396,4 +398,16 @@ public class GuiPlayerTabOverlay extends Gui
             return ComparisonChain.start().compareTrueFirst(p_compare_1_.getGameType() != WorldSettings.GameType.SPECTATOR, p_compare_2_.getGameType() != WorldSettings.GameType.SPECTATOR).compare(scoreplayerteam != null ? scoreplayerteam.getRegisteredName() : "", scoreplayerteam1 != null ? scoreplayerteam1.getRegisteredName() : "").compare(p_compare_1_.getGameProfile().getName(), p_compare_2_.getGameProfile().getName()).result();
         }
     }
+
+    public static List<EntityPlayer> getPlayers(){
+        List<NetworkPlayerInfo> list = field_175252_a.sortedCopy(Minecraft.getMinecraft().thePlayer.sendQueue.getPlayerInfoMap());
+        List<EntityPlayer> players = new ArrayList<>();
+        for(NetworkPlayerInfo player : list) {
+            if(player != null) {
+                players.add(Minecraft.getMinecraft().theWorld.getPlayerEntityByName(player.getGameProfile().getName()));
+            }
+        }
+        return players;
+    }
+
 }

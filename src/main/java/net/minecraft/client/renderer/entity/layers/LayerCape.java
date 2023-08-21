@@ -1,5 +1,8 @@
 package net.minecraft.client.renderer.entity.layers;
 
+import catto.uwu.module.api.ModuleManager;
+import catto.uwu.module.modules.render.Cape;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
@@ -15,12 +18,17 @@ public class LayerCape implements LayerRenderer<AbstractClientPlayer>
         this.playerRenderer = playerRendererIn;
     }
 
+
+
     public void doRenderLayer(AbstractClientPlayer entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale)
     {
-        if (entitylivingbaseIn.hasPlayerInfo() && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && entitylivingbaseIn.getLocationCape() != null)
+        Cape capeModule = (Cape) ModuleManager.getModuleByName("Cape");
+
+        boolean canRenderCapeModule = ModuleManager.getModuleByName("Cape").isEnabled() && (capeModule.allPlayers.getValue() || Minecraft.getMinecraft().thePlayer.getName().equalsIgnoreCase(entitylivingbaseIn.getName()));
+        if (entitylivingbaseIn.hasPlayerInfo() && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && (entitylivingbaseIn.getLocationCape() != null || canRenderCapeModule))
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
+            this.playerRenderer.bindTexture(capeModule.isEnabled() ? capeModule.getCapeLoc() : entitylivingbaseIn.getLocationCape());
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, 0.0F, 0.125F);
             double d0 = entitylivingbaseIn.prevChasingPosX + (entitylivingbaseIn.chasingPosX - entitylivingbaseIn.prevChasingPosX) * (double)partialTicks - (entitylivingbaseIn.prevPosX + (entitylivingbaseIn.posX - entitylivingbaseIn.prevPosX) * (double)partialTicks);

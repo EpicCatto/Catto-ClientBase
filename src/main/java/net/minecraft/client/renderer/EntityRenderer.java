@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
-import epiccatto.catto.event.impl.Event3D;
+import catto.uwu.event.impl.Event3D;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.material.Material;

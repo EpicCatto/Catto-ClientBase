@@ -3,7 +3,7 @@ package net.minecraft.block;
 import java.util.List;
 import java.util.Random;
 
-import epiccatto.catto.event.impl.EventCollide;
+import catto.uwu.event.impl.EventCollide;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;

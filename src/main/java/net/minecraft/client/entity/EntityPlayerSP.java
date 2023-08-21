@@ -1,9 +1,9 @@
 package net.minecraft.client.entity;
 
-import epiccatto.catto.Client;
-import epiccatto.catto.event.impl.EventMotion;
-import epiccatto.catto.event.impl.EventMove;
-import epiccatto.catto.event.impl.EventUpdate;
+import catto.uwu.Client;
+import catto.uwu.event.impl.EventMotion;
+import catto.uwu.event.impl.EventMove;
+import catto.uwu.event.impl.EventUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
 import net.minecraft.client.audio.PositionedSoundRecord;

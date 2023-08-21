@@ -2,8 +2,8 @@ package net.minecraft.network;
 
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import epiccatto.catto.event.impl.EventReceivePacket;
-import epiccatto.catto.event.impl.EventSendPacket;
+import catto.uwu.event.impl.EventReceivePacket;
+import catto.uwu.event.impl.EventSendPacket;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelException;

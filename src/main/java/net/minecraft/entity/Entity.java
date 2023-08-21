@@ -5,8 +5,8 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 
-import epiccatto.catto.event.impl.EventSafeWalk;
-import epiccatto.catto.event.impl.EventStrafe;
+import catto.uwu.event.impl.EventSafeWalk;
+import catto.uwu.event.impl.EventStrafe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;

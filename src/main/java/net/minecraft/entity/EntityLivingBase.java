@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
-import epiccatto.catto.event.impl.EventJump;
+import catto.uwu.event.impl.EventJump;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -1569,22 +1569,23 @@ public abstract class EntityLivingBase extends Entity
      */
     protected void jump()
     {
-        this.motionY = (double)this.getJumpUpwardsMotion();
+        float jumpM = this.getJumpUpwardsMotion();
 
         if (this.isPotionActive(Potion.jump))
         {
-            this.motionY += (double)((float)(this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F);
+            jumpM += ((float)(this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F);
         }
 
         if (this instanceof EntityPlayerSP) {
-            EventJump event = new EventJump(rotationYaw, motionY);
+            EventJump event = new EventJump(rotationYaw, jumpM);
             event.call();
+            jumpM = event.getMotionY();
 
             if (event.isCancelled()) {
                 return;
             }
         }
-
+        this.motionY = jumpM;
         if (this.isSprinting())
         {
             float f = this.rotationYaw * 0.017453292F;
