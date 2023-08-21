@@ -20,7 +20,7 @@ public final class ProcessorManager {
 //             }
 //         });
          try {
-             new Reflections("epiccatto").getSubTypesOf(Processor.class).forEach(clazz -> {
+             new Reflections("catto").getSubTypesOf(Processor.class).forEach(clazz -> {
                  try {
                      System.out.println("Registering processor: " + clazz.getSimpleName());
                      processors.add(clazz.newInstance());

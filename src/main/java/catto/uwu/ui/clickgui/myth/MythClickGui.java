@@ -21,8 +21,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import catto.uwu.Client;
 import catto.uwu.ui.clickgui.myth.component.Component;
-import epiccatto.catto.module.settings.impl.*;
-import epiccatto.catto.ui.clickgui.myth.component.impl.*;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 

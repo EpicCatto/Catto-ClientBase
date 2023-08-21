@@ -1,7 +1,6 @@
 package catto.uwu.command;
 
 import catto.uwu.command.commands.*;
-import epiccatto.catto.command.commands.*;
 import catto.uwu.utils.ChatUtil;
 
 import java.util.HashMap;

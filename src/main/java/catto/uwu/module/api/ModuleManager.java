@@ -10,7 +10,7 @@ public class ModuleManager {
     private static final ArrayList<Module> modules = new ArrayList<Module>();
 
     public void registerNormal(){
-        new Reflections("epiccatto").getTypesAnnotatedWith(ModuleData.class).forEach((aClass -> {
+        new Reflections("catto").getTypesAnnotatedWith(ModuleData.class).forEach((aClass -> {
             try {
                 modules.add((Module) aClass.newInstance());
             } catch (InstantiationException | IllegalAccessException e) {

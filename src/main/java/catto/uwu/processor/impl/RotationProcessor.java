@@ -2,10 +2,11 @@ package catto.uwu.processor.impl;
 
 import catto.uwu.event.EventTarget;
 import catto.uwu.event.impl.*;
-import epiccatto.catto.event.impl.*;
 import catto.uwu.processor.Processor;
 import catto.uwu.utils.player.Rotation;
 import net.minecraft.network.play.client.C03PacketPlayer;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class RotationProcessor implements Processor {
     // TODO: Movefix, Rotations in general (GCD, ETC..)
@@ -97,7 +98,7 @@ public class RotationProcessor implements Processor {
         if (base < 0) base = -base;
         if (base > 180.0) base = 180.0;
 
-        final float turnSpeed = (float) base;
+        final float turnSpeed = (float) (base / ThreadLocalRandom.current().nextDouble(1.5, 2.5));
 
         clientRotation.setYaw(serverRotation.getYaw() + (yawDifference > turnSpeed ? turnSpeed : Math.max(yawDifference, -turnSpeed)));
         clientRotation.setPitch(serverRotation.getPitch() + (pitchDifference > turnSpeed ? turnSpeed : Math.max(pitchDifference, -turnSpeed)));
