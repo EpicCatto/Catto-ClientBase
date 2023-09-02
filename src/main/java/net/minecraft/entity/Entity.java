@@ -623,18 +623,16 @@ public abstract class Entity implements ICommandSender
                 this.motionY = 0.0D;
                 this.motionZ = 0.0D;
             }
-
-            if (this instanceof EntityPlayerSP){
-                final EventSafeWalk event = new EventSafeWalk(false);
-                event.call();
-            }
+            final EventSafeWalk event = new EventSafeWalk(false);
+            event.call();
 
             double d3 = x;
             double d4 = y;
             double d5 = z;
             boolean flag = this.onGround && this.isSneaking() && this instanceof EntityPlayer;
 
-            if (flag)
+            final boolean safeMode = this.onGround && event.safe && this instanceof EntityPlayer;
+            if (flag || safeMode)
             {
                 double d6;
 

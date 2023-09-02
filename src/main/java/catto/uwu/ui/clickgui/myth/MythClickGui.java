@@ -197,7 +197,7 @@ public class MythClickGui extends GuiScreen {
 
                     int offsetS = (int) ((int) (10 + FontLoaders.Sfui20.getHeight() + 5) + settingsScrollNow);
                     for (Component component : components) {
-                        if (component.module == selectedModule && component.setting.isVisible()) {
+                        if (component.module == selectedModule && (component.setting.isVisible() && (component.setting.getParentNote() != null ? component.setting.getParentNote().getValue() : true))) {
                             component.y = offsetS;
                             component.drawScreen(mouseX, mouseY);
                             offsetS += component.height();

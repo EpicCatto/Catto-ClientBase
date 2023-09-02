@@ -5,7 +5,7 @@ package catto.uwu.event;
  */
 public class Priority {
 
-    public static final byte FIRST = 0, SECOND = 1, THIRD = 2, FOURTH = 3, FIFTH = 4;
+    public static final byte VERY_LOW = 0, LOW = 1, MEDIUM = 2, HIGH = 3, VERY_HIGH = 4;
 
     public static final byte[] VALUE_ARRAY;
 

@@ -244,6 +244,32 @@
             <artifactId>openauth</artifactId>
             <version>1.1.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.viaversion</groupId>
+            <artifactId>viaversion</artifactId>
+            <version>4.7.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ViaVersion-4.7.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.viarewind</groupId>
+            <artifactId>viarewind</artifactId>
+            <version>2.0.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ViaRewind-2.0.3.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.viabackward</groupId>
+            <artifactId>viabackwards</artifactId>
+            <version>4.7.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ViaBackwards-4.7.0.jar</systemPath>
+        </dependency>
     </dependencies>
 
 </project>

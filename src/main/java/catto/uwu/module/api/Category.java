@@ -8,12 +8,16 @@ public enum Category {
     WORLD("World"),
     CONFIG("Config");
 
-	public String name;
+	public final String name;
 	public boolean hidden;
 	public int x;
 	public int y;
 
     Category(String name){
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

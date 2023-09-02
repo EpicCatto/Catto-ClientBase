@@ -1,8 +1,10 @@
 package catto.uwu.processor.impl;
 
 import catto.uwu.event.EventTarget;
+import catto.uwu.event.Priority;
 import catto.uwu.event.impl.*;
 import catto.uwu.processor.Processor;
+import catto.uwu.utils.ChatUtil;
 import catto.uwu.utils.player.Rotation;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
@@ -34,7 +36,7 @@ public class RotationProcessor implements Processor {
         }
     }
 
-    @EventTarget
+    @EventTarget(value = Priority.VERY_HIGH)
     public void onStrafe(EventStrafe event) {
         if(enabled && moveFix) {
             event.setYaw(clientRotation.getYaw());
@@ -113,7 +115,7 @@ public class RotationProcessor implements Processor {
     }
 
 
-    public Rotation getToRotation() {
+    public static Rotation getToRotation() {
         return toRotation;
     }
 
@@ -124,8 +126,20 @@ public class RotationProcessor implements Processor {
     }
     public static void setToRotation(Rotation toRotation, boolean moveFix) {
         if (toRotation.getPitch() > 90 || toRotation.getPitch() < -90) return;
-        RotationProcessor.toRotation.setYaw(toRotation.getYaw());
-        RotationProcessor.toRotation.setPitch(toRotation.getPitch());
+
+        final float yaw = toRotation.getYaw();
+        final float pitch = toRotation.getPitch();
+
+        final float lastYaw = getToRotation().getYaw();
+        final float lastPitch = getToRotation().getPitch();
+
+        final float gcd = (float) (mc.gameSettings.mouseSensitivity * 0.6F + 0.2F) * (float) Math.pow(1.2, 3);
+
+        final float fixedYaw = lastYaw + Math.floorDiv((int) (yaw - lastYaw), (int) gcd) * gcd;
+        final float fixedPitch = lastPitch + Math.floorDiv((int) (pitch - lastPitch), (int) gcd) * gcd;
+
+        RotationProcessor.toRotation.setYaw(fixedYaw);
+        RotationProcessor.toRotation.setPitch(fixedPitch);
         rotateTicks = 1;
         revertTicks = 20;
         RotationProcessor.moveFix = moveFix;

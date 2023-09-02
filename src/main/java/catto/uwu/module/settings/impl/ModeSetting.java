@@ -39,6 +39,19 @@ public class ModeSetting extends Setting {
 		setVisible(supplier);
 	}
 
+	public void cycle() {
+		for (int i = 0; i < options.length; i++) {
+			if (options[i].equals(value)) {
+				if (i + 1 < options.length) {
+					value = options[i + 1];
+				} else {
+					value = options[0];
+				}
+				break;
+			}
+		}
+	}
+
 	public String[] getOptions() {
 		return this.options;
 	}

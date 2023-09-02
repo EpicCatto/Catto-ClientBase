@@ -5,6 +5,8 @@ import catto.uwu.module.settings.impl.BooleanSetting;
 import catto.uwu.module.settings.impl.ModeSetting;
 import catto.uwu.module.settings.impl.NoteSetting;
 import catto.uwu.module.settings.impl.NumberSetting;
+import catto.uwu.processor.impl.RotationProcessor;
+import catto.uwu.utils.player.Rotation;
 import catto.uwu.utils.player.RotationUtil;
 import catto.uwu.event.EventTarget;
 import catto.uwu.event.impl.EventMotion;
@@ -54,7 +56,8 @@ public class Killaura extends Module {
 
 
     private int targetIndex = 0;
-    public TimerUtil attackTimer, switchTimer = new TimerUtil();
+    private final TimerUtil switchTimer = new TimerUtil();
+    private final TimerUtil attackTimer = new TimerUtil();
 
     public Killaura() {
         super();
@@ -65,13 +68,22 @@ public class Killaura extends Module {
 
     @EventTarget
     public void onMotion(EventMotion event){
-        setSuffix(sortingMode.getValue());
+        setSuffix(mode.getValue());
         if (!event.isPre()) return;
 
         getAllTarget();
         sortTargets();
         slotTargetSwitch();
 
+        if (target == null) return;
+
+        float[] rotations = RotationUtil.getRotation(target);
+        RotationProcessor.setToRotation(new Rotation(rotations[0], rotations[1]), true);
+        if (attackTimer.hasReached((long) (1000 / (randomizeCps.getValue() ? random(minCps.getValue().intValue(), maxCps.getValue().intValue()) : cps.getValue())))) {
+            mc.thePlayer.swingItem();
+            mc.playerController.attackEntity(mc.thePlayer, target);
+            attackTimer.reset();
+        }
     }
 
     @Override
@@ -149,6 +161,10 @@ public class Killaura extends Module {
 //            distance = range.getValue();
 //        }
         return distance;
+    }
+
+    private int random(int min, int max) {
+        return (int) (Math.random() * (max - min) + min);
     }
 
 }

@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EventTarget {
 
-    byte value() default 2;
+    byte value() default Priority.MEDIUM;
 }

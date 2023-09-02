@@ -1,6 +1,9 @@
 # Catto-Client
 Most cutting edge client of 2023
 
+# Libs
+- ViaMCP (https://github.com/FlorianMichael/ViaMCP)
+
 # MavenMCP 1.8.9
 
 ### About

@@ -112,7 +112,7 @@ public class GuiAltsManager extends GuiScreen {
                 return;
             }
 
-            if (password.getText().isEmpty()){
+            if (password.getText().isEmpty() && combined.getText().isEmpty()){
                 mc.session = new Session(username.getText(), "0", "balls", "null");
                 status = EnumChatFormatting.GREEN + "Logged in Cracked! (" + username.getText() + ")";
                 return;

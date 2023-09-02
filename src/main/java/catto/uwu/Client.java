@@ -9,12 +9,12 @@ import catto.uwu.module.api.ModuleManager;
 import catto.uwu.module.file.FileFactory;
 import catto.uwu.module.file.config.ConfigManager;
 import catto.uwu.module.file.impl.ModulesFile;
+import catto.uwu.ui.clickgui.dropdown.DropDownGui;
 import catto.uwu.ui.clickgui.myth.MythClickGui;
 import catto.uwu.utils.client.ClientData;
 import catto.uwu.utils.client.ClientDataFile;
 import catto.uwu.processor.ProcessorManager;
-
-import java.util.Date;
+import catto.uwu.viamcp.viamcp.ViaMCP;
 
 public class Client {
     public static Client instance;
@@ -30,6 +30,8 @@ public class Client {
     public ConfigManager configManager;
     public CommandManager commandManager;
     public MythClickGui mythClickGui;
+    public DropDownGui dropDownGui;
+
     //Data
     public static ClientData clientData;
     public ProcessorManager processorManager;
@@ -37,8 +39,10 @@ public class Client {
 
     public void startClient(){
         if (instance!=null) return;
-        System.out.println(new Date().getTime());
+
         instance = this;
+
+        initViaMCP();
 
         moduleManager = new ModuleManager();
         fileFactory = new FileFactory();
@@ -57,6 +61,7 @@ public class Client {
         EventManager.register(this);
 
         mythClickGui = new MythClickGui();
+        dropDownGui = new DropDownGui();
 
         load = true;
     }
@@ -73,6 +78,18 @@ public class Client {
             instance.fileFactory.save();
         } catch (Exception e) {
             clientData.logError("Error while saving files", e);
+        }
+    }
+
+    private void initViaMCP(){
+        try {
+            ViaMCP.create();
+
+            // In case you want a version slider like in the Minecraft options, you can use this code here, please choose one of those:
+
+            ViaMCP.INSTANCE.initAsyncSlider(); // For top left aligned slider
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

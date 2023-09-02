@@ -45,6 +45,7 @@ import catto.uwu.event.impl.EventTick;
 import catto.uwu.event.impl.EventWorldLoad;
 import catto.uwu.ui.menu.GuiWelcome;
 import catto.uwu.utils.font.FontLoaders;
+import catto.uwu.viamcp.viamcp.fixes.AttackOrder;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -1503,7 +1504,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     {
         if (this.leftClickCounter <= 0)
         {
-            this.thePlayer.swingItem();
+//            Via MCP
+//            this.thePlayer.swingItem();
+            AttackOrder.sendConditionalSwing(this.objectMouseOver);
 
             if (this.objectMouseOver == null)
             {
@@ -1519,7 +1522,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                 switch (this.objectMouseOver.typeOfHit)
                 {
                     case ENTITY:
-                        this.playerController.attackEntity(this.thePlayer, this.objectMouseOver.entityHit);
+//                        Via MCP
+//                        this.playerController.attackEntity(this.thePlayer, this.objectMouseOver.entityHit);
+                        AttackOrder.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
                         break;
 
                     case BLOCK:

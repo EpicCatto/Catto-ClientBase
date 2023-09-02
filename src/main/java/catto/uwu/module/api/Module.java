@@ -21,7 +21,7 @@ public class Module implements Serializable {
     private String suffix = "";
     private int keyCode;
     private boolean enabled;
-
+    private boolean extended;
 
     private final ArrayList<Setting> settings;
 
@@ -103,6 +103,13 @@ public class Module implements Serializable {
         isShow = show;
     }
 
+    public boolean isExtended() {
+        return extended;
+    }
+
+    public void setExtended(boolean extended) {
+        this.extended = extended;
+    }
 
 
     public List<Setting> getSettings() {
