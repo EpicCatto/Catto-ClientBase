@@ -124,6 +124,12 @@ public class RotationProcessor implements Processor {
         if (toRotation.getPitch() > 90 || toRotation.getPitch() < -90) return;
         setToRotation(toRotation, true);
     }
+    
+    public static float getGCD() {
+        float GCD = Minecraft.getMinecraft().gameSettings.mouseSensitivity * 0.6F + 0.2F;
+        return GCD * GCD * GCD * 1.2F;
+    }
+    
     public static void setToRotation(Rotation toRotation, boolean moveFix) {
         if (toRotation.getPitch() > 90 || toRotation.getPitch() < -90) return;
 
@@ -133,7 +139,7 @@ public class RotationProcessor implements Processor {
         final float lastYaw = getToRotation().getYaw();
         final float lastPitch = getToRotation().getPitch();
 
-        final float gcd = (float) (mc.gameSettings.mouseSensitivity * 0.6F + 0.2F) * (float) Math.pow(1.2, 3);
+        final float gcd = getGCD();
 
         final float fixedYaw = lastYaw + Math.floorDiv((int) (yaw - lastYaw), (int) gcd) * gcd;
         final float fixedPitch = lastPitch + Math.floorDiv((int) (pitch - lastPitch), (int) gcd) * gcd;
