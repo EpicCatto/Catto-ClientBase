@@ -1,5 +1,7 @@
 package net.minecraft.client.gui;
 
+import catto.uwu.module.api.ModuleManager;
+import catto.uwu.module.modules.render.HUD;
 import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
@@ -38,6 +40,9 @@ public class GuiChat extends GuiScreen
      */
     private String defaultInputFieldText = "";
 
+    private final HUD hud = (HUD) ModuleManager.getModuleByName("HUD");
+
+
     public GuiChat()
     {
     }
@@ -68,6 +73,7 @@ public class GuiChat extends GuiScreen
      */
     public void onGuiClosed()
     {
+        hud.mouseReleased();
         Keyboard.enableRepeatEvents(false);
         this.mc.ingameGUI.getChatGUI().resetScroll();
     }
@@ -169,6 +175,7 @@ public class GuiChat extends GuiScreen
     /**
      * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
      */
+
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         if (mouseButton == 0)
@@ -182,6 +189,7 @@ public class GuiChat extends GuiScreen
         }
 
         this.inputField.mouseClicked(mouseX, mouseY, mouseButton);
+        hud.mouseClicked(mouseX, mouseY, mouseButton);
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
@@ -343,9 +351,18 @@ public class GuiChat extends GuiScreen
         }
     }
 
+    @Override
+    protected void mouseReleased(int mouseX, int mouseY, int state) {
+        hud.mouseReleased();
+        super.mouseReleased(mouseX, mouseY, state);
+    }
+
     /**
      * Returns true if this GUI should pause the game when it is displayed in single-player
      */
+
+
+
     public boolean doesGuiPauseGame()
     {
         return false;

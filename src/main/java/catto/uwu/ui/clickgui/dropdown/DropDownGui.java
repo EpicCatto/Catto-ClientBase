@@ -5,7 +5,10 @@ import catto.uwu.module.api.Module;
 import catto.uwu.module.api.ModuleManager;
 import catto.uwu.ui.clickgui.dropdown.frame.Frame;
 import catto.uwu.utils.font.FontLoaders;
+import catto.uwu.utils.render.RenderUtils;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.ScaledResolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,8 @@ public class DropDownGui extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        ScaledResolution sr = new ScaledResolution(mc);
+        RenderUtils.drawGradientRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight(), 0x10000000, 0x80000000);
         for (Frame frame : frames) {
             frame.drawScreen(mouseX, mouseY, partialTicks);
         }

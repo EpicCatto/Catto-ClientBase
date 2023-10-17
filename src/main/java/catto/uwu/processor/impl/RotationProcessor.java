@@ -6,6 +6,7 @@ import catto.uwu.event.impl.*;
 import catto.uwu.processor.Processor;
 import catto.uwu.utils.ChatUtil;
 import catto.uwu.utils.player.Rotation;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -141,8 +142,8 @@ public class RotationProcessor implements Processor {
 
         final float gcd = getGCD();
 
-        final float fixedYaw = lastYaw + Math.floorDiv((int) (yaw - lastYaw), (int) gcd) * gcd;
-        final float fixedPitch = lastPitch + Math.floorDiv((int) (pitch - lastPitch), (int) gcd) * gcd;
+        final float fixedYaw = ((yaw - lastYaw) % gcd) + yaw;
+        final float fixedPitch = ((pitch - lastPitch) % gcd)  + pitch;
 
         RotationProcessor.toRotation.setYaw(fixedYaw);
         RotationProcessor.toRotation.setPitch(fixedPitch);
