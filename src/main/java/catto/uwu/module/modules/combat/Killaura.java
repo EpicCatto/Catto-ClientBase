@@ -24,9 +24,14 @@ import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
+import net.optifine.util.MathUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Random;
 
 @ModuleData(name = "Killaura", description = "Automatically attack things around you!", category = Category.COMBAT)
 public class Killaura extends Module {
@@ -58,6 +63,7 @@ public class Killaura extends Module {
     private int targetIndex = 0;
     private final TimerUtil switchTimer = new TimerUtil();
     private final TimerUtil attackTimer = new TimerUtil();
+    private Random RANDOM = new Random();
 
     public Killaura() {
         super();
@@ -77,11 +83,10 @@ public class Killaura extends Module {
 
         if (target == null) return;
 
-        float[] rotations = RotationUtil.getRotation(target);
-        RotationProcessor.setToRotation(new Rotation(rotations[0], rotations[1]), true);
-        if (attackTimer.hasReached((long) (1000 / (randomizeCps.getValue() ? random(minCps.getValue().intValue(), maxCps.getValue().intValue()) : cps.getValue())))) {
-            mc.thePlayer.swingItem();
-            mc.playerController.attackEntity(mc.thePlayer, target);
+        RotationUtil.Rotation rotations = RotationUtil.toRotation(RotationUtil.searchCenter(target.getEntityBoundingBox(), false, true, true, true).getVec(), false);
+        RotationProcessor.setToRotation(new Rotation(rotations.getYaw(), rotations.getPitch()), true);
+        if (attackTimer.hasReached( (long) 1000 / (int) (MathUtils.nextDouble(maxCps.getValue(), minCps.getValue()) - RANDOM.nextInt(10) + RANDOM.nextInt(10)))) {
+            
             attackTimer.reset();
         }
     }

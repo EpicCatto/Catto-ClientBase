@@ -246,42 +246,6 @@ public class RotationUtil {
             return this.pitch;
         }
 
-        public void update(Rotation lastRotations) {
-            if (Float.isNaN(yaw) || Float.isNaN(pitch))
-                return;
-
-            final float yaw = getYaw();
-            final float pitch = getPitch();
-
-            final float lastYaw = lastRotations.getYaw();
-            final float lastPitch = lastRotations.getPitch();
-
-            final float f = mc.gameSettings.mouseSensitivity * 0.6F + 0.2F;
-            final float gcd = f * f * f * 1.2F;
-
-            final float deltaYaw = yaw - lastYaw;
-            final float deltaPitch = pitch - lastPitch;
-
-            final float fixedDeltaYaw = deltaYaw - (deltaYaw % gcd);
-            final float fixedDeltaPitch = deltaPitch - (deltaPitch % gcd);
-
-            final float fixedYaw = lastYaw + fixedDeltaYaw;
-            final float fixedPitch = lastPitch + fixedDeltaPitch;
-
-            //mc.thePlayer.rotationYaw = yaw;
-            //mc.thePlayer.rotationPitch = pitch;
-            setYaw(fixedYaw);
-            setPitch(fixedPitch);
-        }
-
-        public void fixedSensitivity(Float sensitivity) {
-            float f = sensitivity * 0.6F + 0.2F;
-            float gcd = f * f * f * 1.2F;
-
-            yaw -= yaw % gcd;
-            pitch -= pitch % gcd;
-        }
-
         public static class VecRotation {
             Vec3 vec;
             Rotation rotation;

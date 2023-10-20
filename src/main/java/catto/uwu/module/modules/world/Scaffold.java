@@ -40,7 +40,7 @@ public class Scaffold extends Module {
     @EventTarget
     public void onStrafe(EventStrafe event) {
 //        apply movefix
-//        event.setYaw(rotations[0]);
+        event.setYaw(rotations[0]);
     }
     @Override
     public void onEnable() {

@@ -6,6 +6,7 @@ import catto.uwu.event.impl.*;
 import catto.uwu.processor.Processor;
 import catto.uwu.utils.ChatUtil;
 import catto.uwu.utils.player.Rotation;
+import catto.uwu.utils.player.RotationUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
@@ -37,7 +38,7 @@ public class RotationProcessor implements Processor {
         }
     }
 
-    @EventTarget(value = Priority.VERY_HIGH)
+    @EventTarget
     public void onStrafe(EventStrafe event) {
         if(enabled && moveFix) {
             event.setYaw(clientRotation.getYaw());
@@ -101,7 +102,7 @@ public class RotationProcessor implements Processor {
         if (base < 0) base = -base;
         if (base > 180.0) base = 180.0;
 
-        final float turnSpeed = (float) (base / ThreadLocalRandom.current().nextDouble(1.5, 2.5));
+        final float turnSpeed = (float) (base / ThreadLocalRandom.current().nextDouble(1, 2.5));
 
         clientRotation.setYaw(serverRotation.getYaw() + (yawDifference > turnSpeed ? turnSpeed : Math.max(yawDifference, -turnSpeed)));
         clientRotation.setPitch(serverRotation.getPitch() + (pitchDifference > turnSpeed ? turnSpeed : Math.max(pitchDifference, -turnSpeed)));
@@ -134,19 +135,29 @@ public class RotationProcessor implements Processor {
     public static void setToRotation(Rotation toRotation, boolean moveFix) {
         if (toRotation.getPitch() > 90 || toRotation.getPitch() < -90) return;
 
+
+
         final float yaw = toRotation.getYaw();
         final float pitch = toRotation.getPitch();
-
+        if (Float.isNaN(yaw) || Float.isNaN(pitch))
+            return;
         final float lastYaw = getToRotation().getYaw();
         final float lastPitch = getToRotation().getPitch();
 
-        final float gcd = getGCD();
+        final float f = mc.gameSettings.mouseSensitivity * 0.6F + 0.2F;
+        final float gcd = f * f * f * 1.2F;
 
-        final float fixedYaw = ((yaw - lastYaw) % gcd) + yaw;
-        final float fixedPitch = ((pitch - lastPitch) % gcd)  + pitch;
+        final float deltaYaw = yaw - lastYaw;
+        final float deltaPitch = pitch - lastPitch;
 
-        RotationProcessor.toRotation.setYaw(fixedYaw);
-        RotationProcessor.toRotation.setPitch(fixedPitch);
+        final float fixedDeltaYaw = deltaYaw - (deltaYaw % gcd);
+        final float fixedDeltaPitch = deltaPitch - (deltaPitch % gcd);
+
+        final float fixedYaw = lastYaw + fixedDeltaYaw;
+        final float fixedPitch = lastPitch + fixedDeltaPitch;
+
+        RotationProcessor.getToRotation().setYaw(fixedYaw);
+        RotationProcessor.getToRotation().setPitch(fixedPitch);
         rotateTicks = 1;
         revertTicks = 20;
         RotationProcessor.moveFix = moveFix;
