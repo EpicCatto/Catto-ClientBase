@@ -32,14 +32,18 @@ public class ModulesFile implements IFile {
             return;
         }
 
-        JsonObject object = gson.fromJson(readFile(file), JsonObject.class);
-        if (object.has("Modules")){
-            JsonObject modulesObject = object.getAsJsonObject("Modules");
+        try{
+            JsonObject object = gson.fromJson(readFile(file), JsonObject.class);
+            if (object.has("Modules")){
+                JsonObject modulesObject = object.getAsJsonObject("Modules");
 
-            for (Module module : ModuleManager.getModules()) {
-                if (modulesObject.has(module.getName()))
-                    module.load(modulesObject.getAsJsonObject(module.getName()), true);
+                for (Module module : ModuleManager.getModules()) {
+                    if (modulesObject.has(module.getName()))
+                        module.load(modulesObject.getAsJsonObject(module.getName()), true);
+                }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

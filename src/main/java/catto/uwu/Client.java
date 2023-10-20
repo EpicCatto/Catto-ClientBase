@@ -11,9 +11,11 @@ import catto.uwu.module.file.config.ConfigManager;
 import catto.uwu.module.file.impl.ModulesFile;
 import catto.uwu.ui.clickgui.dropdown.DropDownGui;
 import catto.uwu.ui.clickgui.myth.MythClickGui;
+import catto.uwu.ui.hud.ElementsFile;
 import catto.uwu.utils.client.ClientData;
 import catto.uwu.utils.client.ClientDataFile;
 import catto.uwu.processor.ProcessorManager;
+import catto.uwu.utils.render.blur.BlurProcessor;
 import catto.uwu.viamcp.viamcp.ViaMCP;
 
 public class Client {
@@ -31,6 +33,7 @@ public class Client {
     public CommandManager commandManager;
     public MythClickGui mythClickGui;
     public DropDownGui dropDownGui;
+    public BlurProcessor blurProcessor;
 
     //Data
     public static ClientData clientData;
@@ -49,12 +52,14 @@ public class Client {
         commandManager = new CommandManager();
         configManager = new ConfigManager();
         processorManager = new ProcessorManager();
+        blurProcessor = new BlurProcessor(true);
 
         moduleManager.registerNormal();
         fileFactory.setupRoot(clientName);
         fileFactory.add(
                 new ModulesFile(),
-                new ClientDataFile()
+                new ClientDataFile(),
+                new ElementsFile()
         );
         this.fileFactory.load();
 

@@ -8,9 +8,14 @@ import catto.uwu.module.api.Category;
 import catto.uwu.module.api.Module;
 import catto.uwu.module.api.ModuleData;
 import catto.uwu.module.api.ModuleManager;
+import catto.uwu.module.settings.impl.BooleanSetting;
+import catto.uwu.module.settings.impl.ModeSetting;
+import catto.uwu.module.settings.impl.NoteSetting;
+import catto.uwu.ui.clickgui.dropdown.frame.component.impl.settings.NoteComponent;
 import catto.uwu.ui.hud.Element;
 import catto.uwu.ui.hud.elements.Arraylist;
 import catto.uwu.ui.hud.elements.Label;
+import catto.uwu.ui.hud.elements.Watermark;
 import catto.uwu.ui.hud.elements.sessioninfo.SessionInfo;
 import catto.uwu.utils.render.ColorUtil;
 import catto.uwu.utils.font.FontLoaders;
@@ -26,20 +31,30 @@ import java.util.HashMap;
 @ModuleData(name = "HUD", description = "Show module on your screen cuz yes :D", category = Category.RENDER)
 public class HUD extends Module {
 
+    private static HUD instance = null;
 
-
-    private final HUD instance;
-
-    private ArrayList<Element> elements = new ArrayList<>();
+    private final ArrayList<Element> elements = new ArrayList<>();
     private Element dragging = null;
 
-    private SessionInfo debugInfo = new SessionInfo("Debug Info");
+    private final SessionInfo debugInfo = new SessionInfo("Debug Info");
+
+//    Settingss
+    public NoteSetting watermarkSettings = new NoteSetting("Watermark Settings", this);
+    public NoteSetting arraylistSettings = new NoteSetting("Arraylist Settings", this);
+    public NoteSetting sessionInfoSettings = new NoteSetting("Session Info Settings", this);
+
+//    Watermark
+    public ModeSetting watermarkStyle = new ModeSetting("Style", this, new String[]{"Myth", "Sense", "Exhi", "Custom"}, "Myth", watermarkSettings);
+    public BooleanSetting watermarkFont = new BooleanSetting("Font", this, true, watermarkSettings);
+    public ModeSetting watermarkFontStyle = new ModeSetting("Fonts", this, new String[]{"SF-UI", "Product Sans", "Ali"}, "Normal", watermarkSettings);
 
     public HUD() {
         instance = this;
-        elements.add(new Label("Client Brand", Client.clientName));
+        elements.add(new Watermark("Client Brand", Client.clientName));
         elements.add(new Arraylist("Modules Array"));
         elements.add(debugInfo);
+
+        addSettings(watermarkSettings, watermarkStyle, watermarkFont);
     }
 
     @EventTarget
@@ -85,8 +100,11 @@ public class HUD extends Module {
 
 
 
-
-    public HUD getInstance() {
+    public static HUD getInstance() {
         return instance;
+    }
+
+    public ArrayList<Element> getElements() {
+        return elements;
     }
 }

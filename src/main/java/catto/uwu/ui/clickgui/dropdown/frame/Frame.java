@@ -43,8 +43,8 @@ public class Frame {
 //        background
         Gui.drawRect((int)x, (int)y - 5, (int)x2, (int)y2, new Color(0, 0, 0, 150).getRGB());
 //        line
-        Gui.drawRect((int)x, (int)y2, (int)x2, (int)y2 + 1, -1);
-        RenderUtils.drawGradientSideways((int)x, (int)y - 5, (int)x2, (int)y - 4, ColorUtil.mythColor(100000), ColorUtil.mythColor(1000000));
+//        Gui.drawRect((int)x, (int)y2, (int)x2, (int)y2 + 1, -1);
+        RenderUtils.drawGradientSideways((int)x, (int)y2, (int)x2, (int)y2 + 1, ColorUtil.mythColor(100000), ColorUtil.mythColor(1000000));
         FontLoaders.Sfui20.drawString(category.getName(), (int)x + 5, (int)y, -1);
 
         if (!expanded)

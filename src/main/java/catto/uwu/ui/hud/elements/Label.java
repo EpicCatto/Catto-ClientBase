@@ -2,40 +2,69 @@ package catto.uwu.ui.hud.elements;
 
 import catto.uwu.Client;
 import catto.uwu.ui.hud.Element;
+import catto.uwu.utils.ChatUtil;
+import catto.uwu.utils.render.ColorUtil;
+import com.google.common.base.Preconditions;
+import com.google.gson.JsonObject;
+import com.sun.istack.internal.NotNull;
 import net.minecraft.client.Minecraft;
+
+import java.awt.*;
 
 public class Label extends Element {
     public String text;
+    public boolean dropShadow, bloom;
+    public Color bloomColor;
 
 
     public Label(String name, String text) {
         super(name, 0, 0, 0, 0);
         this.text = text;
+        this.dropShadow = true;
+        this.bloom = false;
+        this.bloomColor = new Color(33, 33, 37, 155);
+    }
+    public Label(String name, String text, boolean dropShadow, boolean bloom, Color color) {
+        super(name, 0, 0, 0, 0);
+        this.text = text;
+        this.dropShadow = dropShadow;
+        this.bloom = bloom;
+        this.bloomColor = color;
     }
 
     @Override
     public void draw() {
-        String displayedText = text
-                .replaceAll("%fps%", Integer.toString(Minecraft.getDebugFPS()))
-                .replaceAll("%tps%", Double.toString(Math.round(Minecraft.getMinecraft().timer.timerSpeed * 100) / 100.0))
-                .replaceAll("%x%", Double.toString(Math.floor(Minecraft.getMinecraft().thePlayer.posX)))
-                .replaceAll("%y%", Double.toString(Math.floor(Minecraft.getMinecraft().thePlayer.posY)))
-                .replaceAll("%z%", Double.toString(Math.floor(Minecraft.getMinecraft().thePlayer.posZ)))
-                .replaceAll("%fall%", Double.toString(Math.floor(Minecraft.getMinecraft().thePlayer.fallDistance)))
-                .replaceAll("%ticks%", Integer.toString(Minecraft.getMinecraft().thePlayer.ticksExisted))
-                .replaceAll("%health%", Float.toString(Math.round(Minecraft.getMinecraft().thePlayer.getHealth())))
-                .replaceAll("%server%", Minecraft.getMinecraft().getCurrentServerData() == null ? "localhost" : Minecraft.getMinecraft().getCurrentServerData().serverIP)
-                .replaceAll("%ping%", Minecraft.getMinecraft().getCurrentServerData() == null ? "0" : Long.toString(Minecraft.getMinecraft().getCurrentServerData().pingToServer))
-                .replaceAll("%balance%", Double.toString(0))
-                .replaceAll("%name%", Minecraft.getMinecraft().thePlayer.getGameProfile().getName())
-                .replaceAll("%version%", Client.clientVersion)
-                .replaceAll("%ign%", Minecraft.getMinecraft().thePlayer.getGameProfile().getName());
+        String displayedText = ChatUtil.formatLabel(text);
 
-        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(displayedText, x, y, -1);
-        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(displayedText.substring(0, 1), x, y, 0xFF00FF00);
+        if (bloom)
+            Client.instance.blurProcessor.bloom((int) x, (int) y, (int) width, (int) height, 8, bloomColor);
+
+        if (dropShadow)
+            Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(displayedText, x, y, -1);
+        else
+            Minecraft.getMinecraft().fontRendererObj.drawString(displayedText, (int) x, (int) y, -1);
+
+
         this.width = fr.getStringWidth(displayedText);
         this.height = fr.FONT_HEIGHT;
 
+    }
 
+    @Override
+    public void save(JsonObject object) {
+        object.addProperty("text", text);
+        object.addProperty("dropShadow", dropShadow);
+        object.addProperty("bloom", bloom);
+        object.addProperty("bloomColor", ColorUtil.toHex(bloomColor));
+        super.save(object);
+    }
+
+    @Override
+    public void load(JsonObject object) {
+        text = object.get("text").getAsString();
+        dropShadow = object.get("dropShadow").getAsBoolean();
+        bloom = object.get("bloom").getAsBoolean();
+        bloomColor = new Color(ColorUtil.fromHEX(object.get("bloomColor").getAsString()));
+        super.load(object);
     }
 }

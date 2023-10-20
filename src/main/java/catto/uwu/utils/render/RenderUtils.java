@@ -14,8 +14,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glScissor;
+import static org.lwjgl.opengl.GL11.*;
 
 public class RenderUtils {
 
@@ -231,25 +230,64 @@ public class RenderUtils {
         tessellator.draw();
     }
 
-    public static void drawRoundedRect(float x, float y, float x2, float y2, final float round, final int color) {
-        x += (float) (round / 2.0f + 0.5);
-        y += (float) (round / 2.0f + 0.5);
-        x2 -= (float) (round / 2.0f + 0.5);
-        y2 -= (float) (round / 2.0f + 0.5);
-        Gui.drawRect((int) x, (int) y, (int) x2, (int) y2, color);
-        circle(x2 - round / 2.0f, y + round / 2.0f, round, color);
-        circle(x + round / 2.0f, y2 - round / 2.0f, round, color);
-        circle(x + round / 2.0f, y + round / 2.0f, round, color);
-        circle(x2 - round / 2.0f, y2 - round / 2.0f, round, color);
-        Gui.drawRect((int) (x - round / 2.0f - 0.5f), (int) (y + round / 2.0f), (int) x2, (int) (y2 - round / 2.0f),
-                color);
-        Gui.drawRect((int) x, (int) (y + round / 2.0f), (int) (x2 + round / 2.0f + 0.5f), (int) (y2 - round / 2.0f),
-                color);
-        Gui.drawRect((int) (x + round / 2.0f), (int) (y - round / 2.0f - 0.5f), (int) (x2 - round / 2.0f),
-                (int) (y2 - round / 2.0f), color);
-        Gui.drawRect((int) (x + round / 2.0f), (int) y, (int) (x2 - round / 2.0f), (int) (y2 + round / 2.0f + 0.5f),
-                color);
+    public static void drawRoundedRect(double x, double y, double x1, double y1, double radius, int color) {
+
+        float alpha = (color >> 24 & 255) / 255.0f;
+        float red = (color >> 16 & 255) / 255.0f;
+        float green = (color >> 8 & 255) / 255.0f;
+        float blue = (color & 255) / 255.0f;
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glMatrixMode(GL_MODELVIEW);
+
+        GL11.glPushMatrix();
+        GL11.glColor4f(red, green, blue, alpha);
+        x *= 2.0D;
+        y *= 2.0D;
+        x1 *= 2.0D;
+        y1 *= 2.0D;
+        GL11.glScaled(0.5D, 0.5D, 0.5D);
+        double center_X = (x1 - x) /2 + x;
+        double centre_Y = (y1 - y) /2 + y;
+        GL11.glTranslated(center_X,centre_Y,0);
+        GL11.glTranslated(-center_X,-centre_Y,0);
+        GL11.glBegin(9);
+
+        int i;
+        // Top left Corner
+        for (i = 0; i <= 90; i += 3) {
+            GL11.glVertex2d(x + radius + Math.sin((double) i * 3.141592653589793D / 180.0D) * radius * -1.0D, y + radius + Math.cos((double) i * 3.141592653589793D / 180.0D) * radius * -1.0D);
+        }
+        // Bottom left Corner
+        for (i = 90; i <= 180; i += 3) {
+            GL11.glVertex2d(x + radius + Math.sin((double) i * 3.141592653589793D / 180.0D) * radius * -1.0D, y1 - radius + Math.cos((double) i * 3.141592653589793D / 180.0D) * radius * -1.0D);
+        }
+        // Bottom Right Corner
+        for (i = 0; i <= 90; i += 3) {
+            GL11.glVertex2d(x1 - radius + Math.sin((double) i * 3.141592653589793D / 180.0D) * radius, y1 - radius + Math.cos((double) i * 3.141592653589793D / 180.0D) * radius);
+        }
+        // Top Right Corner
+        for (i = 90; i <= 180; i += 3) {
+            GL11.glVertex2d(x1 - radius + Math.sin((double) i * 3.141592653589793D / 180.0D) * radius, y + radius + Math.cos((double) i * 3.141592653589793D / 180.0D) * radius);
+        }
+
+
+        GL11.glEnd();
+        GL11.glScaled(2.0D, 2.0D, 2.0D);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GL11.glDisable(GL11.GL_BLEND);
+        GlStateManager.disableBlend();
+        GlStateManager.enableAlpha();
+        GlStateManager.enableDepth();
+        color(Color.white.getRGB());
+        GL11.glColor3f(255, 255, 255);
+        GL11.glPopMatrix();
+
     }
+
 
     public static void circle(final float x, final float y, final float radius, final int fill) {
         arc(x, y, 0.0f, 360.0f, radius, fill);

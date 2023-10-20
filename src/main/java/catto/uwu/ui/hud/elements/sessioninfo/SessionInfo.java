@@ -1,9 +1,13 @@
 package catto.uwu.ui.hud.elements.sessioninfo;
 
+import catto.uwu.Client;
 import catto.uwu.ui.hud.Element;
 import catto.uwu.utils.font.FontLoaders;
+import catto.uwu.utils.render.ColorUtil;
+import catto.uwu.utils.render.RenderUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -48,19 +52,21 @@ public class SessionInfo extends Element{
         }
 
         this.width = longest + 50;
-        this.height = (FontLoaders.Sfui18.getHeight() + 2) * countyes + 20;
-
-        //Draw head
-        Gui.drawRect(x + 10, y - FontLoaders.Sfui18.getHeight() + 4, x + 50 + longest, y + 10, new Color(0, 0, 0, 161).getRGB());
-        FontLoaders.Sfui18.drawString(name, x + (longest+50)/2 - FontLoaders.Sfui18.getStringWidth(name)/4, y, -1);
+        this.height = ((FontLoaders.Sfui18.getHeight() + 2) * countyes + 20) + 5;
 
         //Backround
-        Gui.drawRect(x + 10, y + 10, x + 50 + longest, y + 20 + ((FontLoaders.Sfui18.getHeight() + 2) * countyes), new Color(0, 0, 0, 100).getRGB());
+//        RenderUtils.drawRoundedRect(x, y, x + width, y + height, 10f, new Color(0, 0, 0, 150).getRGB());
+//        Client.instance.blurProcessor.blur(x, y, width, height, false);
+        Client.instance.blurProcessor.bloom(x, y, (int) width, (int) height, 8, new Color(0, 0, 0, 163));
 
+        FontLoaders.Sfui18.drawString(name, (int) (x + (width/2) - FontLoaders.Sfui18.getStringWidth(name)/2), y + 5, -1);
+
+//        underline
+        Gui.drawRect(x + (width/2) - FontLoaders.Sfui18.getStringWidth(name)/2, y + 5 + FontLoaders.Sfui18.getHeight() + 2, x + (width/2) + FontLoaders.Sfui18.getStringWidth(name)/2, y + 5 + FontLoaders.Sfui18.getHeight() + 3, -1);
 
         // list all the info
         for (String s : sorted) {
-            FontLoaders.Sfui18.drawStringWithShadow(s + ": " + info.get(s), x + 15, y + 15 + ((FontLoaders.Sfui18.getHeight() + 4) * count), color);
+            FontLoaders.Sfui18.drawStringWithShadow(s + ": " + info.get(s), x + (width/2) - FontLoaders.Sfui18.getStringWidth(name)/2, y + 20 + ((FontLoaders.Sfui18.getHeight() + 4) * count), color);
             count++;
         }
     }

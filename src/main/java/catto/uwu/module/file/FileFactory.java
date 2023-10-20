@@ -40,6 +40,10 @@ public class FileFactory extends Container<IFile> {
         forEach(file -> file.load(GSON));
     }
 
+    public File getRoot() {
+        return root;
+    }
+
     public void setupRoot(String name) {
         // make the root directory
         root = new File(Minecraft.getMinecraft().mcDataDir, name);

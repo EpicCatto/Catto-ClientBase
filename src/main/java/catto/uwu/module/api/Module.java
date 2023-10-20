@@ -22,6 +22,7 @@ public class Module implements Serializable {
     private int keyCode;
     private boolean enabled;
     private boolean extended;
+    private float x, y;
 
     private final ArrayList<Setting> settings;
 
@@ -119,6 +120,22 @@ public class Module implements Serializable {
     public final void addSettings(Setting... settings) {
         // added all settings to the list
         this.settings.addAll(Arrays.asList(settings));
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
     }
 
     @Override

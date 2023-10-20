@@ -1,5 +1,9 @@
 package catto.uwu.utils.render;
 
+import catto.uwu.Client;
+import com.google.common.base.Preconditions;
+import com.sun.istack.internal.NotNull;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.awt.*;
@@ -51,4 +55,29 @@ public class ColorUtil {
     public static String translateColor(String original) {
         return original.replaceAll("&([0-9a-fk-or])", "\u00a7$1");
     }
+
+    public static int fromHEX(String sex){
+        int r = Integer.valueOf(sex.substring(1, 3), 16); int g = Integer.valueOf(sex.substring(3, 5), 16); int b = Integer.valueOf(sex.substring(5, 7), 16);
+        return new Color(r, g, b).getRGB();
+    }
+
+    public static String toHex(Color color) {
+        return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+    }
+
+    @NotNull
+    public static String translateAlternateColorCodes(char altColorChar, @NotNull String textToTranslate) {
+        Preconditions.checkArgument(textToTranslate != null, "Cannot translate null text");
+        char[] b = textToTranslate.toCharArray();
+
+        for(int i = 0; i < b.length - 1; ++i) {
+            if (b[i] == altColorChar && "0123456789AaBbCcDdEeFfKkLlMmNnOoRrXx".indexOf(b[i + 1]) > -1) {
+                b[i] = 167;
+                b[i + 1] = Character.toLowerCase(b[i + 1]);
+            }
+        }
+
+        return new String(b);
+    }
+
 }

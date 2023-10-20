@@ -33,6 +33,7 @@ public class CommandManager {
         commands.put(new String[]{"config", "c"}, new ConfigCommand());
         commands.put(new String[]{"hclip", "hc"}, new HClipCommand());
         commands.put(new String[]{"vclip", "vc"}, new VClipCommand());
+        commands.put(new String[]{"elements", "e"}, new ElementsCommand());
         //TODO when im not lazy :(
         //commands.put(new String[]{"setting", "s"}, new SettingsCommand());
     }
