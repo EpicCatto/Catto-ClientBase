@@ -43,7 +43,7 @@ public class BlockCommandBlock extends BlockContainer
         if (!worldIn.isRemote)
         {
             boolean flag = worldIn.isBlockPowered(pos);
-            boolean flag1 = ((Boolean)state.getValue(TRIGGERED)).booleanValue();
+            boolean flag1 = state.getValue(TRIGGERED).booleanValue();
 
             if (flag && !flag1)
             {
@@ -79,7 +79,7 @@ public class BlockCommandBlock extends BlockContainer
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         TileEntity tileentity = worldIn.getTileEntity(pos);
-        return tileentity instanceof TileEntityCommandBlock ? ((TileEntityCommandBlock)tileentity).getCommandBlockLogic().tryOpenEditCommandBlock(playerIn) : false;
+        return tileentity instanceof TileEntityCommandBlock && ((TileEntityCommandBlock) tileentity).getCommandBlockLogic().tryOpenEditCommandBlock(playerIn);
     }
 
     public boolean hasComparatorInputOverride()
@@ -147,7 +147,7 @@ public class BlockCommandBlock extends BlockContainer
     {
         int i = 0;
 
-        if (((Boolean)state.getValue(TRIGGERED)).booleanValue())
+        if (state.getValue(TRIGGERED).booleanValue())
         {
             i |= 1;
         }
@@ -157,7 +157,7 @@ public class BlockCommandBlock extends BlockContainer
 
     protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] {TRIGGERED});
+        return new BlockState(this, TRIGGERED);
     }
 
     /**

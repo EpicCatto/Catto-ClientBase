@@ -11,7 +11,7 @@ import net.minecraft.client.gui.Gui;
 import java.awt.*;
 
 public class NoteComponent extends Component {
-    private NoteSetting noteSetting;
+    private final NoteSetting noteSetting;
     public NoteComponent(double x, double y, Frame parent, Module module, NoteSetting noteSetting) {
         this.x = x;
         this.y = y;

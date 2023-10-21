@@ -76,8 +76,8 @@ public class RenderUtils {
         WorldRenderer worldRenderer = tessellator.getWorldRenderer();
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
-        GlStateManager.tryBlendFuncSeparate((int)770, (int)771, (int)1, (int)0);
-        GlStateManager.color((float)var6, (float)var7, (float)var8, (float)var11);
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.color(var6, var7, var8, var11);
         worldRenderer.begin(7, DefaultVertexFormats.POSITION);
         worldRenderer.pos(left, bottom, 0.0).endVertex();
         worldRenderer.pos(right, bottom, 0.0).endVertex();
@@ -86,31 +86,31 @@ public class RenderUtils {
         tessellator.draw();
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
-        GlStateManager.color((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
     }
     public static void rectangleBordered(double x, double y, double x1, double y1, double width, int internalColor, int borderColor) {
         RenderUtils.rectangle(x + width, y + width, x1 - width, y1 - width, internalColor);
-        GlStateManager.color((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         RenderUtils.rectangle(x + width, y, x1 - width, y + width, borderColor);
-        GlStateManager.color((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         RenderUtils.rectangle(x, y, x + width, y1, borderColor);
-        GlStateManager.color((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         RenderUtils.rectangle(x1 - width, y, x1, y1, borderColor);
-        GlStateManager.color((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         RenderUtils.rectangle(x + width, y1 - width, x1 - width, y1, borderColor);
-        GlStateManager.color((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
     }
     public static void rectangleBorderedint(int x, int y, int x1, int y1, int width, int internalColor, int borderColor) {
         RenderUtils.rectangle(x + width, y + width, x1 - width, y1 - width, internalColor);
-        GlStateManager.color((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         RenderUtils.rectangle(x + width, y, x1 - width, y + width, borderColor);
-        GlStateManager.color((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         RenderUtils.rectangle(x, y, x + width, y1, borderColor);
-        GlStateManager.color((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         RenderUtils.rectangle(x1 - width, y, x1, y1, borderColor);
-        GlStateManager.color((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         RenderUtils.rectangle(x + width, y1 - width, x1 - width, y1, borderColor);
-        GlStateManager.color((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
     }
     public static void drawGradientSideways(final double left, final double top, final double right, final double bottom, final int col1, final int col2) {
         final float f = (col1 >> 24 & 0xFF) / 255.0f;

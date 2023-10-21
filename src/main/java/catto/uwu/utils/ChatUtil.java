@@ -32,7 +32,7 @@ public class ChatUtil {
                 .replaceAll("%name%", Minecraft.getMinecraft().thePlayer.getGameProfile().getName())
                 .replaceAll("%version%", Client.clientVersion)
                 .replaceAll("%ign%", Minecraft.getMinecraft().thePlayer.getGameProfile().getName())
-                .replaceAll("%pctime%", String.valueOf(java.time.LocalTime.now().getHour() > 12 ? java.time.LocalTime.now().getHour() - 12 : java.time.LocalTime.now().getHour()) + ":" + java.time.LocalTime.now().getMinute() + " " + (java.time.LocalTime.now().getHour() > 12 ? "PM" : "AM"));
+                .replaceAll("%pctime%", (java.time.LocalTime.now().getHour() > 12 ? java.time.LocalTime.now().getHour() - 12 : java.time.LocalTime.now().getHour()) + ":" + java.time.LocalTime.now().getMinute() + " " + (java.time.LocalTime.now().getHour() > 12 ? "PM" : "AM"));
 
     }
 

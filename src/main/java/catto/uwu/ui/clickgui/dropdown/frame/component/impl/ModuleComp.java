@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ModuleComp extends Component {
 
-    private ArrayList<Component> components = new ArrayList<>();
+    private final ArrayList<Component> components = new ArrayList<>();
 
     public ModuleComp(double x, double y, double offset, Frame parent, Module module) {
         this.x = x;

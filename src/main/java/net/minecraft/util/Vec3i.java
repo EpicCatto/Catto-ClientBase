@@ -41,7 +41,7 @@ public class Vec3i implements Comparable<Vec3i>
         else
         {
             Vec3i vec3i = (Vec3i)p_equals_1_;
-            return this.getX() != vec3i.getX() ? false : (this.getY() != vec3i.getY() ? false : this.getZ() == vec3i.getZ());
+            return this.getX() == vec3i.getX() && (this.getY() == vec3i.getY() && this.getZ() == vec3i.getZ());
         }
     }
 
@@ -114,7 +114,7 @@ public class Vec3i implements Comparable<Vec3i>
      */
     public double distanceSq(Vec3i to)
     {
-        return this.distanceSq((double)to.getX(), (double)to.getY(), (double)to.getZ());
+        return this.distanceSq(to.getX(), to.getY(), to.getZ());
     }
 
     public String toString()

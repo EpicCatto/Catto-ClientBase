@@ -49,17 +49,9 @@ public class ClickEvent
             {
                 if (this.value != null)
                 {
-                    if (!this.value.equals(clickevent.value))
-                    {
-                        return false;
-                    }
+                    return this.value.equals(clickevent.value);
                 }
-                else if (clickevent.value != null)
-                {
-                    return false;
-                }
-
-                return true;
+                else return clickevent.value == null;
             }
         }
         else
@@ -70,7 +62,7 @@ public class ClickEvent
 
     public String toString()
     {
-        return "ClickEvent{action=" + this.action + ", value=\'" + this.value + '\'' + '}';
+        return "ClickEvent{action=" + this.action + ", value='" + this.value + '\'' + '}';
     }
 
     public int hashCode()
@@ -80,7 +72,7 @@ public class ClickEvent
         return i;
     }
 
-    public static enum Action
+    public enum Action
     {
         OPEN_URL("open_url", true),
         OPEN_FILE("open_file", false),
@@ -89,11 +81,11 @@ public class ClickEvent
         SUGGEST_COMMAND("suggest_command", true),
         CHANGE_PAGE("change_page", true);
 
-        private static final Map<String, ClickEvent.Action> nameMapping = Maps.<String, ClickEvent.Action>newHashMap();
+        private static final Map<String, ClickEvent.Action> nameMapping = Maps.newHashMap();
         private final boolean allowedInChat;
         private final String canonicalName;
 
-        private Action(String canonicalNameIn, boolean allowedInChatIn)
+        Action(String canonicalNameIn, boolean allowedInChatIn)
         {
             this.canonicalName = canonicalNameIn;
             this.allowedInChat = allowedInChatIn;
@@ -111,7 +103,7 @@ public class ClickEvent
 
         public static ClickEvent.Action getValueByCanonicalName(String canonicalNameIn)
         {
-            return (ClickEvent.Action)nameMapping.get(canonicalNameIn);
+            return nameMapping.get(canonicalNameIn);
         }
 
         static {

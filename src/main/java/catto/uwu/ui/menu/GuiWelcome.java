@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GuiWelcome extends GuiScreen {
 
-    private TimerUtil timer = new TimerUtil();
+    private final TimerUtil timer = new TimerUtil();
     private int page, stage = 0;
 
     private ScreenStage screenStage;

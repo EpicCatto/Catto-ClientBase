@@ -30,7 +30,7 @@ public class CommandStop extends CommandBase
     {
         if (MinecraftServer.getServer().worldServers != null)
         {
-            notifyOperators(sender, this, "commands.stop.start", new Object[0]);
+            notifyOperators(sender, this, "commands.stop.start");
         }
 
         MinecraftServer.getServer().initiateShutdown();

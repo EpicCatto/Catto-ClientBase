@@ -55,7 +55,7 @@ public class ClientData {
     public void logError(String errorTitle, Throwable info) {
         System.err.println("[ERROR] " + errorTitle + ": " + info.getMessage());
         info.printStackTrace();
-        stackErrorLogs.put("[" + new Date().toString() + "] " + errorTitle, info);
+        stackErrorLogs.put("[" + new Date() + "] " + errorTitle, info);
     }
 
 

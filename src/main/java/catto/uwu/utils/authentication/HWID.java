@@ -139,7 +139,7 @@ public class HWID {
         }
 
         public String getMc() {
-            return String.valueOf(System.getProperty("user.home")) + this.mc;
+            return System.getProperty("user.home") + this.mc;
         }
 
         public static final OSHelper getOS() {

@@ -64,7 +64,7 @@ public class Killaura extends Module {
     private int targetIndex = 0;
     private final TimerUtil switchTimer = new TimerUtil();
     private final TimerUtil attackTimer = new TimerUtil();
-    private Random RANDOM = new Random();
+    private final Random RANDOM = new Random();
 
     public Killaura() {
         super();
@@ -115,7 +115,6 @@ public class Killaura extends Module {
                 break;
             case "mc":
                 mc.thePlayer.swingItem();
-                if (mc.thePlayer.ticksExisted % 2 == 0)
                 mc.playerController.attackEntity(mc.thePlayer, target);
                 break;
             case "legit":

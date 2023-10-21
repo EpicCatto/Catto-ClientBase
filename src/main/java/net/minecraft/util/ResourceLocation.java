@@ -21,7 +21,7 @@ public class ResourceLocation
 
     public ResourceLocation(String resourceDomainIn, String resourcePathIn)
     {
-        this(0, new String[] {resourceDomainIn, resourcePathIn});
+        this(0, resourceDomainIn, resourcePathIn);
     }
 
     /**
@@ -35,7 +35,7 @@ public class ResourceLocation
 
         if (i >= 0)
         {
-            astring[1] = toSplit.substring(i + 1, toSplit.length());
+            astring[1] = toSplit.substring(i + 1);
 
             if (i > 1)
             {

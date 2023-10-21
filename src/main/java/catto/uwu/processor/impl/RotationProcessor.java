@@ -98,7 +98,7 @@ public class RotationProcessor implements Processor {
 
     }
 
-    @EventTarget
+    @EventTarget(Priority.VERY_HIGH)
     public void onTick(EventTick event){
         if (mc.thePlayer != null) {
             mc.thePlayer.lastMovementYaw = mc.thePlayer.movementYaw;

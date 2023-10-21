@@ -25,7 +25,7 @@ public class BooleanComponent extends Component {
         super.drawScreen(mouseX, mouseY);
 
         FontLoaders.Sfui20.drawString(setting.getName(), (int)(parent.x + x - 55), (int)(parent.y + y + 1), new Color(200,200,200).getRGB());
-        RenderUtils.drawCircle((float) parent.x + x - 65, (double)parent.y + y + 5, 5f,((BooleanSetting)setting).getValue() ? new Color(0, 216, 245).getRGB() : new Color(30,30,30).getRGB());
+        RenderUtils.drawCircle((float) parent.x + x - 65, parent.y + y + 5, 5f,((BooleanSetting)setting).getValue() ? new Color(0, 216, 245).getRGB() : new Color(30,30,30).getRGB());
     }
 
     @Override

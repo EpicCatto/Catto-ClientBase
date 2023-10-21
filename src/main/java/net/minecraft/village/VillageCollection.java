@@ -17,9 +17,9 @@ import net.minecraft.world.WorldSavedData;
 public class VillageCollection extends WorldSavedData
 {
     private World worldObj;
-    private final List<BlockPos> villagerPositionsList = Lists.<BlockPos>newArrayList();
-    private final List<VillageDoorInfo> newDoors = Lists.<VillageDoorInfo>newArrayList();
-    private final List<Village> villageList = Lists.<Village>newArrayList();
+    private final List<BlockPos> villagerPositionsList = Lists.newArrayList();
+    private final List<VillageDoorInfo> newDoors = Lists.newArrayList();
+    private final List<Village> villageList = Lists.newArrayList();
     private int tickCounter;
 
     public VillageCollection(String name)
@@ -83,7 +83,7 @@ public class VillageCollection extends WorldSavedData
 
         while (iterator.hasNext())
         {
-            Village village = (Village)iterator.next();
+            Village village = iterator.next();
 
             if (village.isAnnihilated())
             {
@@ -126,7 +126,7 @@ public class VillageCollection extends WorldSavedData
     {
         if (!this.villagerPositionsList.isEmpty())
         {
-            this.addDoorsAround((BlockPos)this.villagerPositionsList.remove(0));
+            this.addDoorsAround(this.villagerPositionsList.remove(0));
         }
     }
 
@@ -134,7 +134,7 @@ public class VillageCollection extends WorldSavedData
     {
         for (int i = 0; i < this.newDoors.size(); ++i)
         {
-            VillageDoorInfo villagedoorinfo = (VillageDoorInfo)this.newDoors.get(i);
+            VillageDoorInfo villagedoorinfo = this.newDoors.get(i);
             Village village = this.getNearestVillage(villagedoorinfo.getDoorBlockPos(), 32);
 
             if (village == null)
@@ -260,7 +260,7 @@ public class VillageCollection extends WorldSavedData
     private boolean isWoodDoor(BlockPos doorPos)
     {
         Block block = this.worldObj.getBlockState(doorPos).getBlock();
-        return block instanceof BlockDoor ? block.getMaterial() == Material.wood : false;
+        return block instanceof BlockDoor && block.getMaterial() == Material.wood;
     }
 
     /**

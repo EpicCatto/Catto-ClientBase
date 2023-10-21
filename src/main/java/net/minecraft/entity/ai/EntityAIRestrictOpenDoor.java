@@ -8,7 +8,7 @@ import net.minecraft.village.VillageDoorInfo;
 
 public class EntityAIRestrictOpenDoor extends EntityAIBase
 {
-    private EntityCreature entityObj;
+    private final EntityCreature entityObj;
     private VillageDoorInfo frontDoor;
 
     public EntityAIRestrictOpenDoor(EntityCreature creatureIn)
@@ -42,7 +42,7 @@ public class EntityAIRestrictOpenDoor extends EntityAIBase
             else
             {
                 this.frontDoor = village.getNearestDoor(blockpos);
-                return this.frontDoor == null ? false : (double)this.frontDoor.getDistanceToInsideBlockSq(blockpos) < 2.25D;
+                return this.frontDoor != null && (double) this.frontDoor.getDistanceToInsideBlockSq(blockpos) < 2.25D;
             }
         }
     }
@@ -52,7 +52,7 @@ public class EntityAIRestrictOpenDoor extends EntityAIBase
      */
     public boolean continueExecuting()
     {
-        return this.entityObj.worldObj.isDaytime() ? false : !this.frontDoor.getIsDetachedFromVillageFlag() && this.frontDoor.func_179850_c(new BlockPos(this.entityObj));
+        return !this.entityObj.worldObj.isDaytime() && !this.frontDoor.getIsDetachedFromVillageFlag() && this.frontDoor.func_179850_c(new BlockPos(this.entityObj));
     }
 
     /**

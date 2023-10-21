@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class StringComponent extends Component {
 
-    private SettingsInputBox value;
+    private final SettingsInputBox value;
 
     public StringComponent(double x, double y, MythClickGui parent, Module module, StringSetting setting) {
         this.x = x;

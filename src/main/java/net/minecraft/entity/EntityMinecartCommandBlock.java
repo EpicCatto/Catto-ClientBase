@@ -135,7 +135,6 @@ public class EntityMinecartCommandBlock extends EntityMinecart
             }
             catch (Throwable var3)
             {
-                ;
             }
         }
         else if (dataID == 23)

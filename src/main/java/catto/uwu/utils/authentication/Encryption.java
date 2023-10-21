@@ -50,7 +50,7 @@ public class Encryption {
         }
         catch (InvalidAlgorithmParameterException | InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException e)
         {
-            System.out.println("Error occured during encryption: " + e.toString());
+            System.out.println("Error occured during encryption: " + e);
         }
         return null;
     }
@@ -76,7 +76,7 @@ public class Encryption {
         }
         catch (InvalidAlgorithmParameterException | InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException e)
         {
-            System.out.println("Error occured during decryption: " + e.toString());
+            System.out.println("Error occured during decryption: " + e);
         }
         return null;
     }

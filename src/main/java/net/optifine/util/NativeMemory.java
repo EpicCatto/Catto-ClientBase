@@ -7,8 +7,8 @@ import net.minecraft.src.Config;
 
 public class NativeMemory
 {
-    private static LongSupplier bufferAllocatedSupplier = makeLongSupplier(new String[][] {{"sun.misc.SharedSecrets", "getJavaNioAccess", "getDirectBufferPool", "getMemoryUsed"}, {"jdk.internal.misc.SharedSecrets", "getJavaNioAccess", "getDirectBufferPool", "getMemoryUsed"}});
-    private static LongSupplier bufferMaximumSupplier = makeLongSupplier(new String[][] {{"sun.misc.VM", "maxDirectMemory"}, {"jdk.internal.misc.VM", "maxDirectMemory"}});
+    private static final LongSupplier bufferAllocatedSupplier = makeLongSupplier(new String[][] {{"sun.misc.SharedSecrets", "getJavaNioAccess", "getDirectBufferPool", "getMemoryUsed"}, {"jdk.internal.misc.SharedSecrets", "getJavaNioAccess", "getDirectBufferPool", "getMemoryUsed"}});
+    private static final LongSupplier bufferMaximumSupplier = makeLongSupplier(new String[][] {{"sun.misc.VM", "maxDirectMemory"}, {"jdk.internal.misc.VM", "maxDirectMemory"}});
 
     public static long getBufferAllocated()
     {
@@ -41,7 +41,7 @@ public class NativeMemory
 
         for (Throwable throwable1 : list)
         {
-            Config.warn("" + throwable1.getClass().getName() + ": " + throwable1.getMessage());
+            Config.warn(throwable1.getClass().getName() + ": " + throwable1.getMessage());
         }
 
         return null;
@@ -87,7 +87,7 @@ public class NativeMemory
                         }
                         catch (Throwable throwable)
                         {
-                            Config.warn("" + throwable.getClass().getName() + ": " + throwable.getMessage());
+                            Config.warn(throwable.getClass().getName() + ": " + throwable.getMessage());
                             this.disabled = true;
                             return -1L;
                         }

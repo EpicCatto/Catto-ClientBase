@@ -6,11 +6,11 @@ import net.minecraft.util.MathHelper;
 public class ModelSilverfish extends ModelBase
 {
     /** The body parts of the silverfish's model. */
-    private ModelRenderer[] silverfishBodyParts = new ModelRenderer[7];
+    private final ModelRenderer[] silverfishBodyParts = new ModelRenderer[7];
 
     /** The wings (dust-looking sprites) on the silverfish's model. */
-    private ModelRenderer[] silverfishWings;
-    private float[] field_78170_c = new float[7];
+    private final ModelRenderer[] silverfishWings;
+    private final float[] field_78170_c = new float[7];
 
     /** The widths, heights, and lengths for the silverfish model boxes. */
     private static final int[][] silverfishBoxLength = new int[][] {{3, 2, 2}, {4, 3, 2}, {6, 4, 3}, {3, 3, 3}, {2, 2, 3}, {2, 1, 2}, {1, 1, 2}};

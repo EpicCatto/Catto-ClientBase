@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 public class ModeSetting extends Setting {
 
 	private String value;
-	private String[] options;
+	private final String[] options;
 	
 	public ModeSetting(String name, Module parent, String[] options, String defaultValue) {
 		super(name, parent);

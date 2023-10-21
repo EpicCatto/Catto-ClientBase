@@ -73,7 +73,7 @@ public class CryptManager
     {
         try
         {
-            return digestOperation("SHA-1", new byte[][] {serverId.getBytes("ISO_8859_1"), secretKey.getEncoded(), publicKey.getEncoded()});
+            return digestOperation("SHA-1", serverId.getBytes("ISO_8859_1"), secretKey.getEncoded(), publicKey.getEncoded());
         }
         catch (UnsupportedEncodingException unsupportedencodingexception)
         {
@@ -118,11 +118,9 @@ public class CryptManager
         }
         catch (NoSuchAlgorithmException var3)
         {
-            ;
         }
         catch (InvalidKeySpecException var4)
         {
-            ;
         }
 
         LOGGER.error("Public key reconstitute failed!");
@@ -211,7 +209,7 @@ public class CryptManager
         try
         {
             Cipher cipher = Cipher.getInstance("AES/CFB8/NoPadding");
-            cipher.init(opMode, (Key)key, (AlgorithmParameterSpec)(new IvParameterSpec(key.getEncoded())));
+            cipher.init(opMode, key, new IvParameterSpec(key.getEncoded()));
             return cipher;
         }
         catch (GeneralSecurityException generalsecurityexception)

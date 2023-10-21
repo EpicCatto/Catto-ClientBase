@@ -17,10 +17,8 @@ public class Teams extends Module {
                     || entity.getDisplayName().getUnformattedText().length() <= 2) {
                 return false;
             }
-            if (mc.thePlayer.getDisplayName().getUnformattedText().substring(0, 2)
-                    .equals(entity.getDisplayName().getUnformattedText().substring(0, 2))) {
-                return true;
-            }
+            return mc.thePlayer.getDisplayName().getUnformattedText().substring(0, 2)
+                    .equals(entity.getDisplayName().getUnformattedText().substring(0, 2));
         }
         return false;
     }

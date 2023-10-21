@@ -22,14 +22,14 @@ public class ContainerRepair extends Container
     private static final Logger logger = LogManager.getLogger();
 
     /** Here comes out item you merged and/or renamed. */
-    private IInventory outputSlot;
+    private final IInventory outputSlot;
 
     /**
      * The 2slots where you put your items in that you want to merge and/or rename.
      */
-    private IInventory inputSlots;
-    private World theWorld;
-    private BlockPos selfPosition;
+    private final IInventory inputSlots;
+    private final World theWorld;
+    private final BlockPos selfPosition;
 
     /** The maximum cost of repairing/renaming in the anvil. */
     public int maximumCost;
@@ -79,7 +79,7 @@ public class ContainerRepair extends Container
                     playerIn.addExperienceLevel(-ContainerRepair.this.maximumCost);
                 }
 
-                ContainerRepair.this.inputSlots.setInventorySlotContents(0, (ItemStack)null);
+                ContainerRepair.this.inputSlots.setInventorySlotContents(0, null);
 
                 if (ContainerRepair.this.materialCost > 0)
                 {
@@ -92,12 +92,12 @@ public class ContainerRepair extends Container
                     }
                     else
                     {
-                        ContainerRepair.this.inputSlots.setInventorySlotContents(1, (ItemStack)null);
+                        ContainerRepair.this.inputSlots.setInventorySlotContents(1, null);
                     }
                 }
                 else
                 {
-                    ContainerRepair.this.inputSlots.setInventorySlotContents(1, (ItemStack)null);
+                    ContainerRepair.this.inputSlots.setInventorySlotContents(1, null);
                 }
 
                 ContainerRepair.this.maximumCost = 0;
@@ -105,7 +105,7 @@ public class ContainerRepair extends Container
 
                 if (!playerIn.capabilities.isCreativeMode && !worldIn.isRemote && iblockstate.getBlock() == Blocks.anvil && playerIn.getRNG().nextFloat() < 0.12F)
                 {
-                    int l = ((Integer)iblockstate.getValue(BlockAnvil.DAMAGE)).intValue();
+                    int l = iblockstate.getValue(BlockAnvil.DAMAGE).intValue();
                     ++l;
 
                     if (l > 2)
@@ -173,7 +173,7 @@ public class ContainerRepair extends Container
 
         if (itemstack == null)
         {
-            this.outputSlot.setInventorySlotContents(0, (ItemStack)null);
+            this.outputSlot.setInventorySlotContents(0, null);
             this.maximumCost = 0;
         }
         else
@@ -195,7 +195,7 @@ public class ContainerRepair extends Container
 
                     if (j4 <= 0)
                     {
-                        this.outputSlot.setInventorySlotContents(0, (ItemStack)null);
+                        this.outputSlot.setInventorySlotContents(0, null);
                         this.maximumCost = 0;
                         return;
                     }
@@ -216,7 +216,7 @@ public class ContainerRepair extends Container
                 {
                     if (!flag && (itemstack1.getItem() != itemstack2.getItem() || !itemstack1.isItemStackDamageable()))
                     {
-                        this.outputSlot.setInventorySlotContents(0, (ItemStack)null);
+                        this.outputSlot.setInventorySlotContents(0, null);
                         this.maximumCost = 0;
                         return;
                     }
@@ -251,8 +251,8 @@ public class ContainerRepair extends Container
 
                         if (enchantment != null)
                         {
-                            int k5 = map.containsKey(Integer.valueOf(i5)) ? ((Integer)map.get(Integer.valueOf(i5))).intValue() : 0;
-                            int l3 = ((Integer)map1.get(Integer.valueOf(i5))).intValue();
+                            int k5 = map.containsKey(Integer.valueOf(i5)) ? map.get(Integer.valueOf(i5)).intValue() : 0;
+                            int l3 = map1.get(Integer.valueOf(i5)).intValue();
                             int i6;
 
                             if (k5 == l3)
@@ -423,7 +423,7 @@ public class ContainerRepair extends Container
 
     public boolean canInteractWith(EntityPlayer playerIn)
     {
-        return this.theWorld.getBlockState(this.selfPosition).getBlock() != Blocks.anvil ? false : playerIn.getDistanceSq((double)this.selfPosition.getX() + 0.5D, (double)this.selfPosition.getY() + 0.5D, (double)this.selfPosition.getZ() + 0.5D) <= 64.0D;
+        return this.theWorld.getBlockState(this.selfPosition).getBlock() == Blocks.anvil && playerIn.getDistanceSq((double) this.selfPosition.getX() + 0.5D, (double) this.selfPosition.getY() + 0.5D, (double) this.selfPosition.getZ() + 0.5D) <= 64.0D;
     }
 
     /**
@@ -432,7 +432,7 @@ public class ContainerRepair extends Container
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(index);
+        Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack())
         {
@@ -462,7 +462,7 @@ public class ContainerRepair extends Container
 
             if (itemstack1.stackSize == 0)
             {
-                slot.putStack((ItemStack)null);
+                slot.putStack(null);
             }
             else
             {

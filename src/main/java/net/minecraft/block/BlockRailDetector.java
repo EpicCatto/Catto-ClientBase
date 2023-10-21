@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 public class BlockRailDetector extends BlockRailBase
 {
-    public static final PropertyEnum<BlockRailBase.EnumRailDirection> SHAPE = PropertyEnum.<BlockRailBase.EnumRailDirection>create("shape", BlockRailBase.EnumRailDirection.class, new Predicate<BlockRailBase.EnumRailDirection>()
+    public static final PropertyEnum<BlockRailBase.EnumRailDirection> SHAPE = PropertyEnum.create("shape", BlockRailBase.EnumRailDirection.class, new Predicate<BlockRailBase.EnumRailDirection>()
     {
         public boolean apply(BlockRailBase.EnumRailDirection p_apply_1_)
         {
@@ -61,7 +61,7 @@ public class BlockRailDetector extends BlockRailBase
     {
         if (!worldIn.isRemote)
         {
-            if (!((Boolean)state.getValue(POWERED)).booleanValue())
+            if (!state.getValue(POWERED).booleanValue())
             {
                 this.updatePoweredState(worldIn, pos, state);
             }
@@ -77,7 +77,7 @@ public class BlockRailDetector extends BlockRailBase
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
-        if (!worldIn.isRemote && ((Boolean)state.getValue(POWERED)).booleanValue())
+        if (!worldIn.isRemote && state.getValue(POWERED).booleanValue())
         {
             this.updatePoweredState(worldIn, pos, state);
         }
@@ -85,19 +85,19 @@ public class BlockRailDetector extends BlockRailBase
 
     public int getWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side)
     {
-        return ((Boolean)state.getValue(POWERED)).booleanValue() ? 15 : 0;
+        return state.getValue(POWERED).booleanValue() ? 15 : 0;
     }
 
     public int getStrongPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side)
     {
-        return !((Boolean)state.getValue(POWERED)).booleanValue() ? 0 : (side == EnumFacing.UP ? 15 : 0);
+        return !state.getValue(POWERED).booleanValue() ? 0 : (side == EnumFacing.UP ? 15 : 0);
     }
 
     private void updatePoweredState(World worldIn, BlockPos pos, IBlockState state)
     {
-        boolean flag = ((Boolean)state.getValue(POWERED)).booleanValue();
+        boolean flag = state.getValue(POWERED).booleanValue();
         boolean flag1 = false;
-        List<EntityMinecart> list = this.<EntityMinecart>findMinecarts(worldIn, pos, EntityMinecart.class, new Predicate[0]);
+        List<EntityMinecart> list = this.findMinecarts(worldIn, pos, EntityMinecart.class);
 
         if (!list.isEmpty())
         {
@@ -146,16 +146,16 @@ public class BlockRailDetector extends BlockRailBase
 
     public int getComparatorInputOverride(World worldIn, BlockPos pos)
     {
-        if (((Boolean)worldIn.getBlockState(pos).getValue(POWERED)).booleanValue())
+        if (worldIn.getBlockState(pos).getValue(POWERED).booleanValue())
         {
-            List<EntityMinecartCommandBlock> list = this.<EntityMinecartCommandBlock>findMinecarts(worldIn, pos, EntityMinecartCommandBlock.class, new Predicate[0]);
+            List<EntityMinecartCommandBlock> list = this.findMinecarts(worldIn, pos, EntityMinecartCommandBlock.class);
 
             if (!list.isEmpty())
             {
-                return ((EntityMinecartCommandBlock)list.get(0)).getCommandBlockLogic().getSuccessCount();
+                return list.get(0).getCommandBlockLogic().getSuccessCount();
             }
 
-            List<EntityMinecart> list1 = this.<EntityMinecart>findMinecarts(worldIn, pos, EntityMinecart.class, new Predicate[] {EntitySelectors.selectInventories});
+            List<EntityMinecart> list1 = this.findMinecarts(worldIn, pos, EntityMinecart.class, EntitySelectors.selectInventories);
 
             if (!list1.isEmpty())
             {
@@ -175,7 +175,7 @@ public class BlockRailDetector extends BlockRailBase
     private AxisAlignedBB getDectectionBox(BlockPos pos)
     {
         float f = 0.2F;
-        return new AxisAlignedBB((double)((float)pos.getX() + 0.2F), (double)pos.getY(), (double)((float)pos.getZ() + 0.2F), (double)((float)(pos.getX() + 1) - 0.2F), (double)((float)(pos.getY() + 1) - 0.2F), (double)((float)(pos.getZ() + 1) - 0.2F));
+        return new AxisAlignedBB((float)pos.getX() + 0.2F, pos.getY(), (float)pos.getZ() + 0.2F, (float)(pos.getX() + 1) - 0.2F, (float)(pos.getY() + 1) - 0.2F, (float)(pos.getZ() + 1) - 0.2F);
     }
 
     /**
@@ -192,9 +192,9 @@ public class BlockRailDetector extends BlockRailBase
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;
-        i = i | ((BlockRailBase.EnumRailDirection)state.getValue(SHAPE)).getMetadata();
+        i = i | state.getValue(SHAPE).getMetadata();
 
-        if (((Boolean)state.getValue(POWERED)).booleanValue())
+        if (state.getValue(POWERED).booleanValue())
         {
             i |= 8;
         }
@@ -204,6 +204,6 @@ public class BlockRailDetector extends BlockRailBase
 
     protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] {SHAPE, POWERED});
+        return new BlockState(this, SHAPE, POWERED);
     }
 }

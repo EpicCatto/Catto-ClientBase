@@ -16,7 +16,7 @@ public class Module implements Serializable {
 
     public static Minecraft mc = Minecraft.getMinecraft();
 
-    private ModuleData data;
+    private final ModuleData data;
     private boolean isShow = true;
     private String suffix = "";
     private int keyCode;

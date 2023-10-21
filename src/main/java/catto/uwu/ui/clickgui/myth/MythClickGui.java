@@ -119,7 +119,7 @@ public class MythClickGui extends GuiScreen {
                 offset += 20;
 
                 if (selectedOnlineConfig != null && onlineConfig == selectedOnlineConfig) {
-                    int configInfoOffset = (int) (10 + FontLoaders.Sfui20.getHeight() + 5);
+                    int configInfoOffset = 10 + FontLoaders.Sfui20.getHeight() + 5;
 
                     ArrayList<String> info = new ArrayList<>();
                     info.add("Name: " + onlineConfig.getName());
@@ -142,7 +142,7 @@ public class MythClickGui extends GuiScreen {
             }
 
             if (selectedConfig != null && selectedCategory == Category.CONFIG && config == selectedConfig) {
-                int configInfoOffset = (int) (10 + FontLoaders.Sfui20.getHeight() + 5);
+                int configInfoOffset = 10 + FontLoaders.Sfui20.getHeight() + 5;
 
                 ArrayList<String> info = new ArrayList<>();
                 info.add("Name: " + config.getName());
@@ -195,7 +195,7 @@ public class MythClickGui extends GuiScreen {
 
                     //float valuey = windowY + 100 + valueRoleNow;
 
-                    int offsetS = (int) ((int) (10 + FontLoaders.Sfui20.getHeight() + 5) + settingsScrollNow);
+                    int offsetS = (int) ((10 + FontLoaders.Sfui20.getHeight() + 5) + settingsScrollNow);
                     for (Component component : components) {
                         if (component.module == selectedModule && (component.setting.isVisible() && (component.setting.getParentNote() != null ? component.setting.getParentNote().getValue() : true))) {
                             component.y = offsetS;
@@ -342,7 +342,7 @@ public class MythClickGui extends GuiScreen {
     }
 
     public void updateSettings(Module module){
-        int offset = (int) (10 + FontLoaders.Sfui20.getHeight() + 5);
+        int offset = 10 + FontLoaders.Sfui20.getHeight() + 5;
         if (module.getSettings() != null) {
             for (Setting setting : module.getSettings()) {
                 if (setting instanceof BooleanSetting) {

@@ -34,8 +34,8 @@ public class GuiAltsManager extends GuiScreen {
 
         ScaledResolution sr = new ScaledResolution(mc);
         this.username = new GuiTextField(1, mc.fontRendererObj, 10, 30, 100, 20);
-        this.password = new GuiTextField(1, mc.fontRendererObj, username.xPosition, (int) (username.yPosition + username.getHeight() + 10), username.getWidth(), username.getHeight());
-        this.combined = new GuiTextField(1, mc.fontRendererObj, password.xPosition, (int) (password.yPosition + password.getHeight() + 10), password.getWidth(), password.getHeight());
+        this.password = new GuiTextField(1, mc.fontRendererObj, username.xPosition, username.yPosition + username.getHeight() + 10, username.getWidth(), username.getHeight());
+        this.combined = new GuiTextField(1, mc.fontRendererObj, password.xPosition, password.yPosition + password.getHeight() + 10, password.getWidth(), password.getHeight());
 
         username.setEnableBackgroundDrawing(false);
         password.setEnableBackgroundDrawing(false);
@@ -107,8 +107,8 @@ public class GuiAltsManager extends GuiScreen {
                     int index = (int)(gen.length() * Math.random());
                     sb.append(gen.charAt(index));
                 }
-                mc.session = new Session("Catto_" + sb.toString(), "0", "balls", "null");
-                status = EnumChatFormatting.GREEN + "Logged in Cracked! (" + "Catto_" + sb.toString() + ")";
+                mc.session = new Session("Catto_" + sb, "0", "balls", "null");
+                status = EnumChatFormatting.GREEN + "Logged in Cracked! (" + "Catto_" + sb + ")";
                 return;
             }
 

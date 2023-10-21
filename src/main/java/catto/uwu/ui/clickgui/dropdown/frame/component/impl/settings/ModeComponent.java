@@ -11,7 +11,7 @@ import net.minecraft.client.gui.Gui;
 import java.awt.*;
 
 public class ModeComponent extends Component {
-    private ModeSetting modeSetting;
+    private final ModeSetting modeSetting;
     public ModeComponent(double x, double y, Frame parent, Module module, ModeSetting modeSetting) {
         this.x = x;
         this.y = y;

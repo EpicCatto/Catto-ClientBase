@@ -31,7 +31,7 @@ public class DataUtil {
 
             //jsonObject.add("data", data);
 
-            System.out.println(jsonObject.toString());
+            System.out.println(jsonObject);
 
             System.out.println("Respond: " + DataUtil.postResponse("/auth", jsonObject.toString()));
         } catch (IOException | URISyntaxException e) {

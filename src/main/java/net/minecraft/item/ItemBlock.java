@@ -139,7 +139,7 @@ public class ItemBlock extends Item
             pos = pos.offset(side);
         }
 
-        return worldIn.canBlockBePlaced(this.block, pos, false, side, (Entity)null, stack);
+        return worldIn.canBlockBePlaced(this.block, pos, false, side, null, stack);
     }
 
     /**

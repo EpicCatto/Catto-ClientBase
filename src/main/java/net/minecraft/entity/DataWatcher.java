@@ -23,12 +23,12 @@ public class DataWatcher
 
     /** When isBlank is true the DataWatcher is not watching any objects */
     private boolean isBlank = true;
-    private static final Map < Class<?>, Integer > dataTypes = Maps. < Class<?>, Integer > newHashMap();
-    private final Map<Integer, DataWatcher.WatchableObject> watchedObjects = Maps.<Integer, DataWatcher.WatchableObject>newHashMap();
+    private static final Map < Class<?>, Integer > dataTypes = Maps.newHashMap();
+    private final Map<Integer, DataWatcher.WatchableObject> watchedObjects = Maps.newHashMap();
 
     /** true if one or more object was changed */
     private boolean objectChanged;
-    private ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
     public BiomeGenBase spawnBiome = BiomeGenBase.plains;
     public BlockPos spawnPosition = BlockPos.ORIGIN;
 
@@ -39,7 +39,7 @@ public class DataWatcher
 
     public <T> void addObject(int id, T object)
     {
-        Integer integer = (Integer)dataTypes.get(object.getClass());
+        Integer integer = dataTypes.get(object.getClass());
 
         if (integer == null)
         {
@@ -68,7 +68,7 @@ public class DataWatcher
      */
     public void addObjectByDataType(int id, int type)
     {
-        DataWatcher.WatchableObject datawatcher$watchableobject = new DataWatcher.WatchableObject(type, id, (Object)null);
+        DataWatcher.WatchableObject datawatcher$watchableobject = new DataWatcher.WatchableObject(type, id, null);
         this.lock.writeLock().lock();
         this.watchedObjects.put(Integer.valueOf(id), datawatcher$watchableobject);
         this.lock.writeLock().unlock();
@@ -127,7 +127,7 @@ public class DataWatcher
 
         try
         {
-            datawatcher$watchableobject = (DataWatcher.WatchableObject)this.watchedObjects.get(Integer.valueOf(id));
+            datawatcher$watchableobject = this.watchedObjects.get(Integer.valueOf(id));
         }
         catch (Throwable throwable)
         {
@@ -206,7 +206,7 @@ public class DataWatcher
 
                     if (list == null)
                     {
-                        list = Lists.<DataWatcher.WatchableObject>newArrayList();
+                        list = Lists.newArrayList();
                     }
 
                     list.add(datawatcher$watchableobject);
@@ -242,7 +242,7 @@ public class DataWatcher
         {
             if (list == null)
             {
-                list = Lists.<DataWatcher.WatchableObject>newArrayList();
+                list = Lists.newArrayList();
             }
 
             list.add(datawatcher$watchableobject);
@@ -311,7 +311,7 @@ public class DataWatcher
         {
             if (list == null)
             {
-                list = Lists.<DataWatcher.WatchableObject>newArrayList();
+                list = Lists.newArrayList();
             }
 
             int j = (i & 224) >> 5;
@@ -370,7 +370,7 @@ public class DataWatcher
 
         for (DataWatcher.WatchableObject datawatcher$watchableobject : p_75687_1_)
         {
-            DataWatcher.WatchableObject datawatcher$watchableobject1 = (DataWatcher.WatchableObject)this.watchedObjects.get(Integer.valueOf(datawatcher$watchableobject.getDataValueId()));
+            DataWatcher.WatchableObject datawatcher$watchableobject1 = this.watchedObjects.get(Integer.valueOf(datawatcher$watchableobject.getDataValueId()));
 
             if (datawatcher$watchableobject1 != null)
             {

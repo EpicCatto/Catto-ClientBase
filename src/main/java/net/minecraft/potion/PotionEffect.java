@@ -10,7 +10,7 @@ public class PotionEffect
     private static final Logger LOGGER = LogManager.getLogger();
 
     /** ID value of the potion this effect matches. */
-    private int potionID;
+    private final int potionID;
 
     /** The duration of the potion effect */
     private int duration;

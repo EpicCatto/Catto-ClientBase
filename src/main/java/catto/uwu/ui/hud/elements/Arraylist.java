@@ -3,6 +3,7 @@ package catto.uwu.ui.hud.elements;
 import catto.uwu.module.api.Module;
 import catto.uwu.module.api.ModuleManager;
 import catto.uwu.ui.hud.Element;
+import catto.uwu.utils.ChatUtil;
 import catto.uwu.utils.render.ColorUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
@@ -49,8 +50,17 @@ public class Arraylist extends Element {
             float hideX = (left ? -fr.getStringWidth(name) - 2 : sr.getScaledWidth() + fr.getStringWidth(name) + 2);
             float endX = shouldVisible ? (left ? 2 + ix : (ix + width) - fr.getStringWidth(name) + 1) : hideX;
 
-            m.setX(animate(m.getX(), endX, 0.00420f));
-            m.setY(animate(m.getY(), y, 0.0042f));
+//            ChatUtil.sendChatMessageWPrefix(endX + "");
+
+            float animationX = animate(m.getX(), endX, 0.00420f);
+            float animationY = animate(m.getY(), y, 0.0042f);
+//            if return nan, then set to 0
+            if (Float.isNaN(animationX)) animationX = 0;
+            if (Float.isNaN(animationY)) animationY = 0;
+
+            m.setX(animationX);
+            m.setY(animationY);
+
 
             if (left ? (m.getX() > hideX) : (m.getX() < hideX)) {
                 if (mx < fr.getStringWidth(name))
@@ -70,14 +80,20 @@ public class Arraylist extends Element {
 
 
     public static float animate(float current, float end, float minSpeed) {
-        float movement = (end - current) * 0.025f * 240 / Minecraft.getDebugFPS();;
+        if (end == current) {
+            return current; // If the current and end values are equal, no animation is needed.
+        }
+
+        float movement = (end - current) * 0.025f * 240 / Minecraft.getDebugFPS();
 
         if (movement > 0) {
-            movement = Math.max(minSpeed, movement);movement = Math.min(end - current, movement);
+            movement = Math.max(minSpeed, movement);
+            movement = Math.min(end - current, movement);
         } else if (movement < 0) {
             movement = Math.min(-minSpeed, movement);
             movement = Math.max(end - current, movement);
         }
+
         return current + movement;
     }
 

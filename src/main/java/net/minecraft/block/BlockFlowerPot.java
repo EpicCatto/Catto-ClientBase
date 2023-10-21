@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 public class BlockFlowerPot extends BlockContainer
 {
     public static final PropertyInteger LEGACY_DATA = PropertyInteger.create("legacy_data", 0, 15);
-    public static final PropertyEnum<BlockFlowerPot.EnumFlowerType> CONTENTS = PropertyEnum.<BlockFlowerPot.EnumFlowerType>create("contents", BlockFlowerPot.EnumFlowerType.class);
+    public static final PropertyEnum<BlockFlowerPot.EnumFlowerType> CONTENTS = PropertyEnum.create("contents", BlockFlowerPot.EnumFlowerType.class);
 
     public BlockFlowerPot()
     {
@@ -125,7 +125,7 @@ public class BlockFlowerPot extends BlockContainer
 
                     if (!playerIn.capabilities.isCreativeMode && --itemstack.stackSize <= 0)
                     {
-                        playerIn.inventory.setInventorySlotContents(playerIn.inventory.currentItem, (ItemStack)null);
+                        playerIn.inventory.setInventorySlotContents(playerIn.inventory.currentItem, null);
                     }
 
                     return true;
@@ -140,7 +140,7 @@ public class BlockFlowerPot extends BlockContainer
 
     private boolean canNotContain(Block blockIn, int meta)
     {
-        return blockIn != Blocks.yellow_flower && blockIn != Blocks.red_flower && blockIn != Blocks.cactus && blockIn != Blocks.brown_mushroom && blockIn != Blocks.red_mushroom && blockIn != Blocks.sapling && blockIn != Blocks.deadbush ? blockIn == Blocks.tallgrass && meta == BlockTallGrass.EnumType.FERN.getMeta() : true;
+        return blockIn == Blocks.yellow_flower || blockIn == Blocks.red_flower || blockIn == Blocks.cactus || blockIn == Blocks.brown_mushroom || blockIn == Blocks.red_mushroom || blockIn == Blocks.sapling || blockIn == Blocks.deadbush || blockIn == Blocks.tallgrass && meta == BlockTallGrass.EnumType.FERN.getMeta();
     }
 
     public Item getItem(World worldIn, BlockPos pos)
@@ -205,7 +205,7 @@ public class BlockFlowerPot extends BlockContainer
 
             if (tileentityflowerpot != null)
             {
-                tileentityflowerpot.setFlowerPotData((Item)null, 0);
+                tileentityflowerpot.setFlowerPotData(null, 0);
             }
         }
     }
@@ -299,7 +299,7 @@ public class BlockFlowerPot extends BlockContainer
 
     protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] {CONTENTS, LEGACY_DATA});
+        return new BlockState(this, CONTENTS, LEGACY_DATA);
     }
 
     /**
@@ -307,7 +307,7 @@ public class BlockFlowerPot extends BlockContainer
      */
     public int getMetaFromState(IBlockState state)
     {
-        return ((Integer)state.getValue(LEGACY_DATA)).intValue();
+        return state.getValue(LEGACY_DATA).intValue();
     }
 
     /**
@@ -452,7 +452,7 @@ public class BlockFlowerPot extends BlockContainer
         return EnumWorldBlockLayer.CUTOUT;
     }
 
-    public static enum EnumFlowerType implements IStringSerializable
+    public enum EnumFlowerType implements IStringSerializable
     {
         EMPTY("empty"),
         POPPY("rose"),
@@ -479,7 +479,7 @@ public class BlockFlowerPot extends BlockContainer
 
         private final String name;
 
-        private EnumFlowerType(String name)
+        EnumFlowerType(String name)
         {
             this.name = name;
         }

@@ -18,7 +18,7 @@ public class Scaffold extends Module {
     private final BooleanSetting safewalk = new BooleanSetting("Safewalk", this, true);
 
 //    0 yaw, 1 pitch
-    private float[] rotations = new float[2];
+    private final float[] rotations = new float[2];
 
     public Scaffold() {
         addSettings(delay, safewalk);

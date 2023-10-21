@@ -11,14 +11,14 @@ import net.minecraft.village.MerchantRecipeList;
 public class NpcMerchant implements IMerchant
 {
     /** Instance of Merchants Inventory. */
-    private InventoryMerchant theMerchantInventory;
+    private final InventoryMerchant theMerchantInventory;
 
     /** This merchant's current player customer. */
-    private EntityPlayer customer;
+    private final EntityPlayer customer;
 
     /** The MerchantRecipeList instance. */
     private MerchantRecipeList recipeList;
-    private IChatComponent field_175548_d;
+    private final IChatComponent field_175548_d;
 
     public NpcMerchant(EntityPlayer p_i45817_1_, IChatComponent p_i45817_2_)
     {
@@ -64,6 +64,6 @@ public class NpcMerchant implements IMerchant
      */
     public IChatComponent getDisplayName()
     {
-        return (IChatComponent)(this.field_175548_d != null ? this.field_175548_d : new ChatComponentTranslation("entity.Villager.name", new Object[0]));
+        return this.field_175548_d != null ? this.field_175548_d : new ChatComponentTranslation("entity.Villager.name", new Object[0]);
     }
 }

@@ -9,7 +9,7 @@ import catto.uwu.module.api.ModuleData;
 
 @ModuleData(name = "Timer", description = "Speeds up the game", category = Category.WORLD)
 public class Timer extends Module {
-    private NumberSetting speed = new NumberSetting("Speed", this, 1, 0.1, 10, false);
+    private final NumberSetting speed = new NumberSetting("Speed", this, 1, 0.1, 10, false);
 
 
     public Timer() {

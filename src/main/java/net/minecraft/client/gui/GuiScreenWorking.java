@@ -10,7 +10,7 @@ public class GuiScreenWorking extends GuiScreen implements IProgressUpdate
     private String field_146589_f = "";
     private int progress;
     private boolean doneWorking;
-    private CustomLoadingScreen customLoadingScreen = CustomLoadingScreens.getCustomLoadingScreen();
+    private final CustomLoadingScreen customLoadingScreen = CustomLoadingScreens.getCustomLoadingScreen();
 
     /**
      * Shows the 'Saving level' string.
@@ -61,7 +61,7 @@ public class GuiScreenWorking extends GuiScreen implements IProgressUpdate
         {
             if (!this.mc.isConnectedToRealms())
             {
-                this.mc.displayGuiScreen((GuiScreen)null);
+                this.mc.displayGuiScreen(null);
             }
         }
         else

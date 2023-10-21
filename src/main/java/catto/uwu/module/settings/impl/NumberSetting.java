@@ -9,11 +9,11 @@ import java.util.function.Supplier;
 public class NumberSetting extends Setting {
 
 	private double value;
-	private double min;
-	private double max;
-	private boolean onlyInt;
+	private final double min;
+	private final double max;
+	private final boolean onlyInt;
 
-	private double inc;
+	private final double inc;
 
 	public NumberSetting(String name, Module parent, double defaultValue, double min, double max, boolean onlyInt) {
 		super(name, parent);

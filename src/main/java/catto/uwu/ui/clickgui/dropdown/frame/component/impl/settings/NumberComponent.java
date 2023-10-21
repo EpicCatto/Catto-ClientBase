@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class NumberComponent extends Component {
-    private NumberSetting numberSetting;
+    private final NumberSetting numberSetting;
     private boolean dragging;
 
     public NumberComponent(double x, double y, Frame parent, Module module, NumberSetting noteSetting) {

@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class RotationUtil {
 
-    private static Minecraft mc = Minecraft.getMinecraft();
+    private static final Minecraft mc = Minecraft.getMinecraft();
 
     public static float getDistanceToEntity(EntityLivingBase entityLivingBase) {
         return mc.thePlayer.getDistanceToEntity(entityLivingBase);
@@ -94,7 +94,7 @@ public class RotationUtil {
     }
 
     public static float[] faceBlock(final BlockPos target) {
-        EntityOtherPlayerMP entityOtherPlayerMP = new EntityOtherPlayerMP((World) mc.theWorld, mc.thePlayer.getGameProfile());
+        EntityOtherPlayerMP entityOtherPlayerMP = new EntityOtherPlayerMP(mc.theWorld, mc.thePlayer.getGameProfile());
         entityOtherPlayerMP.setPositionAndRotation(target.getX() + 0.5, target.getY() - 1, target.getZ() + 0.5, mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch);
         entityOtherPlayerMP.rotationYawHead = mc.thePlayer.rotationYawHead;
         entityOtherPlayerMP.setSneaking(mc.thePlayer.isSneaking());
@@ -192,11 +192,11 @@ public class RotationUtil {
      * @param throughWalls throughWalls option
      * @return center
      */
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
-    private static double x = random.nextDouble();
-    private static double y = random.nextDouble();
-    private static double z = random.nextDouble();
+    private static final double x = random.nextDouble();
+    private static final double y = random.nextDouble();
+    private static final double z = random.nextDouble();
 
     public static Rotation.VecRotation searchCenter(final AxisAlignedBB bb, final boolean outborder, final boolean random, final boolean predict, final boolean throughWalls) {
         if(outborder) {

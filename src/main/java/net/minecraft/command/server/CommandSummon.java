@@ -51,7 +51,7 @@ public class CommandSummon extends CommandBase
     {
         if (args.length < 1)
         {
-            throw new WrongUsageException("commands.summon.usage", new Object[0]);
+            throw new WrongUsageException("commands.summon.usage");
         }
         else
         {
@@ -74,12 +74,12 @@ public class CommandSummon extends CommandBase
 
             if (!world.isBlockLoaded(blockpos))
             {
-                throw new CommandException("commands.summon.outOfWorld", new Object[0]);
+                throw new CommandException("commands.summon.outOfWorld");
             }
             else if ("LightningBolt".equals(s))
             {
                 world.addWeatherEffect(new EntityLightningBolt(world, d0, d1, d2));
-                notifyOperators(sender, this, "commands.summon.success", new Object[0]);
+                notifyOperators(sender, this, "commands.summon.success");
             }
             else
             {
@@ -97,7 +97,7 @@ public class CommandSummon extends CommandBase
                     }
                     catch (NBTException nbtexception)
                     {
-                        throw new CommandException("commands.summon.tagError", new Object[] {nbtexception.getMessage()});
+                        throw new CommandException("commands.summon.tagError", nbtexception.getMessage());
                     }
                 }
 
@@ -110,12 +110,12 @@ public class CommandSummon extends CommandBase
                 }
                 catch (RuntimeException var19)
                 {
-                    throw new CommandException("commands.summon.failed", new Object[0]);
+                    throw new CommandException("commands.summon.failed");
                 }
 
                 if (entity2 == null)
                 {
-                    throw new CommandException("commands.summon.failed", new Object[0]);
+                    throw new CommandException("commands.summon.failed");
                 }
                 else
                 {
@@ -123,7 +123,7 @@ public class CommandSummon extends CommandBase
 
                     if (!flag && entity2 instanceof EntityLiving)
                     {
-                        ((EntityLiving)entity2).onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity2)), (IEntityLivingData)null);
+                        ((EntityLiving)entity2).onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity2)), null);
                     }
 
                     world.spawnEntityInWorld(entity2);
@@ -143,7 +143,7 @@ public class CommandSummon extends CommandBase
                         entity = entity1;
                     }
 
-                    notifyOperators(sender, this, "commands.summon.success", new Object[0]);
+                    notifyOperators(sender, this, "commands.summon.success");
                 }
             }
         }

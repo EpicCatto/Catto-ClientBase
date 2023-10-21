@@ -90,7 +90,7 @@ public class ChestStealer extends Module {
     @EventTarget
     public void onRender2D(Event2D event) {
         if (mc.currentScreen instanceof GuiChest && silent.getValue()) {
-            FontLoaders.Sfui20.drawCenteredString("Silent Stealing... press Escape to close the chest", (event.getWidth() / 2), (float) (event.getHeight() / 2 + FontLoaders.Sfui20.getStringHeight("Silent Stealing... press Escape to close the chest") / 2) +3, -1);
+            FontLoaders.Sfui20.drawCenteredString("Silent Stealing... press Escape to close the chest", (event.getWidth() / 2), event.getHeight() / 2 + FontLoaders.Sfui20.getStringHeight("Silent Stealing... press Escape to close the chest") / 2 + 3, -1);
         }
     }
 
