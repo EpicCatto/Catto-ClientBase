@@ -98,6 +98,14 @@ public class RotationProcessor implements Processor {
 
     }
 
+    @EventTarget
+    public void onTick(EventTick event){
+        if (mc.thePlayer != null) {
+            mc.thePlayer.lastMovementYaw = mc.thePlayer.movementYaw;
+            mc.thePlayer.movementYaw = mc.thePlayer.velocityYaw = mc.thePlayer.rotationYaw;
+        }
+    }
+
     private void setClientRotation(float yawDifference, float pitchDifference, double base) {
         if (base < 0) base = -base;
         if (base > 180.0) base = 180.0;

@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 
 import catto.uwu.event.impl.EventSafeWalk;
 import catto.uwu.event.impl.EventStrafe;
+import catto.uwu.utils.math.Vec3d;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -15,6 +16,7 @@ import net.minecraft.block.BlockWall;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockPattern;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandResultStats;
 import net.minecraft.command.ICommandSender;
@@ -244,6 +246,10 @@ public abstract class Entity implements ICommandSender
     private boolean invulnerable;
     protected UUID entityUniqueID;
 
+    public float movementYaw, velocityYaw, lastMovementYaw;
+
+    public boolean moved = false;
+
     /** The command result statistics for this Entity. */
     private final CommandResultStats cmdResultStats;
 
@@ -419,6 +425,10 @@ public abstract class Entity implements ICommandSender
         if (this.ridingEntity != null && this.ridingEntity.isDead)
         {
             this.ridingEntity = null;
+        }
+
+        if (this.ticksExisted > 10 && (Math.abs(this.prevPosX - this.posX) > 0.05 || Math.abs(this.prevPosY - this.posY) > 0.05 || Math.abs(this.prevPosZ - this.posZ) > 0.05)) {
+            this.moved = true;
         }
 
         this.prevDistanceWalkedModified = this.distanceWalkedModified;
@@ -1228,33 +1238,43 @@ public abstract class Entity implements ICommandSender
     /**
      * Used in both water and by flying objects
      */
-    public void moveFlying(float strafe, float forward, float friction)
-    {
-        EventStrafe strafeEvent = new EventStrafe(this.rotationYaw, strafe, forward, friction);
-        strafeEvent.call();
-        if (strafeEvent.isCancelled())return;
+    public void moveFlying(float strafe, float forward, float friction) {
+        boolean player = this == Minecraft.getMinecraft().thePlayer;
+        float yaw = this.rotationYaw;
 
-        float f = strafeEvent.getStrafe() * strafeEvent.getStrafe() + strafeEvent.getForward() * strafeEvent.getForward();
+        if (player) {
+            final EventStrafe event = new EventStrafe(rotationYaw, strafe, forward, friction);
 
-        if (f >= 1.0E-4F)
-        {
+            event.call();
+
+            if (event.isCancelled()) {
+                return;
+            }
+
+            forward = event.getForward();
+            strafe = event.getStrafe();
+            friction = event.getFriction();
+            yaw = event.getYaw();
+        }
+
+        float f = strafe * strafe + forward * forward;
+
+        if (f >= 1.0E-4F) {
             f = MathHelper.sqrt_float(f);
 
-            if (f < 1.0F)
-            {
+            if (f < 1.0F) {
                 f = 1.0F;
             }
 
             f = friction / f;
             strafe = strafe * f;
             forward = forward * f;
-            float f1 = MathHelper.sin(strafeEvent.getYaw() * (float)Math.PI / 180.0F);
-            float f2 = MathHelper.cos(strafeEvent.getYaw() * (float)Math.PI / 180.0F);
-            this.motionX += (double)(strafe * f2 - forward * f1);
-            this.motionZ += (double)(forward * f2 + strafe * f1);
+            float f1 = MathHelper.sin(yaw * (float) Math.PI / 180.0F);
+            float f2 = MathHelper.cos(yaw * (float) Math.PI / 180.0F);
+            this.motionX += (double) (strafe * f2 - forward * f1);
+            this.motionZ += (double) (forward * f2 + strafe * f1);
         }
     }
-
     public int getBrightnessForRender(float partialTicks)
     {
         BlockPos blockpos = new BlockPos(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ);
@@ -1506,6 +1526,11 @@ public abstract class Entity implements ICommandSender
             double d2 = this.prevPosZ + (this.posZ - this.prevPosZ) * (double)partialTicks;
             return new Vec3(d0, d1, d2);
         }
+    }
+
+    public Vec3d getPositionEyes3d(float partialTicks){
+        Vec3 vec3 = this.getPositionEyes(partialTicks);
+        return new Vec3d(vec3.xCoord, vec3.yCoord, vec3.zCoord);
     }
 
     public MovingObjectPosition rayTrace(double blockReachDistance, float partialTicks)

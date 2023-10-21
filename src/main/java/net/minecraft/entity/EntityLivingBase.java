@@ -961,7 +961,7 @@ public abstract class EntityLivingBase extends Entity
                             d1 = (Math.random() - Math.random()) * 0.01D;
                         }
 
-                        this.attackedAtYaw = (float)(MathHelper.atan2(d0, d1) * 180.0D / Math.PI - (double)this.rotationYaw);
+                        this.attackedAtYaw = (float)(MathHelper.atan2(d0, d1) * 180.0D / Math.PI - (double)this.movementYaw);
                         this.knockBack(entity, amount, d1, d0);
                     }
                     else
@@ -1577,9 +1577,11 @@ public abstract class EntityLivingBase extends Entity
         }
 
         if (this instanceof EntityPlayerSP) {
-            EventJump event = new EventJump(rotationYaw, jumpM);
+            EventJump event = new EventJump(this.movementYaw, jumpM);
             event.call();
             jumpM = event.getMotionY();
+            this.movementYaw = event.getYaw();
+            this.velocityYaw = event.getYaw();
 
             if (event.isCancelled()) {
                 return;
@@ -1588,7 +1590,7 @@ public abstract class EntityLivingBase extends Entity
         this.motionY = jumpM;
         if (this.isSprinting())
         {
-            float f = this.rotationYaw * 0.017453292F;
+            float f = this.movementYaw * 0.017453292F;
             this.motionX -= (double)(MathHelper.sin(f) * 0.2F);
             this.motionZ += (double)(MathHelper.cos(f) * 0.2F);
         }

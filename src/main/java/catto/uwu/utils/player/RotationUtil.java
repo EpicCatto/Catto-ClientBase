@@ -1,5 +1,6 @@
 package catto.uwu.utils.player;
 
+import catto.uwu.utils.math.Vec3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -134,6 +135,15 @@ public class RotationUtil {
     public static double getRotationDifference(Rotation a, Rotation b) {
         return Math.hypot(getAngleDifference(a.getYaw(), b.getYaw()), (a.getPitch() - b.getPitch()));
     }
+
+    public Vec3d getVectorForRotation(float yaw, float pitch) {
+        float f1 = MathHelper.cos(-yaw * 0.017453292F - (float) Math.PI);
+        float f2 = MathHelper.sin(-yaw * 0.017453292F - (float) Math.PI);
+        float f3 = -MathHelper.cos(-pitch * 0.017453292F);
+        float f4 = MathHelper.sin(-pitch * 0.017453292F);
+        return new Vec3d(f2 * f3, f4, f1 * f3);
+    }
+
 
     public static double getRotationDifference180(Rotation a, Rotation b) {
         double base = getRotationDifference(a, b);

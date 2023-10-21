@@ -1732,6 +1732,7 @@ public abstract class World implements IBlockAccess
             this.theProfiler.endSection();
         }
 
+
         this.theProfiler.endStartSection("blockEntities");
         this.processingLoadedTiles = true;
         Iterator<TileEntity> iterator = this.tickableTileEntities.iterator();

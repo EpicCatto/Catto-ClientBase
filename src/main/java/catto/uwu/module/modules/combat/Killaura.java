@@ -14,6 +14,7 @@ import catto.uwu.module.api.Category;
 import catto.uwu.module.api.Module;
 import catto.uwu.module.api.ModuleData;
 import catto.uwu.utils.TimerUtil;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -24,9 +25,7 @@ import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.MovingObjectPosition;
 import net.optifine.util.MathUtils;
 
 import java.util.ArrayList;
@@ -38,26 +37,28 @@ public class Killaura extends Module {
 
     public static EntityLivingBase target;
     private final ArrayList<EntityLivingBase> targets = new ArrayList<>();
-    public NoteSetting targetNote = new NoteSetting("Sorting Settings", this);
-    private final ModeSetting mode = new ModeSetting("Mode", this, new String[]{"Single", "Switch"}, "Single", targetNote);
-    public NumberSetting switchDelay = new NumberSetting("Switch Delay", this, 100, 1, 1000, true, () -> mode.getValue().equalsIgnoreCase("Switch"), targetNote);
-    public ModeSetting sortingMode = new ModeSetting("Sorting Mode", this, new String[]{"Angle", "Distance", "Health"}, "Health", targetNote);
+    public NoteSetting sortingNote = new NoteSetting("Sorting Settings", this);
+    private final ModeSetting mode = new ModeSetting("Mode", this, new String[]{"Single", "Switch"}, "Single", sortingNote);
+    public NumberSetting switchDelay = new NumberSetting("Switch Delay", this, 100, 1, 1000, true, () -> mode.getValue().equalsIgnoreCase("Switch"), sortingNote);
+    public ModeSetting sortingMode = new ModeSetting("Sorting Mode", this, new String[]{"Angle", "Distance", "Health"}, "Health", sortingNote);
 
-    public NoteSetting attackNote = new NoteSetting("Targets Settings", this);
+    public NoteSetting targetsNote = new NoteSetting("Targets Settings", this);
+
+
+    public BooleanSetting player = new BooleanSetting("Player", this, true, targetsNote);
+    public BooleanSetting animals = new BooleanSetting("Animals", this, false, targetsNote);
+    public BooleanSetting mobs = new BooleanSetting("Mobs", this, false, targetsNote);
+    public BooleanSetting invisible = new BooleanSetting("Invisible", this, false, targetsNote);
+    public BooleanSetting wall = new BooleanSetting("Wall", this, true, targetsNote);
+
+    public NoteSetting attackNote = new NoteSetting("Attack Settings", this);
+    private final ModeSetting attackMethod = new ModeSetting("Method", this, new String[]{"Packet", "MC", "Legit"}, "Packet", attackNote);
     private final NumberSetting range = new NumberSetting("Attack Range", this, 4, 1, 7, false, attackNote);
-
-    public BooleanSetting player = new BooleanSetting("Player", this, true, attackNote);
-    public BooleanSetting animals = new BooleanSetting("Animals", this, false, attackNote);
-    public BooleanSetting mobs = new BooleanSetting("Mobs", this, false, attackNote);
-    public BooleanSetting invisible = new BooleanSetting("Invisible", this, false, attackNote);
-    public BooleanSetting wall = new BooleanSetting("Wall", this, true, attackNote);
-    private final NumberSetting attackRange = new NumberSetting("Attack Range", this, 4.5, 0.1, 7, false, attackNote);
-
-    public NoteSetting cpsNote = new NoteSetting("CPS Settings", this);
-    private final BooleanSetting randomizeCps = new BooleanSetting("Randomize CPS", this, false, cpsNote);
-    private final NumberSetting cps = new NumberSetting("CPS", this, 10, 1, 20, false, () -> !randomizeCps.getValue(), cpsNote);
-    private final NumberSetting maxCps = new NumberSetting("Max CPS", this, 10, 1, 20, false, randomizeCps::getValue, cpsNote);
-    private final NumberSetting minCps = new NumberSetting("Min CPS", this, 5, 1, 20, false, randomizeCps::getValue, cpsNote);
+    private final BooleanSetting rayCast = new BooleanSetting("RayCast", this, false, attackNote);
+    private final BooleanSetting randomizeCps = new BooleanSetting("Randomize CPS", this, false, attackNote);
+    private final NumberSetting cps = new NumberSetting("CPS", this, 10, 1, 20, false, () -> !randomizeCps.getValue(), attackNote);
+    private final NumberSetting maxCps = new NumberSetting("Max CPS", this, 10, 1, 20, false, randomizeCps::getValue, attackNote);
+    private final NumberSetting minCps = new NumberSetting("Min CPS", this, 5, 1, 20, false, randomizeCps::getValue, attackNote);
 
 
     private int targetIndex = 0;
@@ -67,7 +68,7 @@ public class Killaura extends Module {
 
     public Killaura() {
         super();
-        addSettings(targetNote, mode, switchDelay, sortingMode, attackNote, range, player, animals, mobs, invisible, wall, attackRange, cpsNote, randomizeCps, cps, maxCps, minCps);
+        addSettings(sortingNote, mode, switchDelay, sortingMode, targetsNote, player, animals, mobs, invisible, wall, attackNote, attackMethod, range, randomizeCps, cps, maxCps, minCps, rayCast);
     }
 
 
@@ -85,8 +86,14 @@ public class Killaura extends Module {
 
         RotationUtil.Rotation rotations = RotationUtil.toRotation(RotationUtil.searchCenter(target.getEntityBoundingBox(), false, true, true, true).getVec(), false);
         RotationProcessor.setToRotation(new Rotation(rotations.getYaw(), rotations.getPitch()), true);
+
         if (attackTimer.hasReached( (long) 1000 / (int) (MathUtils.nextDouble(maxCps.getValue(), minCps.getValue()) - RANDOM.nextInt(10) + RANDOM.nextInt(10)))) {
-            
+            final MovingObjectPosition movingObjectPosition = mc.objectMouseOver;
+//            if (!rayCast.getValue() || (movingObjectPosition != null && movingObjectPosition.entityHit == target && movingObjectPosition.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY))
+//                attack(movingObjectPosition.entityHit);
+//            else if (!rayCast.getValue())
+                attack(target);
+
             attackTimer.reset();
         }
     }
@@ -96,6 +103,28 @@ public class Killaura extends Module {
         targets.clear();
         attackTimer.reset();
         target = null;
+    }
+
+    private void attack(Entity target) {
+//        if ((mc.thePlayer.getDistanceToEntity(target) <= range && !rayCast.getValue()) ||
+//                (rayCast.getValue() && movingObjectPosition != null && movingObjectPosition.entityHit == target)) {
+        switch (attackMethod.getValue().toLowerCase()) {
+            case "packet":
+                mc.thePlayer.swingItem();
+                mc.thePlayer.sendQueue.addToSendQueue(new net.minecraft.network.play.client.C02PacketUseEntity(target, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
+                break;
+            case "mc":
+                mc.thePlayer.swingItem();
+                if (mc.thePlayer.ticksExisted % 2 == 0)
+                mc.playerController.attackEntity(mc.thePlayer, target);
+                break;
+            case "legit":
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindPickBlock.getKeyCode(), true);
+                KeyBinding.onTick(mc.gameSettings.keyBindPickBlock.getKeyCode());
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindPickBlock.getKeyCode(), false);
+                break;
+
+        }
     }
 
     private void getAllTarget() {

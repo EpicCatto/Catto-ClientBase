@@ -2,6 +2,7 @@
 package catto.uwu.utils.math;
 
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.util.Vec3i;
 
 public class Vec3d
@@ -78,6 +79,10 @@ public class Vec3d
 
     public Vec3d scale(final double p_186678_1_) {
         return new Vec3d(this.xCoord * p_186678_1_, this.yCoord * p_186678_1_, this.zCoord * p_186678_1_);
+    }
+
+    public Vec3 scale3(final double p_186678_1_) {
+        return new Vec3(this.xCoord * p_186678_1_, this.yCoord * p_186678_1_, this.zCoord * p_186678_1_);
     }
 
     @Override
