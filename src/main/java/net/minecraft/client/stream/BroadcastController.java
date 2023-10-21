@@ -857,7 +857,7 @@ public class BroadcastController
 
         if (i == -1L)
         {
-            this.logError(String.format("Error in SendStartSpanMetaData\n"));
+            this.logError("Error in SendStartSpanMetaData\n");
         }
 
         return i;
@@ -1036,7 +1036,7 @@ public class BroadcastController
 
             if (!framebuffer.getIsValid())
             {
-                this.logError(String.format("Error while allocating frame buffer"));
+                this.logError("Error while allocating frame buffer");
                 return false;
             }
 
@@ -1063,7 +1063,7 @@ public class BroadcastController
     {
         if (this.field_152875_k.size() == 0)
         {
-            this.logError(String.format("Out of free buffers, this should never happen"));
+            this.logError("Out of free buffers, this should never happen");
             return null;
         }
         else

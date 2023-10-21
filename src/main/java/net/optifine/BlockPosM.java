@@ -169,7 +169,7 @@ public class BlockPosM extends BlockPos
                 return new AbstractIterator()
                 {
                     private BlockPosM theBlockPosM = null;
-                    protected BlockPosM computeNext0()
+                    private BlockPosM computeNext0()
                     {
                         if (this.theBlockPosM == null)
                         {

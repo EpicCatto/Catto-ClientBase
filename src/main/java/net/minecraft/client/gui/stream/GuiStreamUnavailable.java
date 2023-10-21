@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -220,7 +221,7 @@ public class GuiStreamUnavailable extends GuiScreen
         }
         else if (istream.func_152912_E() != null)
         {
-            List<ChatComponentTranslation> list1 = Arrays.asList(new ChatComponentTranslation("stream.unavailable.initialization_failure.extra", ErrorCode.getString(istream.func_152912_E())));
+            List<ChatComponentTranslation> list1 = Collections.singletonList(new ChatComponentTranslation("stream.unavailable.initialization_failure.extra", ErrorCode.getString(istream.func_152912_E())));
             minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.INITIALIZATION_FAILURE, list1));
         }
         else

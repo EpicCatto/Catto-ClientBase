@@ -200,8 +200,8 @@ public class WorldRenderer
     private static float getDistanceSq(FloatBuffer p_181665_0_, float p_181665_1_, float p_181665_2_, float p_181665_3_, int p_181665_4_, int p_181665_5_)
     {
         float f = p_181665_0_.get(p_181665_5_);
-        float f1 = p_181665_0_.get(p_181665_5_ + 0 + 1);
-        float f2 = p_181665_0_.get(p_181665_5_ + 0 + 2);
+        float f1 = p_181665_0_.get(p_181665_5_ + 1);
+        float f2 = p_181665_0_.get(p_181665_5_ + 2);
         float f3 = p_181665_0_.get(p_181665_5_ + p_181665_4_);
         float f4 = p_181665_0_.get(p_181665_5_ + p_181665_4_ + 1);
         float f5 = p_181665_0_.get(p_181665_5_ + p_181665_4_ + 2);

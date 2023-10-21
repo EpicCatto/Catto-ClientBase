@@ -16,14 +16,7 @@ import java.net.URI;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
@@ -1815,7 +1808,7 @@ public class Config
 
     public static boolean equals(Object p_equals_0_, Object p_equals_1_)
     {
-        return p_equals_0_ == p_equals_1_ || (p_equals_0_ != null && p_equals_0_.equals(p_equals_1_));
+        return Objects.equals(p_equals_0_, p_equals_1_);
     }
 
     public static boolean equalsOne(Object p_equalsOne_0_, Object[] p_equalsOne_1_)
@@ -2281,7 +2274,7 @@ public class Config
             int[] aint = new int[j];
             System.arraycopy(p_addIntsToArray_0_, 0, aint, 0, i);
 
-            System.arraycopy(p_addIntsToArray_1_, 0, aint, 0 + i, p_addIntsToArray_1_.length);
+            System.arraycopy(p_addIntsToArray_1_, 0, aint, i, p_addIntsToArray_1_.length);
 
             return aint;
         }

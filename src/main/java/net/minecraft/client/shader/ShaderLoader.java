@@ -119,17 +119,17 @@ public class ShaderLoader
             return this.shaderName;
         }
 
-        protected String getShaderExtension()
+        private String getShaderExtension()
         {
             return this.shaderExtension;
         }
 
-        protected int getShaderMode()
+        private int getShaderMode()
         {
             return this.shaderMode;
         }
 
-        protected Map<String, ShaderLoader> getLoadedShaders()
+        private Map<String, ShaderLoader> getLoadedShaders()
         {
             return this.loadedShaders;
         }

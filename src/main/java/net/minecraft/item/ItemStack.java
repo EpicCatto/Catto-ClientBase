@@ -449,7 +449,7 @@ public final class ItemStack
      */
     public static boolean areItemsEqual(ItemStack stackA, ItemStack stackB)
     {
-        return stackA == null && stackB == null || (stackA != null && stackB != null && stackA.isItemEqual(stackB));
+        return stackA == null && stackB == null || (stackA != null && stackA.isItemEqual(stackB));
     }
 
     /**

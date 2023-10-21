@@ -164,7 +164,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
             --this.itemDropThreshold;
         }
 
-        if (this.playerEntity.getLastActiveTime() > 0L && this.serverController.getMaxPlayerIdleMinutes() > 0 && MinecraftServer.getCurrentTimeMillis() - this.playerEntity.getLastActiveTime() > (long)((long) this.serverController.getMaxPlayerIdleMinutes() * 1000 * 60))
+        if (this.playerEntity.getLastActiveTime() > 0L && this.serverController.getMaxPlayerIdleMinutes() > 0 && MinecraftServer.getCurrentTimeMillis() - this.playerEntity.getLastActiveTime() > ((long) this.serverController.getMaxPlayerIdleMinutes() * 1000 * 60))
         {
             this.kickPlayerFromServer("You have been idle for too long!");
         }
@@ -1107,14 +1107,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
 
             if (flag1 && flag2 && flag3)
             {
-                if (itemstack == null)
-                {
-                    this.playerEntity.inventoryContainer.putStackInSlot(packetIn.getSlotId(), null);
-                }
-                else
-                {
-                    this.playerEntity.inventoryContainer.putStackInSlot(packetIn.getSlotId(), itemstack);
-                }
+                this.playerEntity.inventoryContainer.putStackInSlot(packetIn.getSlotId(), itemstack);
 
                 this.playerEntity.inventoryContainer.setCanCraft(this.playerEntity, true);
             }
@@ -1269,13 +1262,11 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
                         itemstack3.setTagInfo("pages", itemstack1.getTagCompound().getTagList("pages", 8));
                     }
 
-                    return;
                 }
             }
             catch (Exception exception3)
             {
                 logger.error("Couldn't handle book info", exception3);
-                return;
             }
             finally
             {
@@ -1313,13 +1304,11 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
                         itemstack2.setItem(Items.written_book);
                     }
 
-                    return;
                 }
             }
             catch (Exception exception4)
             {
                 logger.error("Couldn't sign book", exception4);
-                return;
             }
             finally
             {

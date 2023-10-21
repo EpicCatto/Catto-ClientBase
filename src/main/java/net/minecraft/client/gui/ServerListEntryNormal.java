@@ -140,7 +140,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
         else
         {
             k = 1;
-            l = (int)(Minecraft.getSystemTime() / 100L + (long)(slotIndex * 2L) & 7L);
+            l = (int)(Minecraft.getSystemTime() / 100L + (slotIndex * 2L) & 7L);
 
             if (l > 4)
             {

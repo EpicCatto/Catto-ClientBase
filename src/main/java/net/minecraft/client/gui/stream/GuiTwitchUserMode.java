@@ -175,10 +175,10 @@ public class GuiTwitchUserMode extends GuiScreen
     {
         int i = this.width / 3;
         int j = i - 130;
-        this.buttonList.add(new GuiButton(1, 0 + j / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.timeout")));
+        this.buttonList.add(new GuiButton(1, j / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.timeout")));
         this.buttonList.add(new GuiButton(0, i + j / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.ban")));
         this.buttonList.add(new GuiButton(2, i * 2 + j / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.mod")));
-        this.buttonList.add(new GuiButton(5, 0 + j / 2, this.height - 45, 130, 20, I18n.format("gui.cancel")));
+        this.buttonList.add(new GuiButton(5, j / 2, this.height - 45, 130, 20, I18n.format("gui.cancel")));
         this.buttonList.add(new GuiButton(3, i + j / 2, this.height - 45, 130, 20, I18n.format("stream.userinfo.unban")));
         this.buttonList.add(new GuiButton(4, i * 2 + j / 2, this.height - 45, 130, 20, I18n.format("stream.userinfo.unmod")));
         int k = 0;

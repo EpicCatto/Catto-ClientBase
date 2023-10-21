@@ -937,7 +937,7 @@ public class Reflector
     public static boolean postForgeBusEvent(ReflectorConstructor constr, Object... params)
     {
         Object object = newInstance(constr, params);
-        return object != null && postForgeBusEvent(object);
+        return postForgeBusEvent(object);
     }
 
     public static boolean postForgeBusEvent(Object event)

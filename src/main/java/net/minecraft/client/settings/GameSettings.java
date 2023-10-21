@@ -3539,7 +3539,7 @@ public class GameSettings
             return MathHelper.clamp_float(value, this.valueMax, this.$VALUES);
         }
 
-        protected float snapToStep(float value)
+        private float snapToStep(float value)
         {
             if (this.valueMin > 0.0F)
             {

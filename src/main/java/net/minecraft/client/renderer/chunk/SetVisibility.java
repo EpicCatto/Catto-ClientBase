@@ -79,7 +79,7 @@ public class SetVisibility
 
     private boolean getBit(int p_getBit_1_)
     {
-        return (this.bits & (long)(1L << p_getBit_1_)) != 0L;
+        return (this.bits & (1L << p_getBit_1_)) != 0L;
     }
 
     private void setBit(int p_setBit_1_, boolean p_setBit_2_)

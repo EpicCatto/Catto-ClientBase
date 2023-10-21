@@ -1,10 +1,7 @@
 package net.optifine.util;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class ArrayUtils
 {
@@ -39,7 +36,7 @@ public class ArrayUtils
             int[] aint = new int[j];
             System.arraycopy(intArray, 0, aint, 0, i);
 
-            System.arraycopy(copyFrom, 0, aint, 0 + i, copyFrom.length);
+            System.arraycopy(copyFrom, 0, aint, i, copyFrom.length);
 
             return aint;
         }
@@ -330,7 +327,7 @@ public class ArrayUtils
 
     public static boolean equals(Object o1, Object o2)
     {
-        return o1 == o2 || (o1 != null && o1.equals(o2));
+        return Objects.equals(o1, o2);
     }
 
     public static boolean isSameOne(Object a, Object[] bs)
