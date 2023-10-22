@@ -46,7 +46,11 @@ public class HUD extends Module {
 //    Watermark
     public ModeSetting watermarkStyle = new ModeSetting("Style", this, new String[]{"Myth", "Sense", "Exhi", "Custom"}, "Myth", watermarkSettings);
     public BooleanSetting watermarkFont = new BooleanSetting("Font", this, true, watermarkSettings);
-    public ModeSetting watermarkFontStyle = new ModeSetting("Fonts", this, new String[]{"SF-UI", "Product Sans", "Ali"}, "Normal", watermarkSettings);
+
+
+//    Arraylist
+    public BooleanSetting arraylistFont = new BooleanSetting("Font", this, true, arraylistSettings);
+
 
     public HUD() {
         instance = this;
@@ -54,7 +58,7 @@ public class HUD extends Module {
         elements.add(new Arraylist("Modules Array"));
         elements.add(debugInfo);
 
-        addSettings(watermarkSettings, watermarkStyle, watermarkFont);
+        addSettings(watermarkSettings, watermarkStyle, watermarkFont, arraylistSettings, arraylistFont, sessionInfoSettings);
     }
 
     @EventTarget

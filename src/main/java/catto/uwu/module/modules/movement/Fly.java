@@ -138,17 +138,15 @@ public class Fly extends Module {
 //        mc.thePlayer.cameraYaw = 0.1F;
         if(MoveUtil.isMoving()) {
             if (mc.thePlayer.onGround){
+                MoveUtil.strafe(0.336767 * 4.45f);
                 mc.thePlayer.jump();
             }
             else mc.thePlayer.posY -= 0.7;
+            MoveUtil.strafe(0.376767);
         }
     }
 
     private void moveVerus(EventMove event) {
-        if (mc.thePlayer.onGround){
-            MoveUtil.setMotion(event, 0.336767 * 4.45f);
-            mc.thePlayer.jump();
-        }
-        MoveUtil.setMotion(event, 0.376767);
+
     }
 }

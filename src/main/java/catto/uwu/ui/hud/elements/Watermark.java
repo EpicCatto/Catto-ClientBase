@@ -4,6 +4,7 @@ import catto.uwu.Client;
 import catto.uwu.module.modules.render.HUD;
 import catto.uwu.ui.hud.Element;
 import catto.uwu.utils.ChatUtil;
+import catto.uwu.utils.font.CFontRenderer;
 import catto.uwu.utils.font.FontLoaders;
 import catto.uwu.utils.render.ColorUtil;
 import catto.uwu.utils.render.RenderUtils;
@@ -22,7 +23,6 @@ public class Watermark extends Element {
     private String defaultMyth;
     private String defaultSense;
     private String defaultExhi;
-
 
     public Watermark(String name, String text) {
         super(name, 0, 0, 0, 0);
