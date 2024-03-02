@@ -68,6 +68,7 @@ There are many other features, but i'm too lazy to list them all. explore the co
 | Marcelektro         | MavenMCP 1.8.9           | [MavenMCP 1.8.9](https://github.com/Marcelektro/MavenMCP-1.8.9)  |
 | Hexeption           | Event System             | Lost? I count find it                                            |
 | LiquidBounce Legacy | Utils and Rotations code | [LB Legacy](https://github.com/CCBlueX/LiquidBounce/tree/legacy) |
+| ViaMCP              | ViaMCP                   | [ViaMCP](https://github.com/ViaVersionMCP/ViaMCP)                |
 
 I'm sorry if i forgot to credit someone, i don't remember where i got all the code from. If you see something that belongs to you, please let me know and i will credit you.
 
