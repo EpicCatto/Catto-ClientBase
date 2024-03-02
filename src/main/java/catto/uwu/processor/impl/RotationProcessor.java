@@ -143,8 +143,6 @@ public class RotationProcessor implements Processor {
     public static void setToRotation(Rotation toRotation, boolean moveFix) {
         if (toRotation.getPitch() > 90 || toRotation.getPitch() < -90) return;
 
-
-
         final float yaw = toRotation.getYaw();
         final float pitch = toRotation.getPitch();
         if (Float.isNaN(yaw) || Float.isNaN(pitch))

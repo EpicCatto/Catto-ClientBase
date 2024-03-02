@@ -15,9 +15,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
+/*
+    * This class is used to get the data from the server
+    * This client is designed to work with the Gato.io API
+    * Depriecated
+    * @Author EpicCatto
+ */
 public class DataUtil {
 
-    private static final String SERVER = "https://notthatuwu-bot-backup.herokuapp.com";
+    private static final String SERVER = "https://gatoclient.info/api/`";
     private static final String USER_AGENT = "GATO-API/";
 
 
@@ -55,32 +61,6 @@ public class DataUtil {
 
     public static String postResponse(final String getParameters, String data) throws IOException {
         final HttpsURLConnection connection = (HttpsURLConnection) new URL(SERVER + getParameters).openConnection();
-        connection.addRequestProperty("User-Agent", USER_AGENT);
-        connection.setRequestMethod("POST");
-        connection.setDoOutput(true);
-
-        final byte[] out = data.getBytes(StandardCharsets.UTF_8);
-        final int length = out.length;
-        connection.setFixedLengthStreamingMode(length);
-        connection.addRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        connection.addRequestProperty("Accept", "application/json");
-        connection.connect();
-        try (OutputStream os = connection.getOutputStream()) {
-            os.write(out);
-        }
-
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-        String lineBuffer;
-        StringBuilder response = new StringBuilder();
-        while ((lineBuffer = reader.readLine()) != null)
-            response.append(lineBuffer);
-
-        return response.toString();
-    }
-
-    public static String dev(final String getParameters, String data) throws IOException {
-        final HttpURLConnection connection = (HttpURLConnection) new URL("http://localhost:5000" + getParameters).openConnection();
         connection.addRequestProperty("User-Agent", USER_AGENT);
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);

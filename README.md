@@ -1,45 +1,81 @@
-# Catto-Client
-Most cutting edge client of 2023
+# Catto-Base
+Most cutting edge 1.8.9 minecraft client of 2023 (real)
 
-# Libs
-- ViaMCP (https://github.com/FlorianMichael/ViaMCP)
+## About
+This is a base for a 1.8.9 MavenMCP client. It's a project i used to work on in my free time, it's not finished and it's not even close to being finished. I'm not working on it anymore, but i'm leaving it here for anyone who wants to use it as a base for their own client. It's not the best code, but it's a good starting point for anyone who wants to make a client.
 
-# MavenMCP 1.8.9
 
-### About
-Maven MCP 1.8.9 is an updated version of MCP. It uses Maven, has a clean code structure, supports Linux and version control in your projects!
+## Features
+### Commands System
+| Command | Alias | Description |
+| --- | --- | --- |
+| help | h | Shows all commands |
+| bind | b | Binds a module to a key |
+| toggle | t | Toggles a module |
+| config | c | Manages module configs |
+| hclip | hc | Horizontal clip |
+| vclip | vc | Vertical clip |
+| elements | e | Manages HUD elements |
 
-### About the structure
-The code is split into two groups: Resources (assets, graphics, shaders etc.) and code.<br>
-Libraries are loaded from Maven.
+### Modules System
+Anotations are used to define modules, for example:
+```java
+@ModuleData(name = "ModuleName", description = "This Module Does what", category = Category)
+```
+Module categories are defined in the Category enum, for example:
+```java
+public enum Category {
+    COMBAT, MOVEMENT, PLAYER, RENDER, MISC
+}
+```
+Values system is used to define module settings, for example:
+```java
+public ModeSetting mode = new ModeSetting("Mode", this, new String[]{"TabList"}, "TabList");
+public ModuleName() {
+    addSettings(mode);
+}
+```
+There are many other settings, such as BooleanSetting, ColorSetting, NumberSetting, NoteSetting, StringSetting, etc.
 
-### Setting up workspace
-1. Clone the repository
-2. Let it setup and index (just wait)
-4. Specify project SDK to **Java 8** It might not work with other versions of JDK
-5. Once it indexes, the project should be ready to go! :)
+Modules are saved in the config file and can be modified.
 
-### Building
-To build a working .jar file, which later can be put to `/versions` in MC folder, you just need to run `mvn clean package` command.
-<br>You can also use the Maven menu *on the right side*, or add a new run configuration, and run it from there (my favourite way).
-<br>Once the process is complete, artifacts will be in `/target` directory.
-<br>There's no requirement to delete MANIFEST from the jar before putting to MC folder.
+### Config System
+Config system is based on Gson, it's very simple and easy to use. It's not the best config system, but it works.
 
-### Running
-To launch the client in the IDE, you need to execute Start.java, **and specify working directory to `./test_run/`**.<br>
+### HUD System
+HUD system uses a custom element system, making it able to add custom elements to the HUD and move them around. they are saved in the config file and can be modified.
+|| 
 
-An example run configuration.<br>
-<img src="https://developers.marcloud.net/i/launchConfig.png"/>
+<details>
+  <summary>Click to see images</summary>
 
-Minecraft's directory will be `./test_run/`. All saves, resource packs etc. will be there.
+  ![img.png](img.png)
+  ![img_1.png](img_1.png)
+</details>
 
-### Migrating from old version of MCP
-Nothing easier. 
-Move your existing java code to `/src/main/java`, and any resources i.e. shaders, fonts etc. to `/src/main/resources`.
-If you added new libraries, make sure to add them to pom.xml, and you're set :D
+### ClickGUI
+ClickGUI is a simple GUI that allows you to toggle and configure modules, it's not the best GUI, but it works.
 
-### Support
-If you have any questions about this repo, let me know on <a href="https://marcloud.net/discord">my Discord</a>! ^^
+### ViaMCP
+Able to join servers from 1.8 to 1.20. Select the version you want to join in multiplayer menu.
 
-<br><br>
-**May 1.8.9 survive!**
+### And much more
+There are many other features, but i'm too lazy to list them all. explore the code and see for yourself.
+
+## Credits
+| Author              | Description              | Github                                                           |
+|---------------------|--------------------------|------------------------------------------------------------------|
+| Marcelektro         | MavenMCP 1.8.9           | [MavenMCP 1.8.9](https://github.com/Marcelektro/MavenMCP-1.8.9)  |
+| Hexeption           | Event System             | Lost? I count find it                                            |
+| LiquidBounce Legacy | Utils and Rotations code | [LB Legacy](https://github.com/CCBlueX/LiquidBounce/tree/legacy) |
+I'm sorry if i forgot to credit someone, i don't remember where i got all the code from. If you see something that belongs to you, please let me know and i will credit you.
+
+## Requirements
+ - 🤯🧠
+ - Java 8
+ - Maven
+ - Git
+
+
+## Installation
+ - MavenMCP 1.8.9 [Read](https://github.com/Marcelektro/MavenMCP-1.8.9)

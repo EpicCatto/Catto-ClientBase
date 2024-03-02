@@ -27,20 +27,13 @@ public class Scaffold extends Module {
     @EventTarget
     public void onMotion(EventMotion event) {
         setSuffix(delay.getValue());
-//				if (place) {
-//        event.setYaw(mc.thePlayer.rotationYaw - 180);
-//        event.setPitch(78.59991f);
+
         RotationProcessor.setToRotation(new Rotation(mc.thePlayer.rotationYaw - 180, 78.59991f), false);
     }
 
     @EventTarget
     public void onSafewalk(EventSafeWalk event) {
         event.setSafe(safewalk.getValue());
-    }
-    @EventTarget
-    public void onStrafe(EventStrafe event) {
-//        apply movefix
-        event.setYaw(rotations[0]);
     }
     @Override
     public void onEnable() {

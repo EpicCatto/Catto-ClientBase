@@ -113,11 +113,8 @@ public class ClientDataFile implements IFile {
             JsonObject dataObject = gson.fromJson(Encryption.decrypt(object.get("Data (DO NOT TOUCH)").getAsJsonObject().get("Data").getAsString(), secret, salt), JsonObject.class);
             authToken = dataObject.get("auth-token").getAsString();
             hwid = dataObject.get("hwid").getAsString();
-
-//            System.out.println(dataObject);
         } catch (Exception e) {
             System.err.println("Error while loading client data resetting...");
-//            Client.clientData.logError("Error while loading client data Json", e);
             save(gson);
             return;
         }

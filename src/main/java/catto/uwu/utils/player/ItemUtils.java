@@ -11,7 +11,7 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class ItemUtils {
     /*
-     * From Venus Project
+     * From Interger Client Project
      * */
 
     protected static Minecraft mc = Minecraft.getMinecraft();

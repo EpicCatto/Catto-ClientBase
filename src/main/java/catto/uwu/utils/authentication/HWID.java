@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
+
 public class HWID {
 
     public static void main(String[] args) {
@@ -34,6 +35,7 @@ public class HWID {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        // In case of OS specific implementation
         /*if (OSHelper.getOS().equals(OSHelper.WINDOWS)){
             if(getWindowsMotherBoardSerialNumber().equalsIgnoreCase("NA")) {
                 try {
