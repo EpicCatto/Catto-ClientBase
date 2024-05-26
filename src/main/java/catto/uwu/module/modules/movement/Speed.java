@@ -9,6 +9,7 @@ import catto.uwu.module.modules.combat.Killaura;
 import catto.uwu.module.settings.impl.BooleanSetting;
 import catto.uwu.module.settings.impl.ModeSetting;
 import catto.uwu.module.settings.impl.NumberSetting;
+import catto.uwu.utils.ChatUtil;
 import catto.uwu.utils.TimerUtil;
 import catto.uwu.utils.player.MoveUtil;
 import net.minecraft.network.Packet;
@@ -92,7 +93,7 @@ public class Speed extends Module {
             case "None":
                 break;
             case "Jump":
-                if (mc.thePlayer.onGround && MoveUtil.isMoving()) {
+                if (MoveUtil.isOnGround() && MoveUtil.isMoving()) {
                     mc.thePlayer.jump();
                 }
                 break;
@@ -110,10 +111,12 @@ public class Speed extends Module {
             case "Dev":
                 if (mc.thePlayer.onGround && MoveUtil.isMoving()) {
                     mc.thePlayer.jump();
-                    if (mc.thePlayer.motionY < 0.15 && mc.thePlayer.motionY > -0.16) {
-                        mc.thePlayer.motionY = -0.2021744352;
-                    }
+
                 }
+//                ChatUtil.sendChatMessageWOutPrefix(mc.thePlayer.motionY);
+//                if (mc.thePlayer.motionY < 0.15 && mc.thePlayer.motionY > -0.16) {
+//                    mc.thePlayer.motionY = -0.1021744352;
+//                }
                 break;
         }
     }

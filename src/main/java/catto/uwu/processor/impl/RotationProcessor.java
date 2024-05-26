@@ -10,6 +10,7 @@ import catto.uwu.utils.player.RotationUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
+import javax.vecmath.Vector2f;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RotationProcessor implements Processor {
@@ -24,7 +25,7 @@ public class RotationProcessor implements Processor {
 
     private static int rotateTicks, revertTicks;
 
-    @EventTarget
+    @EventTarget(Priority.VERY_LOW)
     public void onPacketSend(EventSendPacket event) {
 //        ChatUtil.sendChatMessageWPrefix("packet: " + event.getPacket().getClass().getSimpleName());
         if (event.getPacket() instanceof C03PacketPlayer) {
@@ -38,21 +39,21 @@ public class RotationProcessor implements Processor {
         }
     }
 
-    @EventTarget
+    @EventTarget(Priority.VERY_LOW)
     public void onStrafe(EventStrafe event) {
         if(enabled && moveFix) {
             event.setYaw(clientRotation.getYaw());
         }
     }
 
-    @EventTarget
+    @EventTarget(Priority.VERY_LOW)
     public void onJump(EventJump event) {
         if(enabled && moveFix) {
             event.setYaw(clientRotation.getYaw());
         }
     }
 
-    @EventTarget
+    @EventTarget(Priority.VERY_LOW)
     public void onMotion(EventMotion event) {
         if (!event.isPre()) return;
         if(enabled) {
@@ -61,7 +62,7 @@ public class RotationProcessor implements Processor {
         }
     }
 
-    @EventTarget
+    @EventTarget(Priority.VERY_LOW)
     public void onUpdate(EventUpdate event) {
 
 //        ChatUtil.sendChatMessageWPrefix("enabled: " + enabled + " rotateTicks: " + rotateTicks);
@@ -98,7 +99,7 @@ public class RotationProcessor implements Processor {
 
     }
 
-    @EventTarget(Priority.VERY_HIGH)
+    @EventTarget(Priority.VERY_LOW)
     public void onTick(EventTick event){
         if (mc.thePlayer != null) {
             mc.thePlayer.lastMovementYaw = mc.thePlayer.movementYaw;
@@ -106,11 +107,18 @@ public class RotationProcessor implements Processor {
         }
     }
 
+    @EventTarget(Priority.VERY_LOW)
+    public void onLook(EventLook event) {
+        if (enabled) {
+            event.setRotation(new Vector2f(clientRotation.getYaw(), clientRotation.getPitch()));
+        }
+    }
+
     private void setClientRotation(float yawDifference, float pitchDifference, double base) {
         if (base < 0) base = -base;
         if (base > 180.0) base = 180.0;
 
-        final float turnSpeed = (float) (base / ThreadLocalRandom.current().nextDouble(1, 2.5));
+        final float turnSpeed = (float) (base / ThreadLocalRandom.current().nextDouble(1, 1.5));
 
         clientRotation.setYaw(serverRotation.getYaw() + (yawDifference > turnSpeed ? turnSpeed : Math.max(yawDifference, -turnSpeed)));
         clientRotation.setPitch(serverRotation.getPitch() + (pitchDifference > turnSpeed ? turnSpeed : Math.max(pitchDifference, -turnSpeed)));

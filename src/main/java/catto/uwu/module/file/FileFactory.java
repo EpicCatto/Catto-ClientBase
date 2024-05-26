@@ -37,6 +37,7 @@ public class FileFactory extends Container<IFile> {
     }
 
     public void load() {
+
         forEach(file -> file.load(GSON));
     }
 

@@ -27,6 +27,7 @@ public class CommandManager {
      * Loads all the commands. These commands are stored in a hashmap.
      **/
     private void registerCommands() {
+
         commands.put(new String[]{"help", "h"}, new HelpCommand());
         commands.put(new String[]{"bind", "b"}, new BindCommand());
         commands.put(new String[]{"toggle", "t"}, new ToggleCommand());
